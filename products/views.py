@@ -16,7 +16,10 @@ def cart(request):
     return render(request, 'cart.html')
 
 def checkout(request):
-    return render(request, 'checkout.html')
+    return render(request, 'sign_in.html')
+
+def checkout2(request):
+    return render(request, 'sign_up.html')
 
 def single_product(request):
     return render(request, 'single-product.html')
