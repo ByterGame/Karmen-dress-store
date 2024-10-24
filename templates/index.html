@@ -31,6 +31,12 @@
 	<link rel="stylesheet" href="{% static 'css/main.css'%}">
 	<!-- responsive -->
 	<link rel="stylesheet" href="{% static 'css/responsive.css'%}">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    	integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+  	<link
+    	href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Marcellus&display=swap"
+    	rel="stylesheet">
 
 </head>
 <body>
@@ -163,103 +169,45 @@
 	</div>
 	<!-- end home page slider -->
 
-
+	<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+		<defs>
+		  <symbol xmlns="http://www.w3.org/2000/svg" id="heart" viewBox="0 0 24 24">
+			<path fill="currentColor"
+			  d="M20.16 4.61A6.27 6.27 0 0 0 12 4a6.27 6.27 0 0 0-8.16 9.48l7.45 7.45a1 1 0 0 0 1.42 0l7.45-7.45a6.27 6.27 0 0 0 0-8.87Zm-1.41 7.46L12 18.81l-6.75-6.74a4.28 4.28 0 0 1 3-7.3a4.25 4.25 0 0 1 3 1.25a1 1 0 0 0 1.42 0a4.27 4.27 0 0 1 6 6.05Z" />
+		  </symbol>
+		</defs>
+	  </svg>
 	<!-- products -->
-	<div class="product-section mt-150 mb-150">
-		<div class="container">
-
-			<div class="row">
-                <div class="col-md-12">
-                    <div class="product-filters">
-                        <ul>
-                            <li class="active" data-filter="*">All</li>
-                            <li data-filter=".strawberry">Strawberry</li>
-                            <li data-filter=".berry">Berry</li>
-                            <li data-filter=".lemon">Lemon</li>
-                        </ul>
+	<section id="dress-list" class="py-5">
+        <div class="container">
+            <div class="row">
+                {% for dress in products %}
+                <div class="col-md-4">
+                    <div class="product-item image-zoom-effect link-effect">
+                        <div class="image-holder position-relative">
+                            <a href="index.html">
+                                <img src="{{ dress.photo.url }}" alt="{{ dress.name }}" class="product-image img-fluid">
+                            </a>
+                            <a href="index.html" class="btn-icon btn-wishlist">
+                                <svg width="24" height="24" viewBox="0 0 24 24">
+                                    <use xlink:href="#heart"></use>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="product-content">
+                            <h5 class="element-title text-uppercase fs-5 mt-3">
+                                <a href="index.html">{{ dress.name }}</a>
+                            </h5>
+                            <a href="#" class="text-decoration-none" data-after="Add to cart">
+                                <span>${{ dress.cost }}</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-
-			<div class="row product-lists">
-				<div class="col-lg-4 col-md-6 text-center strawberry">
-					<div class="single-product-item">
-						<div class="product-image">
-							<a href="{% url 'products:single_product' %}"><img src="{% static 'img/products/product-img-1.jpg'%}" alt=""></a>
-						</div>
-						<h3>Strawberry</h3>
-						<p class="product-price"><span>Per Kg</span> 85$ </p>
-						<a href="{% url 'products:cart' %}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 text-center berry">
-					<div class="single-product-item">
-						<div class="product-image">
-							<a href="{% url 'products:single_product' %}"><img src="{% static 'img/products/product-img-2.jpg'%}" alt=""></a>
-						</div>
-						<h3>Berry</h3>
-						<p class="product-price"><span>Per Kg</span> 70$ </p>
-						<a href="{% url 'products:cart' %}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 text-center lemon">
-					<div class="single-product-item">
-						<div class="product-image">
-							<a href="{% url 'products:single_product' %}"><img src="{% static 'img/products/product-img-3.jpg'%}" alt=""></a>
-						</div>
-						<h3>Lemon</h3>
-						<p class="product-price"><span>Per Kg</span> 35$ </p>
-						<a href="{% url 'products:cart' %}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 text-center">
-					<div class="single-product-item">
-						<div class="product-image">
-							<a href="{% url 'products:single_product' %}"><img src="{% static 'img/products/product-img-4.jpg'%}" alt=""></a>
-						</div>
-						<h3>Avocado</h3>
-						<p class="product-price"><span>Per Kg</span> 50$ </p>
-						<a href="{% url 'products:cart' %}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 text-center">
-					<div class="single-product-item">
-						<div class="product-image">
-							<a href="{% url 'products:single_product' %}"><img src="{% static 'img/products/product-img-5.jpg'%}" alt=""></a>
-						</div>
-						<h3>Green Apple</h3>
-						<p class="product-price"><span>Per Kg</span> 45$ </p>
-						<a href="{% url 'products:cart' %}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 text-center strawberry">
-					<div class="single-product-item">
-						<div class="product-image">
-							<a href="{% url 'products:single_product' %}"><img src="{% static 'img/products/product-img-6.jpg'%}" alt=""></a>
-						</div>
-						<h3>Strawberry</h3>
-						<p class="product-price"><span>Per Kg</span> 80$ </p>
-						<a href="{% url 'products:cart' %}" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<div class="pagination-wrap">
-						<ul>
-							<li><a href="#">Prev</a></li>
-							<li><a href="#">1</a></li>
-							<li><a class="active" href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">Next</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end products -->
+        </div>
+    </section>
 
 	<!-- footer -->
 	<div class="footer-area">
@@ -319,7 +267,6 @@
 		</div>
 	</div>
 	<!-- end copyright -->
-	
 	<!-- jquery -->
 	<script src="{% static 'js/jquery-1.11.3.min.js'%}"></script>
 	<!-- bootstrap -->
@@ -335,7 +282,6 @@
 	<!-- magnific popup -->
 	<script src="{% static 'js/jquery.magnific-popup.min.js'%}"></script>
 	<!-- mean menu -->
-	<script src="{% static 'js/jquery.meanmenu.min.js'%}"></script>
 	<!-- sticker js -->
 	<script src="{% static 'js/sticker.js'%}"></script>
 	<!-- main js -->
