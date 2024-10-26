@@ -17,7 +17,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'products'
+    'products',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -77,7 +78,7 @@ STATICFILES_DIRS = [
    os.path.join(BASE_DIR, "static"),
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 

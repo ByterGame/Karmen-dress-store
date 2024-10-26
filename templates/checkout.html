@@ -64,6 +64,16 @@
 								<li><a href="{% url 'products:about' %}">About</a></li>
                                 <li><a href="{% url 'products:checkout' %}">Check Out</a></li>
                                 <li><a href="{% url 'products:cart' %}">Cart</a></li>
+                                {% if user.is_authenticated %} 
+                                    <li><a>{{ user.username }}</a></li>
+                                    <li><a href="{% url 'users:logout' %}">Logout</a></li>
+                                    {% if user.is_superuser or user.is_staff %}
+                                        <li><a href="{% url 'admin:index' %}">Admin-panel</a></li>
+                                    {% endif %}
+                                {% else %}
+                                <li><a href="{% url 'users:sign-in' %}">Login</a></li>
+                                <li><a href="{% url 'users:sign-up' %}">Registration</a></li>
+                                {% endif %}
 								<li>
 									<div class="header-icons">
 										<a class="shopping-cart" href="{% url 'products:cart' %}"><i class="fas fa-shopping-cart"></i></a>
