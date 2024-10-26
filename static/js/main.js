@@ -3,7 +3,22 @@ const dressItems = document.querySelectorAll('.dress-item');
 
 (function ($) {
     $(document).ready(function($) {
+        // Фильтрация продуктов
+        $('.product-controls li').on('click', function () {
+            var filterValue = $(this).attr('data-filter');
 
+            // Обновите активный элемент управления
+            $('.product-controls li').removeClass('active');
+            $(this).addClass('active');
+
+            // Фильтрация элементов в списке продуктов
+            if (filterValue === "") {
+                $('#product-list .dress-item').show();
+            } else {
+                $('#product-list .dress-item').hide();
+                $('#product-list .dress-item' + filterValue).show();
+            }
+        });
         // testimonial sliders
         $(".testimonial-sliders").owlCarousel({
             items: 1,
