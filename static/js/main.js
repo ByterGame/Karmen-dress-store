@@ -1,8 +1,9 @@
-(function ($) {
-    "use strict";
+const filterListItems = document.querySelectorAll('.filter-list li');
+const dressItems = document.querySelectorAll('.dress-item');
 
-    $(document).ready(function($){
-        
+(function ($) {
+    $(document).ready(function($) {
+
         // testimonial sliders
         $(".testimonial-sliders").owlCarousel({
             items: 1,
@@ -87,7 +88,7 @@
 
         // projects filters isotop
         $(".product-filters li").on('click', function () {
-            
+
             $(".product-filters li").removeClass("active");
             $(this).addClass("active");
 
@@ -96,9 +97,9 @@
             $(".product-lists").isotope({
                 filter: selector,
             });
-            
+
         });
-        
+
         // isotop inner
         $(".product-lists").isotope();
 

@@ -116,7 +116,6 @@ h6,
 a {
   text-decoration: none;
 }
-
 .image-zoom-effect {
   display: flex;
   flex-wrap: wrap;
@@ -125,11 +124,11 @@ a {
 
 .image-zoom-effect .image-holder {
   width: 100%;
-  height: auto;
   overflow: hidden;
   transform: scale(1);
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   margin-bottom: 20px;
+  aspect-ratio: 0.9; /* задаём фиксированные пропорции для контейнера изображения (1:1). Используйте другой коэффициент соотношения, если нужно */
 }
 
 .image-zoom-effect:hover .image-holder {
@@ -142,8 +141,8 @@ a {
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   z-index: 0;
   width: 100%;
-  height: 500px;
-  object-fit: cover;
+  height: 100%; /* изображение занимает всю высоту контейнера */
+  object-fit: cover; /* Сохранение пропорций изображения */
 }
 
 .image-zoom-effect:hover img {
@@ -154,6 +153,7 @@ a {
   text-align: center;
   margin-top: 10px;
 }
+
 
 /* Link Effect*/
 .link-effect a {
@@ -190,5 +190,90 @@ a {
 .link-effect:hover a::after {
   transform: translateY(0%);
   opacity: 1;
+}
+
+
+.latest-products {
+	padding-top: 55px;
+	padding-bottom: 65px;
+}
+
+.product-filter {
+	margin-bottom: 100px;
+}
+
+.product-filter .section-title {
+	margin-bottom: 20px;
+}
+
+.product-filter .product-controls li {
+	list-style: none;
+	display: inline-block;
+	color: #838383;
+	font-size: 14px;
+	margin-right: 42px;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+.product-filter .product-controls li.mixitup-control-active {
+	color: #1e1e1e;
+}
+
+.product-filter .product-controls li:hover {
+	color: #1e1e1e;
+}
+
+.product-filter .product-controls li:last-child {
+	margin-right: 0;
+}
+
+.single-product-item {
+	margin-bottom: 30px;
+}
+
+.single-product-item figure {
+	margin-bottom: 40px;
+	position: relative;
+	overflow: hidden;
+}
+
+.single-product-item figure img {
+	min-width: 100%;
+}
+
+.single-product-item figure .p-status {
+	position: absolute;
+	left: 20px;
+	top: 20px;
+	padding: 5px 16px;
+	font-size: 12px;
+	background: #1e1e1e;
+	color: #fff;
+	border-radius: 50px;
+}
+
+.single-product-item figure .p-status.sale {
+	background: #FE439F;
+}
+
+.single-product-item figure .p-status.popular {
+	background: #D0D7DB;
+}
+
+.single-product-item .product-text {
+	text-align: center;
+}
+
+.single-product-item .product-text h6 {
+	color: #727272;
+	margin-bottom: 15px;
+}
+
+.single-product-item .product-text p {
+	color: #1e1e1e;
+	font-size: 18px;
+	font-weight: 700;
+	margin-bottom: 0;
 }
 

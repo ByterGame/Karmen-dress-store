@@ -1,1 +1,34 @@
-[{"model": "products.dresscategory", "pk": 1, "fields": {"name": "Офисное", "description": ""}}, {"model": "products.dresscategory", "pk": 2, "fields": {"name": "Летнее", "description": ""}}, {"model": "products.dresscategory", "pk": 3, "fields": {"name": "Вечернее", "description": ""}}, {"model": "products.dresscategory", "pk": 4, "fields": {"name": "Коктейльное", "description": ""}}]
+[
+  {
+    "model": "products.dresscategory",
+    "pk": 1,
+    "fields": {
+      "name": "Office",
+      "description": ""
+    }
+  },
+  {
+    "model": "products.dresscategory",
+    "pk": 2,
+    "fields": {
+      "name": "Summer",
+      "description": ""
+    }
+  },
+  {
+    "model": "products.dresscategory",
+    "pk": 3,
+    "fields": {
+      "name": "Evening",
+      "description": ""
+    }
+  },
+  {
+    "model": "products.dresscategory",
+    "pk": 4,
+    "fields": {
+      "name": "Cocktail",
+      "description": ""
+    }
+  }
+]
