@@ -202,6 +202,7 @@
 							<li data-filter=".summer">Summer</li>
 							<li data-filter=".office">Office</li>
 							<li data-filter=".evening">Evening</li>
+							<li data-filter=".cocktail">Cocktail</li>
                     	</ul>
                     </div>
                 </div>
@@ -211,7 +212,7 @@
                 <div class="col-md-4 dress-item {% if dress.category.name %}{{ dress.category.name|lower }}{% endif %}">
                     <div class="product-item image-zoom-effect link-effect">
                         <div class="image-holder position-relative">
-                            <a href="index.html">
+                            <a href="{% url 'products:single_product' dress.id %}">
                                 <img src="{{ dress.photo.url }}" alt="{{ dress.name }}" class="product-image img-fluid">
                             </a>
                         </div>
@@ -222,7 +223,7 @@
                                 </svg>
                             </a>
                             <h5 class="element-title text-uppercase fs-5 mt-3">
-                                <a href="index.html">{{ dress.name }}</a>
+                                <a href="{% url 'products:single_product' dress.id %}">{{ dress.name }}</a>
                             </h5>
                             <a href="#" class="text-decoration-none" data-after="Add to cart">
                                 <span>${{ dress.cost }}</span>
