@@ -1,5 +1,5 @@
 from products.models import Dress, DressCategory
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 def index(request):
     context = {
@@ -22,6 +22,8 @@ def cart(request):
     return render(request, 'cart.html')
 
 
-def single_product(request):
-    return render(request, 'single-product.html')
+def single_product(request,  id):
+    print(f"Запрошенный ID продукта: {id}")  # Это позволяет увидеть значение ID в консоли
+    dress = get_object_or_404(Dress, id=id)
+    return render(request, 'single_product.html', {'dress': dress})
 

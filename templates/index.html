@@ -68,59 +68,58 @@
     </div>
     <!-- end home page slider -->
 
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-        <defs>
-            <symbol xmlns="http://www.w3.org/2000/svg" id="heart" viewBox="0 0 24 24">
-                <path fill="currentColor"
-                      d="M20.16 4.61A6.27 6.27 0 0 0 12 4a6.27 6.27 0 0 0-8.16 9.48l7.45 7.45a1 1 0 0 0 1.42 0l7.45-7.45a6.27 6.27 0 0 0 0-8.87Zm-1.41 7.46L12 18.81l-6.75-6.74a4.28 4.28 0 0 1 3-7.3a4.25 4.25 0 0 1 3 1.25a1 1 0 0 0 1.42 0a4.27 4.27 0 0 1 6 6.05Z"/>
-            </symbol>
-        </defs>
-    </svg>
-    <!-- products -->
-    <section id="dress-list" class="py-5">
+	<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+		<defs>
+		  <symbol xmlns="http://www.w3.org/2000/svg" id="heart" viewBox="0 0 24 24">
+			<path fill="currentColor"
+			  d="M20.16 4.61A6.27 6.27 0 0 0 12 4a6.27 6.27 0 0 0-8.16 9.48l7.45 7.45a1 1 0 0 0 1.42 0l7.45-7.45a6.27 6.27 0 0 0 0-8.87Zm-1.41 7.46L12 18.81l-6.75-6.74a4.28 4.28 0 0 1 3-7.3a4.25 4.25 0 0 1 3 1.25a1 1 0 0 0 1.42 0a4.27 4.27 0 0 1 6 6.05Z" />
+		  </symbol>
+		</defs>
+	  </svg>
+	<!-- products -->
+	<section id="dress-list" class="py-5">
         <div class="container">
-            <div class="product-filter">
+			<div class="product-filter">
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <div class="section-title">
                             <h2>Our Products</h2>
                         </div>
                         <ul class="product-controls">
-                            <li data-filter="">All</li>
-                            <li data-filter=".new">New collection</li>
-                            <li data-filter=".summer">Summer</li>
-                            <li data-filter=".office">Office</li>
-                            <li data-filter=".evening">Evening</li>
-                        </ul>
+                        	<li data-filter="">All</li>
+							<li data-filter=".new">New collection</li>
+							<li data-filter=".summer">Summer</li>
+							<li data-filter=".office">Office</li>
+							<li data-filter=".evening">Evening</li>
+							<li data-filter=".cocktail">Cocktail</li>
+                    	</ul>
                     </div>
                 </div>
             </div>
             <div class="row" id="product-list">
                 {% for dress in products %}
-                    <div class="col-md-4 dress-item 
-                            {% if dress.category.name %}{{ dress.category.name|lower }}{% endif %}">
-                        <div class="product-item image-zoom-effect link-effect">
-                            <div class="image-holder position-relative">
-                                <a href="index.html">
-                                    <img src="{{ dress.photo.url }}" alt="{{ dress.name }}"
-                                         class="product-image img-fluid">
-                                </a>
-                            </div>
-                            <div class="product-content">
-                                <a href="index.html" class="btn-icon btn-wishlist">
-                                    <svg width="24" height="24" viewBox="0 0 24 24">
-                                        <use xlink:href="#heart"></use>
-                                    </svg>
-                                </a>
-                                <h5 class="element-title text-uppercase fs-5 mt-3">
-                                    <a href="index.html">{{ dress.name }}</a>
-                                </h5>
-                                <a href="#" class="text-decoration-none" data-after="Add to cart">
-                                    <span>${{ dress.cost }}</span>
-                                </a>
-                            </div>
+                <div class="col-md-4 dress-item {% if dress.category.name %}{{ dress.category.name|lower }}{% endif %}">
+                    <div class="product-item image-zoom-effect link-effect">
+                        <div class="image-holder position-relative">
+                            <a href="{% url 'products:single_product' dress.id %}">
+                                <img src="{{ dress.photo.url }}" alt="{{ dress.name }}" class="product-image img-fluid">
+                            </a>
+                        </div>
+                        <div class="product-content">
+							<a href="index.html" class="btn-icon btn-wishlist">
+                                <svg width="24" height="24" viewBox="0 0 24 24">
+                                    <use xlink:href="#heart"></use>
+                                </svg>
+                            </a>
+                            <h5 class="element-title text-uppercase fs-5 mt-3">
+                                <a href="{% url 'products:single_product' dress.id %}">{{ dress.name }}</a>
+                            </h5>
+                            <a href="#" class="text-decoration-none" data-after="Add to cart">
+                                <span>${{ dress.cost }}</span>
+                            </a>
                         </div>
                     </div>
+                </div>
                 {% endfor %}
             </div>
         </div>
