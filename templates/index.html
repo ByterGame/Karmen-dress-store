@@ -98,30 +98,6 @@
             </div>
             <div class="row" id="product-list">
                 {% for dress in products %}
-                    <div class="col-md-4 dress-item
-                            {% if dress.category.name %}{{ dress.category.name|lower }}{% endif %}">
-                        <div class="product-item image-zoom-effect link-effect">
-                            <div class="image-holder position-relative">
-                                <a href="index.html">
-                                    <img src="{{ dress.photo.url }}" alt="{{ dress.name }}"
-                                         class="product-image img-fluid">
-                                </a>
-                            </div>
-                            <div class="product-content">
-                                <a href="index.html" class="btn-icon btn-wishlist">
-                                    <svg width="24" height="24" viewBox="0 0 24 24">
-                                        <use xlink:href="#heart"></use>
-                                    </svg>
-                                </a>
-                                <h5 class="element-title text-uppercase fs-5 mt-3">
-                                    <a href="index.html">{{ dress.name }}</a>
-                                </h5>
-                                <a href="#" class="text-decoration-none" data-after="Add to cart">
-                                    <span>${{ dress.cost }}</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
                 <div class="col-md-4 dress-item {% if dress.category.name %}{{ dress.category.name|lower }}{% endif %}">
                     <div class="product-item image-zoom-effect link-effect">
                         <div class="image-holder position-relative">
