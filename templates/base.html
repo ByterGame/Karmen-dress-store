@@ -56,20 +56,12 @@
         <div class="row">
             <div class="col-lg-12 col-sm-12 text-center">
                 <div class="main-menu-wrap">
-                    <!-- logo -->
-                    <div class="site-logo">
-                        <a href="{% url 'products:index' %}">
-                            <img src="{% static 'img/logo.png' %}" alt="">
-                        </a>
-                    </div>
-                    <!-- logo -->
 
                     <!-- menu start -->
                     <nav class="main-menu">
                         <ul>
                             <li><a href="{% url 'products:index' %}">Shop</a></li>
                             <li><a href="{% url 'products:about' %}">About</a></li>
-                            <li><a href="{% url 'products:checkout' %}">Check Out</a></li>
                             <li><a href="{% url 'products:cart' %}">Cart</a></li>
                             {% if user.is_authenticated %}
                                 <li><a>{{ user.username }}</a></li>
@@ -78,7 +70,7 @@
                                     <li><a href="{% url 'admin:index' %}">Admin-panel</a></li>
                                 {% endif %}
                             {% else %}
-                                <li><a href="{% url 'users:sign-in' %}">Login</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></li>
                                 <li><a href="{% url 'users:sign-up' %}">Registration</a></li>
                             {% endif %}
                             <li>
@@ -99,6 +91,59 @@
     </div>
 </div>
 <!-- end header -->
+
+<!-- login modal window -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            </div>
+            <div class="modal-body">
+           <div class="card card-login">
+                        <form class="form" method="post" action="{% url 'users:sign-in' %}">
+                            {% csrf_token %}
+                            <div class="card-header card-header-primary text-center">
+                                <h2 class="card-title">Login</h2>
+                            </div>
+                            {% if form.errors or messages %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {{ message }}
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.errors }}
+                                {% endif %}
+                            {% endif %}
+                            <div class="card-body">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="material-icons">Login</i>
+                    </span>
+                                    </div>
+                                    {{ form.username }}
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="material-icons">Password</i>
+                    </span>
+                                    </div>
+                                    {{ form.password }}
+                                </div>
+                            </div>
+                            <div class="footer text-center">
+                                <input class="btn btn-primary btn-link btn-wd btn-lg" type="submit" value="Get Started">
+                            </div>
+                            <div class="footer text-center">
+                                <a href="{% url 'users:sign-up' %}" class="btn btn-primary btn-link btn-wd btn-lg">Create
+                                    New Account</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
 <!-- search area -->
 <div class="search-area">
@@ -156,31 +201,6 @@
         </div>
     </div>
 </div>
-<!-- end footer -->
-
-<!-- copyright -->
-<div class="copyright">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-md-12">
-                <p>Copyrights &copy; 2019 - <a href="https://imransdesign.com/">Imran Hossain</a>, All Rights Reserved.
-                </p>
-            </div>
-            <div class="col-lg-6 text-right col-md-12">
-                <div class="social-icons">
-                    <ul>
-                        <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
-                        <li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
-                        <li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end copyright -->
 <!-- jquery -->
 <script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
 <!-- bootstrap -->

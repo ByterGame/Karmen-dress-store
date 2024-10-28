@@ -55,12 +55,12 @@ const dressItems = document.querySelectorAll('.dress-item');
                     nav:false,
                     loop:true
                 },
-                600:{
+                1000:{
                     items:1,
                     nav:true,
                     loop:true
                 },
-                1000:{
+                2000:{
                     items:1,
                     nav:true,
                     loop:true
@@ -234,3 +234,7 @@ materialKit = {
     isWindow: document.documentMode || /Edge/.test(navigator.userAgent)
   }
  };
+
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})

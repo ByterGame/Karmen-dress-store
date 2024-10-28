@@ -1,5 +1,5 @@
 body {
-  --heading-font: "Marcellus", Roboto, sans-serif;
+  --heading-font: "Marcellus", Yu Gothic, sans-serif;
   --heading-font-weight: 400;
   --heading-color: #111;
   --heading-line-height: 1.24;
@@ -7,7 +7,7 @@ body {
   --swiper-theme-color: #8C907E;
 
   /* bootstrap */
-  --bs-body-font-family: "Jost", Roboto, sans-serif;
+  --bs-body-font-family: "Segoe UI", Yu Gothic, sans-serif;
   --bs-body-font-size: 18px;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
@@ -199,7 +199,7 @@ a {
 }
 
 .product-filter {
-	margin-bottom: 100px;
+	margin-bottom: 20px;
 }
 
 .product-filter .section-title {
