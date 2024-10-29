@@ -128,7 +128,7 @@ a {
   transform: scale(1);
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   margin-bottom: 20px;
-  aspect-ratio: 0.9; /* задаём фиксированные пропорции для контейнера изображения (1:1). Используйте другой коэффициент соотношения, если нужно */
+  aspect-ratio: 0.9;
 }
 
 .image-zoom-effect:hover .image-holder {
@@ -277,3 +277,29 @@ a {
 	margin-bottom: 0;
 }
 
+.single-product-img {
+    position: relative;
+    width: 500px;
+    height: 750px;
+    overflow: hidden;
+}
+
+
+.hover-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /
+    height: auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+
+.single-product-img:hover .hover-img {
+    opacity: 1;
+}
+
+.single-product-img:hover .main-img {
+    opacity: 0;
+}

@@ -21,9 +21,22 @@ def checkout(request):
 def cart(request):
     return render(request, 'cart.html')
 
-
-def single_product(request,  id):
-    print(f"Запрошенный ID продукта: {id}")  # Это позволяет увидеть значение ID в консоли
+def single_product(request, id):
     dress = get_object_or_404(Dress, id=id)
-    return render(request, 'single_product.html', {'dress': dress})
+    all_dresses = Dress.objects.order_by('id')
 
+    current_index = list(all_dresses.values_list('id', flat=True)).index(dress.id)
+
+    if current_index == len(all_dresses) - 1:
+        related_dresses = all_dresses[:3]
+    elif current_index == len(all_dresses) - 2:
+        related_dresses = list(all_dresses[current_index + 1:]) + list(all_dresses[:2])
+    elif current_index == len(all_dresses) - 3:
+        related_dresses = list(all_dresses[current_index + 1:]) + list(all_dresses[:2])
+    else:
+        related_dresses = Dress.objects.filter(id__gt=dress.id).order_by('id')[:3]
+
+    return render(request, 'single_product.html', {
+        'dress': dress,
+        'related_dresses': related_dresses,
+    })

@@ -10,6 +10,7 @@
       "length": "Мини",
       "material": "Лён",
       "photo": "products_images/dress1.jpeg",
+      "photo_hover": "products_images/dress1.1.png",
       "category": 4,
       "model": "Прилегающее"
     }
@@ -25,6 +26,7 @@
       "length": "мини",
       "material": "Синтетика",
       "photo": "products_images/dress2.jpg",
+      "photo_hover": "products_images/dress2.1.png",
       "category": 1,
       "model": "платье-пиджак"
     }
@@ -39,7 +41,8 @@
       "color": "красный",
       "length": "мини",
       "material": "лён",
-      "photo": "products_images/dress3.jpg",
+      "photo": "products_images/dress3.JPG",
+      "photo_hover": "products_images/dress3.1.JPG",
       "category": 2,
       "model": "прилегающее"
     }
@@ -55,6 +58,7 @@
       "length": "мини",
       "material": "лён",
       "photo": "products_images/dress4.jpg",
+      "photo_hover": "products_images/dress4.1.png",
       "category": 2,
       "model": "прилегающее"
     }
@@ -70,6 +74,7 @@
       "length": "мини",
       "material": "синтетика",
       "photo": "products_images/dress5.jpg",
+      "photo_hover": "products_images/dress5.1.png",
       "category": 3,
       "model": "полуприлегающее"
     }
@@ -85,6 +90,7 @@
       "length": "мини",
       "material": "лён",
       "photo": "products_images/dress6.jpg",
+      "photo_hover": "products_images/dress6.1.png",
       "category": 4,
       "model": "прилегающее"
     }
@@ -100,6 +106,7 @@
       "length": "мини",
       "material": "синтетика",
       "photo": "products_images/dress7.jpg",
+      "photo_hover": "products_images/dress7.1.png",
       "category": 4,
       "model": "прилегающее"
     }
@@ -115,6 +122,7 @@
       "length": "миди",
       "material": "лён",
       "photo": "products_images/dress8.png",
+      "photo_hover": "products_images/dress8.1.JPG",
       "category": 1,
       "model": "свободное"
     }
@@ -130,6 +138,7 @@
       "length": "миди",
       "material": "хлопок",
       "photo": "products_images/dress9.jpeg",
+      "photo_hover": "products_images/dress9.1.png",
       "category": 1,
       "model": "раздельное"
     }
@@ -145,6 +154,7 @@
       "length": "мини",
       "material": "синтетика",
       "photo": "products_images/dress10.jpeg",
+      "photo_hover": "products_images/dress10.1.png",
       "category": 1,
       "model": "платье-пиджак"
     }
@@ -160,6 +170,7 @@
       "length": "мини",
       "material": "синтетика",
       "photo": "products_images/dress11.jpeg",
+      "photo_hover": "products_images/dress11.1.png",
       "category": 1,
       "model": "платье-пиджак"
     }
@@ -175,6 +186,7 @@
       "length": "мини",
       "material": "синтетика",
       "photo": "products_images/dress12.jpeg",
+      "photo_hover": "products_images/dress12.1.png",
       "category": 1,
       "model": "платье-пиджак"
     }
@@ -190,6 +202,7 @@
       "length": "макси",
       "material": "хлопок",
       "photo": "products_images/dress13.jpeg",
+      "photo_hover": "products_images/dress13.1.JPG",
       "category": 3,
       "model": "прилегающее"
     }
@@ -205,6 +218,7 @@
       "length": "мини",
       "material": "лён",
       "photo": "products_images/dress14.jpeg",
+      "photo_hover": "products_images/dress14.1.png",
       "category": 1,
       "model": "полуприлегающее"
     }
@@ -220,6 +234,7 @@
       "length": "мини",
       "material": "лён",
       "photo": "products_images/dress15.jpeg",
+      "photo_hover": "products_images/dress15.1.png",
       "category": 1,
       "model": "полуприлегающее"
     }
@@ -234,7 +249,8 @@
       "color": "голубой",
       "length": "миди",
       "material": "хлопок",
-      "photo": "products_images/dress16.jpeg",
+      "photo": "products_images/dress16.JPG",
+      "photo_hover": "products_images/dress16.1.JPG",
       "category": 2,
       "model": "свободное"
     }
@@ -250,6 +266,7 @@
       "length": "мини",
       "material": "лён",
       "photo": "products_images/dress17.jpeg",
+      "photo_hover": "products_images/dress17.1.JPG",
       "category": 1,
       "model": "полуприлегающее"
     }
@@ -265,6 +282,7 @@
       "length": "мини",
       "material": "синтетика",
       "photo": "products_images/dress18.jpeg",
+      "photo_hover": "products_images/dress18.1.png",
       "category": 2,
       "model": "свободное"
     }
@@ -280,6 +298,7 @@
       "length": "мини",
       "material": "синтетика",
       "photo": "products_images/dress19.jpeg",
+      "photo_hover": "products_images/dress19.1.JPG",
       "category": 2,
       "model": "свободное"
     }
@@ -295,6 +314,7 @@
       "length": "мини",
       "material": "лён",
       "photo": "products_images/dress20.jpeg",
+      "photo_hover": "products_images/dress20.1.JPG",
       "category": 2,
       "model": "свободное"
     }
@@ -310,6 +330,7 @@
       "length": "мини",
       "material": "хлопок",
       "photo": "products_images/dress21.jpeg",
+      "photo_hover": "products_images/dress21.1.JPG",
       "category": 1,
       "model": "раздельное"
     }
@@ -325,6 +346,7 @@
       "length": "мини",
       "material": "лён",
       "photo": "products_images/dress22.jpeg",
+      "photo_hover": "products_images/dress22.1.jpeg",
       "category": 1,
       "model": "полуприлегающее"
     }
@@ -340,6 +362,7 @@
       "length": "мини",
       "material": "хлопок",
       "photo": "products_images/dress23.jpeg",
+      "photo_hover": "products_images/dress23.1.jpeg",
       "category": 1,
       "model": "свободное"
     }
@@ -355,6 +378,7 @@
       "length": "мини",
       "material": "синтетика",
       "photo": "products_images/dress24.jpeg",
+      "photo_hover": "<contextlib.nullcontext object at 0x10c8f4bd0>",
       "category": 1,
       "model": "полуприлегающее"
     }
@@ -370,6 +394,7 @@
       "length": "мини",
       "material": "хлопок",
       "photo": "products_images/dress25.jpeg",
+      "photo_hover": "products_images/dress25.1.jpeg",
       "category": 2,
       "model": "прилегающее"
     }
@@ -385,6 +410,7 @@
       "length": "мини",
       "material": "лён",
       "photo": "products_images/dress26.jpeg",
+      "photo_hover": "products_images/dress26.1.png",
       "category": 3,
       "model": "прилегающее"
     }
@@ -400,6 +426,7 @@
       "length": "миди",
       "material": "хлопок",
       "photo": "products_images/dress27.jpeg",
+      "photo_hover": "products_images/dress27.1.JPG",
       "category": 3,
       "model": "прилегающее"
     }
@@ -415,6 +442,7 @@
       "length": "мини",
       "material": "синтетика",
       "photo": "products_images/dress28.jpeg",
+      "photo_hover": "products_images/dress28.1.JPG",
       "category": 3,
       "model": "прилегающее"
     }
@@ -430,6 +458,7 @@
       "length": "мини",
       "material": "синтетика",
       "photo": "products_images/dress29.jpeg",
+      "photo_hover": "products_images/dress29.1.png",
       "category": 3,
       "model": "прилегающее"
     }
@@ -445,6 +474,7 @@
       "length": "мини",
       "material": "хлопок",
       "photo": "products_images/dress30.jpeg",
+      "photo_hover": "products_images/dress30.1.png",
       "category": 2,
       "model": "полуприлегающее"
     }
@@ -460,6 +490,7 @@
       "length": "мини",
       "material": "хлопок",
       "photo": "products_images/dress31.jpeg",
+      "photo_hover": "products_images/dress31.1.png",
       "category": 1,
       "model": "свободное"
     }
@@ -475,6 +506,7 @@
       "length": "мини",
       "material": "синтетика",
       "photo": "products_images/dress32.jpeg",
+      "photo_hover": "products_images/dress32.1.png",
       "category": 1,
       "model": "раздельное"
     }
@@ -490,6 +522,7 @@
       "length": "мини",
       "material": "хлопок",
       "photo": "products_images/dress33.jpeg",
+      "photo_hover": "products_images/dress33.1.JPG",
       "category": 1,
       "model": "полуприлегающее"
     }
@@ -505,6 +538,7 @@
       "length": "мини",
       "material": "синтетика",
       "photo": "products_images/dress34.jpeg",
+      "photo_hover": "products_images/dress34.1.JPG",
       "category": 1,
       "model": "раздельное"
     }
@@ -520,6 +554,7 @@
       "length": "мини",
       "material": "лён",
       "photo": "products_images/dress35.jpeg",
+      "photo_hover": "products_images/dress35.1.jpeg",
       "category": 3,
       "model": "полуприлегающее"
     }
@@ -535,6 +570,7 @@
       "length": "миди",
       "material": "синтетика",
       "photo": "products_images/dress36.jpeg",
+      "photo_hover": "products_images/dress36.1.jpeg",
       "category": 2,
       "model": "прилегающее"
     }
@@ -550,6 +586,7 @@
       "length": "макси",
       "material": "синтетика",
       "photo": "products_images/dress37.jpeg",
+      "photo_hover": "products_images/dress37.1.png",
       "category": 3,
       "model": "раздельное"
     }
@@ -565,6 +602,7 @@
       "length": "мини",
       "material": "хлопок",
       "photo": "products_images/dress38.jpeg",
+      "photo_hover": "products_images/dress38.1.jpeg",
       "category": 1,
       "model": "прилегающее"
     }
@@ -580,6 +618,7 @@
       "length": "макси",
       "material": "синтетика",
       "photo": "products_images/dress39.jpeg",
+      "photo_hover": "products_images/dress39.1.png",
       "category": 3,
       "model": "раздельное"
     }
@@ -595,6 +634,7 @@
       "length": "мини",
       "material": "синтетика",
       "photo": "products_images/dress40.jpeg",
+      "photo_hover": "products_images/dress40.1.jpeg",
       "category": 1,
       "model": "раздельное"
     }
@@ -610,6 +650,7 @@
       "length": "мини",
       "material": "хлопок",
       "photo": "products_images/dress41.jpeg",
+      "photo_hover": "products_images/dress41.1.png",
       "category": 2,
       "model": "свободное"
     }
@@ -625,6 +666,7 @@
       "length": "миди",
       "material": "хлопок",
       "photo": "products_images/dress42.jpeg",
+      "photo_hover": "products_images/dress42.1.JPG",
       "category": 2,
       "model": "свободное"
     }
@@ -640,6 +682,7 @@
       "length": "миди",
       "material": "лён",
       "photo": "products_images/dress43.jpeg",
+      "photo_hover": "products_images/dress43.1.png",
       "category": 1,
       "model": "свободное"
     }
@@ -655,6 +698,7 @@
       "length": "мини",
       "material": "хлопок",
       "photo": "products_images/dress44.jpeg",
+      "photo_hover": "products_images/dress44.1.JPG",
       "category": 1,
       "model": "полуприлегающее"
     }
@@ -670,6 +714,7 @@
       "length": "мини",
       "material": "лён",
       "photo": "products_images/dress45.png",
+      "photo_hover": "products_images/dress45.1.JPG",
       "category": 1,
       "model": "полуприлегающее"
     }
@@ -685,6 +730,7 @@
       "length": "мини",
       "material": "лён",
       "photo": "products_images/dress46.jpg",
+      "photo_hover": "products_images/dress46.1.png",
       "category": 1,
       "model": "полуприлегающее"
     }
@@ -700,6 +746,7 @@
       "length": "мини",
       "material": "синтетика",
       "photo": "products_images/dress47.jpeg",
+      "photo_hover": "products_images/dress47.1.JPG",
       "category": 3,
       "model": "прилегающее"
     }

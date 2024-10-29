@@ -1,3 +1,5 @@
+from contextlib import nullcontext
+
 from django.db import models
 
 
@@ -17,8 +19,9 @@ class Dress(models.Model):
     length = models.CharField(max_length=256)
     material = models.CharField(max_length=256)
     photo = models.ImageField(upload_to='products_images')
+    photo_hover = models.ImageField(upload_to='products_images')
     category = models.ForeignKey(to=DressCategory, on_delete=models.CASCADE)
     model = models.CharField(max_length=256)
 
     def __str__(self):
-        return f'Продукт: {self.name} | Категория: {self.category.name}'
+        return f'Продукт: {self.name} | Категория: {self.category.name} | номер {self.id}'

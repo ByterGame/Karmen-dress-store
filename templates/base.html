@@ -285,7 +285,7 @@ $(document).ready(function() {
                 if (response.status === 'success') {
                     // Здесь вы можете скрыть модальное окно и, возможно, обновить интерфейс
                     alert('Successfully logged in!');
-                    //location.reload(); // или просто обновите часть страницы
+                    location.reload(); // или просто обновите часть страницы
                 } else {
                     alert(response.message); // отобразите сообщение об ошибке
                 }
@@ -305,7 +305,7 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.status === 'success') {
                     alert('Account succesfully created!');
-                    //location.reload(); // или просто обновите часть страницы
+                    location.reload(); // или просто обновите часть страницы
                 } else {
                     alert(response.message); // отобразите сообщение об ошибке
                 }
