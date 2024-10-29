@@ -34,9 +34,7 @@ def single_product(request, id):
     elif current_index == len(all_dresses) - 3:
         related_dresses = list(all_dresses[current_index + 1:]) + list(all_dresses[:2])
     else:
-        related_dresses = list(all_dresses[current_index + 1:current_index + 3])
-        if current_index > 0:
-            related_dresses.insert(0, all_dresses[current_index - 1])
+        related_dresses = Dress.objects.filter(id__gt=dress.id).order_by('id')[:3]
 
     return render(request, 'single_product.html', {
         'dress': dress,

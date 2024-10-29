@@ -27,13 +27,14 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="single-product-img">
-                    <img src="{{ dress.photo.url }}" alt="">
+                    <img src="{{ dress.photo.url }}" alt="" class="main-img">
+                    <img src="{{ dress.photo_hover.url }}" alt="" class="hover-img">
                 </div>
             </div>
             <div class="col-md-7">
                 <div class="single-product-content">
                     <h3>{{ dress.name }}</h3>
-                    <p class="single-product-pricing"> {{ dress.cost }}</p>
+                    <p class="single-product-pricing">$ {{ dress.cost }}</p>
                     <p>Color: {{ dress.color }}</p>
                     <p>Length: {{ dress.length }}</p>
                     <p>Material: {{ dress.material }}</p>
@@ -41,18 +42,26 @@
                     <p>Category: {{ dress.category.name }}</p>
                     <div class="single-product-form">
                         <form action="index.html">
-                            <input type="number" placeholder="0">
+                            <p>Size:
+                            <input type="number" placeholder="44" min="40" max="52" step="2">
+                            </p>
                         </form>
                         <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- end single product -->
-
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+		<defs>
+		  <symbol xmlns="http://www.w3.org/2000/svg" id="heart" viewBox="0 0 24 24">
+			<path fill="currentColor"
+			  d="M20.16 4.61A6.27 6.27 0 0 0 12 4a6.27 6.27 0 0 0-8.16 9.48l7.45 7.45a1 1 0 0 0 1.42 0l7.45-7.45a6.27 6.27 0 0 0 0-8.87Zm-1.41 7.46L12 18.81l-6.75-6.74a4.28 4.28 0 0 1 3-7.3a4.25 4.25 0 0 1 3 1.25a1 1 0 0 0 1.42 0a4.27 4.27 0 0 1 6 6.05Z" />
+		  </symbol>
+		</defs>
+        </svg>
 <div class="more-products mb-150">
     <div class="container">
         <div class="row">
