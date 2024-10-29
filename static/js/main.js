@@ -3,7 +3,7 @@ const dressItems = document.querySelectorAll('.dress-item');
 
 (function ($) {
     $(document).ready(function($) {
-        $('.product-controls li').on('click', function () {
+        $('.product-controls li:not(:last-child)').on('click', function () {
             var filterValue = $(this).attr('data-filter');
 
             $('.product-controls li').removeClass('active');
@@ -16,6 +16,20 @@ const dressItems = document.querySelectorAll('.dress-item');
                 $('#product-list .dress-item' + filterValue).show();
             }
         });
+
+        $('#color-filter-select').on('change', function () {
+            var color = $(this).val();
+
+            $('.product-controls li').removeClass('active');
+
+            if (color === "") {
+                $('#product-list .dress-item').show();
+            } else {
+                $('#product-list .dress-item').hide();
+                $('#product-list .dress-item[data-color="' + color + '"]').show();
+            }
+        });
+
         // testimonial sliders
         $(".testimonial-sliders").owlCarousel({
             items: 1,
@@ -52,12 +66,12 @@ const dressItems = document.querySelectorAll('.dress-item');
                     nav:false,
                     loop:true
                 },
-                600:{
+                1000:{
                     items:1,
                     nav:true,
                     loop:true
                 },
-                1000:{
+                2000:{
                     items:1,
                     nav:true,
                     loop:true
@@ -231,3 +245,21 @@ materialKit = {
     isWindow: document.documentMode || /Edge/.test(navigator.userAgent)
   }
  };
+
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+
+document.addEventListener("DOMContentLoaded", function () {
+    const links = document.querySelectorAll("[data-toggle='modal']");
+
+    links.forEach(link => {
+        link.addEventListener("click", function (event) {
+            // Закрыть любое открытое модальное окно
+            const openModal = document.querySelector(".modal.show");
+            if (openModal) {
+                $(openModal).modal("hide");
+            }
+        });
+    });
+});

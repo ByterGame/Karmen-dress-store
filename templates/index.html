@@ -15,11 +15,11 @@
                     <div class="col-md-12 col-lg-7 offset-lg-1 offset-xl-0">
                         <div class="hero-text">
                             <div class="hero-text-tablecell">
-                                <p class="subtitle">Fresh & Organic</p>
-                                <h1>Delicious Seasonal Fruits</h1>
+                                <p class="subtitle">Karmen Dress Store</p>
+                                <h1>Find The Dress Of Your Dream</h1>
                                 <div class="hero-btns">
-                                    <a href="{% url 'products:index' %}" class="boxed-btn">Fruit Collection</a>
-                                    <a href="{% url 'products:about' %}" class="bordered-btn">Contact Us</a>
+                                    <a href="{% url 'products:index' %}" class="boxed-btn">Dress Collection</a>
+                                    <a href="{% url 'products:about' %}" class="bordered-btn">About Us</a>
                                 </div>
                             </div>
                         </div>
@@ -34,11 +34,11 @@
                     <div class="col-lg-10 offset-lg-1 text-center">
                         <div class="hero-text">
                             <div class="hero-text-tablecell">
-                                <p class="subtitle">Fresh Everyday</p>
-                                <h1>100% Organic Collection</h1>
+                                <p class="subtitle">Karmen Dress Store</p>
+                                <h1>100% Original Collection</h1>
                                 <div class="hero-btns">
-                                    <a href="{% url 'products:index' %}" class="boxed-btn">Fruit Collection</a>
-                                    <a href="{% url 'products:about' %}" class="bordered-btn">Contact Us</a>
+                                    <a href="{% url 'products:index' %}" class="boxed-btn">Dress Collection</a>
+                                    <a href="{% url 'products:about' %}" class="bordered-btn">About Us</a>
                                 </div>
                             </div>
                         </div>
@@ -53,11 +53,11 @@
                     <div class="col-lg-10 offset-lg-1 text-right">
                         <div class="hero-text">
                             <div class="hero-text-tablecell">
-                                <p class="subtitle">Mega Sale Going On!</p>
-                                <h1>Get December Discount</h1>
+                                <p class="subtitle">Karmen Dress Store</p>
+                                <h1>Search For New Discount</h1>
                                 <div class="hero-btns">
-                                    <a href="{% url 'products:index' %}" class="boxed-btn">Fruit Collection</a>
-                                    <a href="{% url 'products:about' %}" class="bordered-btn">Contact Us</a>
+                                    <a href="{% url 'products:index' %}" class="boxed-btn">Dress Collection</a>
+                                    <a href="{% url 'products:about' %}" class="bordered-btn">About Us</a>
                                 </div>
                             </div>
                         </div>
@@ -86,19 +86,35 @@
                             <h2>Our Products</h2>
                         </div>
                         <ul class="product-controls">
-                        	<li data-filter="">All</li>
-							<li data-filter=".new">New collection</li>
-							<li data-filter=".summer">Summer</li>
-							<li data-filter=".office">Office</li>
-							<li data-filter=".evening">Evening</li>
-							<li data-filter=".cocktail">Cocktail</li>
-                    	</ul>
+                            <li data-filter="">All</li>
+                            <li data-filter=".summer">Summer</li>
+                            <li data-filter=".office">Office</li>
+                            <li data-filter=".evening">Evening</li>
+                            <li data-filter=".cocktail">Cocktail</li>
+                            <li>
+                                <select id="color-filter-select">
+                                    <option value="">Color</option>
+                                    <option value="красный">Red</option>
+                                    <option value="голубой">Blue</option>
+                                    <option value="черный">Black</option>
+                                    <option value="белый">White</option>
+                                </select>
+                            </li>
+                        </ul>
                     </div>
+                </div>
+                <div id="color-filter-menu" style="display: none;">
+                    <ul class="color-options">
+                        <li class="color-option" data-color="красный">Red</li>
+                        <li class="color-option" data-color="голубой">Blue</li>
+                        <li class="color-option" data-color="черный">Black</li>
+                        <li class="color-option" data-color="белый">White</li>
+                    </ul>
                 </div>
             </div>
             <div class="row" id="product-list">
                 {% for dress in products %}
-                <div class="col-md-4 dress-item {% if dress.category.name %}{{ dress.category.name|lower }}{% endif %}">
+                <div class="col-md-4 dress-item {% if dress.category.name %}{{ dress.category.name|lower }}{% endif %}" data-color="{{ dress.color|lower }}">
                     <div class="product-item image-zoom-effect link-effect">
                         <div class="image-holder position-relative">
                             <a href="{% url 'products:single_product' dress.id %}">
