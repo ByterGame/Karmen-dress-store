@@ -42,8 +42,8 @@
 
 // Hover State
 @mixin boxed-btn-hvr {
-	background-color: #051922;
-    color: #F28123;
+	background-color: #000000;
+    color: #801818;
 	color: $white-color;
 	background-color: darken($primary-color, $darken);
 }
