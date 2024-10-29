@@ -32,7 +32,7 @@ def single_product(request, id):
     elif current_index == len(all_dresses) - 2:
         related_dresses = list(all_dresses[current_index + 1:]) + list(all_dresses[:2])
     elif current_index == len(all_dresses) - 3:
-        related_dresses = list(all_dresses[current_index + 1:]) + list(all_dresses[:2])
+        related_dresses = list(all_dresses[current_index + 1:]) + list(all_dresses[:1])
     else:
         related_dresses = Dress.objects.filter(id__gt=dress.id).order_by('id')[:3]
 
