@@ -24,4 +24,4 @@ class Dress(models.Model):
     model = models.CharField(max_length=256)
 
     def __str__(self):
-        return f'Продукт: {self.name} | Категория: {self.category.name} | номер {self.id}'
+        return f'Продукт: {self.name} | Категория: {self.category.name}'
