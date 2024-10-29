@@ -1,6 +1,5 @@
 from django.urls import path
 from products.views import index, about, cart, checkout,single_product
-from . import views
 
 app_name = 'products'
 
