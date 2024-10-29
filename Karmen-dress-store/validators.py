@@ -1,7 +1,4 @@
 import re
-import string
-from string import punctuation
-
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 
