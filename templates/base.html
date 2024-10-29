@@ -102,16 +102,22 @@
                         <div class="card-header card-header-primary text-center">
                             <h2 class="card-title">Login</h2>
                         </div>
-                        {% if form.errors or messages %}
+                        <div class="card-body">
+                    {% if form.errors or messages %}
+                        <div class="error-message text-center">
                             {% if messages %}
                                 {% for message in messages %}
-                                    {{ message }}
+                                    <p class="text-danger">{{ message }}</p>
                                 {% endfor %}
                             {% else %}
-                                {{ form.errors }}
+                                {% for field, errors in form.errors.items %}
+                                    {% for error in errors %}
+                                        <p class="text-danger">{{ error }}</p>
+                                    {% endfor %}
+                                {% endfor %}
                             {% endif %}
-                        {% endif %}
-                        <div class="card-body">
+                        </div>
+                    {% endif %}
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
@@ -277,46 +283,86 @@
 $(document).ready(function() {
     $('#login-form').on('submit', function(event) {
         event.preventDefault(); // предотвратить обычную отправку формы
-        $.ajax({
-            type: 'POST',
-            url: '{% url "users:sign-in" %}', // путь к вашему представлению
-            data: $(this).serialize(),
-            success: function(response) {
-                if (response.status === 'success') {
-                    // Здесь вы можете скрыть модальное окно и, возможно, обновить интерфейс
-                    alert('Successfully logged in!');
-                    location.reload(); // или просто обновите часть страницы
-                } else {
-                    alert(response.message); // отобразите сообщение об ошибке
-                }
-            },
-            error: function() {
-                alert('Invalid login or password.');
-            }
-        });
-    });
+        const form = $(this);
 
-    $('#register-form').on('submit', function(event) {
-        event.preventDefault(); // предотвратить обычную отправку формы
+        // Очистите предыдущие ошибки перед отправкой
+        form.find('.error-message').remove();
+        form.find('.is-invalid').removeClass('is-invalid');
+
         $.ajax({
             type: 'POST',
-            url: '{% url "users:sign-up" %}', // путь к вашему представлению
-            data: $(this).serialize(),
+            url: form.attr('action'), // путь к представлению
+            data: form.serialize(),
             success: function(response) {
                 if (response.status === 'success') {
-                    alert('Account succesfully created!');
-                    location.reload(); // или просто обновите часть страницы
+                    //alert('Successfully logged in!');
+                    location.reload();
                 } else {
-                    alert(response.message); // отобразите сообщение об ошибке
+                    // Отображение ошибок в форме
+                    $.each(response.errors, function(field, messages) {
+                        if (field === '__all__') {
+                            $('#login-form').prepend(`<div class="error-message">${messages[0]}</div>`);
+                        } else {
+                            const input = form.find(`[name="${field}"]`);
+                            input.addClass('is-invalid');
+                            input.after(`<div class="error-message text-danger">${messages[0]}</div>`);
+                        }
+                    });
                 }
             },
             error: function() {
-                alert('Invalid password.');
+                alert('An unexpected error occurred. Please try again.');
             }
         });
     });
 });
 </script>
 
+<script>
+$(document).ready(function() {
+    $('#register-form').on('submit', function(event) {
+        event.preventDefault();
+        const form = $(this);
+
+        // Очистка предыдущих ошибок перед отправкой
+        form.find('.error-message').remove();
+        form.find('.is-invalid').removeClass('is-invalid');
+
+        $.ajax({
+            type: 'POST',
+            url: form.attr('action'),
+            data: form.serialize(),
+            success: function(response) {
+                if (response.status === 'success') {
+                    alert('Account created successfully!');
+                    location.reload(); // обновление страницы после успешной регистрации
+                } else {
+                    // Отображение ошибок в форме
+                    $.each(response.errors, function(field, messages) {
+                        if (field === '__all__') {
+                            $('#register-form').prepend(`<div class="error-message">${messages[0]}</div>`);
+                        } else {
+                            const input = form.find(`[name="${field}"]`);
+                            input.addClass('is-invalid');
+                            input.after(`<div class="error-message text-danger">${messages[0]}</div>`);
+                        }
+                    });
+                }
+            },
+            error: function() {
+                alert('An unexpected error occurred. Please try again.');
+            }
+        });
+    });
+});
+</script>
+<script>
+$(document).ready(function() {
+    // Закрытие окна входа при нажатии на ссылку открытия окна регистрации
+    $('#loginModal').on('click', '[data-target="#registrationModal"]', function() {
+        $('#loginModal').modal('hide'); // Закрыть текущее окно входа
+    });
+});
+</script>
 </body>
 </html>
