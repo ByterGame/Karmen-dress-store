@@ -238,3 +238,17 @@ materialKit = {
 $('#myModal').on('shown.bs.modal', function () {
   $('#myInput').trigger('focus')
 })
+
+document.addEventListener("DOMContentLoaded", function () {
+    const links = document.querySelectorAll("[data-toggle='modal']");
+
+    links.forEach(link => {
+        link.addEventListener("click", function (event) {
+            // Закрыть любое открытое модальное окно
+            const openModal = document.querySelector(".modal.show");
+            if (openModal) {
+                $(openModal).modal("hide");
+            }
+        });
+    });
+});

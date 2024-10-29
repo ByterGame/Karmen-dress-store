@@ -12,7 +12,7 @@
     <title>{% block title %} {% endblock %}</title>
 
     <!-- favicon -->
-    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/icon1.png' %}">
     <!-- google font -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
@@ -71,7 +71,7 @@
                                 {% endif %}
                             {% else %}
                                 <li><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></li>
-                                <li><a href="{% url 'users:sign-up' %}">Registration</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#registrationModal">Registration</a></li>
                             {% endif %}
                             <li>
                                 <div class="header-icons">
@@ -93,25 +93,69 @@
 <!-- end header -->
 
 <!-- login modal window -->
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            </div>
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content card card-login">
             <div class="modal-body">
-           <div class="card card-login">
-                        <form class="form" method="post" action="{% url 'users:sign-in' %}">
+                    <form class="form" id="login-form" method="post" action="{% url 'users:sign-in' %}">
+                        {% csrf_token %}
+                        <div class="card-header card-header-primary text-center">
+                            <h2 class="card-title">Login</h2>
+                        </div>
+                        {% if form.errors or messages %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {{ message }}
+                                {% endfor %}
+                            {% else %}
+                                {{ form.errors }}
+                            {% endif %}
+                        {% endif %}
+                        <div class="card-body">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">Login</i>
+                                        </span>
+                                    <input type="text" name="username" class="form-control" placeholder="Login..." autofocus="" required="" id="id_username">
+                                </div>
+                                {{ form.username }}
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">Password</i>
+                                        </span>
+                                    <input type="text" name="password" class="form-control" placeholder="Password..." autofocus="" required="" id="id_password">
+                                </div>
+                                {{ form.password }}
+                            </div>
+                        </div>
+                        <div class="footer text-center">
+                            <input class="btn btn-primary btn-link btn-wd btn-lg" type="submit" value="Get Started">
+                        </div>
+                        <div class="footer text-center">
+                            <a href="#" data-toggle="modal" data-target="#registrationModal" class="btn btn-primary btn-link btn-wd btn-lg">Create New Account</a>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- registration modal window -->
+<div class="modal fade" id="registrationModal" tabindex="-1" role="dialog" aria-labelledby="registrationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content card card-login">
+            <div class="modal-body">
+                    <form class="form" id="register-form" method="post" action="{% url 'users:sign-up' %}">
                             {% csrf_token %}
                             <div class="card-header card-header-primary text-center">
-                                <h2 class="card-title">Login</h2>
+                                <h2 class="card-title">Registration</h2>
                             </div>
-                            {% if form.errors or messages %}
-                                {% if messages %}
-                                    {% for message in messages %}
-                                        {{ message }}
-                                    {% endfor %}
-                                {% else %}
-                                    {{ form.errors }}
-                                {% endif %}
+                            {% if form.errors %}
+                                {{ form.errors }}
                             {% endif %}
                             <div class="card-body">
                                 <div class="input-group">
@@ -119,6 +163,7 @@
                     <span class="input-group-text">
                       <i class="material-icons">Login</i>
                     </span>
+                                        <input type="text" name="username" class="form-control" placeholder="Login..." autofocus="" required="" id="id_username">
                                     </div>
                                     {{ form.username }}
                                 </div>
@@ -127,24 +172,30 @@
                     <span class="input-group-text">
                       <i class="material-icons">Password</i>
                     </span>
+                                        <input type="password" name="password1" class="form-control" placeholder="Create password..." required="" id="id_password1">
                                     </div>
-                                    {{ form.password }}
+                                    {{ form.password1 }}
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="material-icons">Password again</i>
+                    </span>
+                                        <input type="password" name="password2" class="form-control" placeholder="Confirm password..." required="" id="id_password2">
+                                    </div>
+                                    {{ form.password2 }}
                                 </div>
                             </div>
                             <div class="footer text-center">
                                 <input class="btn btn-primary btn-link btn-wd btn-lg" type="submit" value="Get Started">
                             </div>
-                            <div class="footer text-center">
-                                <a href="{% url 'users:sign-up' %}" class="btn btn-primary btn-link btn-wd btn-lg">Create
-                                    New Account</a>
-                            </div>
                         </form>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-    
+</div>
+
+
 <!-- search area -->
 <div class="search-area">
     <div class="container">
@@ -202,6 +253,7 @@
     </div>
 </div>
 <!-- jquery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
 <!-- bootstrap -->
 <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
@@ -220,6 +272,51 @@
 <script src="{% static 'js/sticker.js' %}"></script>
 <!-- main js -->
 <script src="{% static 'js/main.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#login-form').on('submit', function(event) {
+        event.preventDefault(); // предотвратить обычную отправку формы
+        $.ajax({
+            type: 'POST',
+            url: '{% url "users:sign-in" %}', // путь к вашему представлению
+            data: $(this).serialize(),
+            success: function(response) {
+                if (response.status === 'success') {
+                    // Здесь вы можете скрыть модальное окно и, возможно, обновить интерфейс
+                    alert('Successfully logged in!');
+                    //location.reload(); // или просто обновите часть страницы
+                } else {
+                    alert(response.message); // отобразите сообщение об ошибке
+                }
+            },
+            error: function() {
+                alert('Invalid login or password.');
+            }
+        });
+    });
+
+    $('#register-form').on('submit', function(event) {
+        event.preventDefault(); // предотвратить обычную отправку формы
+        $.ajax({
+            type: 'POST',
+            url: '{% url "users:sign-up" %}', // путь к вашему представлению
+            data: $(this).serialize(),
+            success: function(response) {
+                if (response.status === 'success') {
+                    alert('Account succesfully created!');
+                    //location.reload(); // или просто обновите часть страницы
+                } else {
+                    alert(response.message); // отобразите сообщение об ошибке
+                }
+            },
+            error: function() {
+                alert('Invalid password.');
+            }
+        });
+    });
+});
+</script>
 
 </body>
 </html>
