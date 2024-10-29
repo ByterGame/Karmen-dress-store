@@ -1,5 +1,10 @@
 from pathlib import Path
 import os
+import sys
+sys.path.append("Karmen-dress-store")
+from validators import LengthValidator, CharValidator, VariousSymbolsValidator
+
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -61,16 +66,13 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'validators.LengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'validators.VariousSymbolsValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'validators.CharValidator',
     },
 ]
 
@@ -78,7 +80,7 @@ STATICFILES_DIRS = [
    os.path.join(BASE_DIR, "static"),
 ]
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'en-uc'
 
 TIME_ZONE = 'UTC'
 
