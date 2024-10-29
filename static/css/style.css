@@ -153,7 +153,9 @@ a {
   text-align: center;
   margin-top: 10px;
 }
-
+.product-content {
+    margin-left: 30px;
+}
 
 /* Link Effect*/
 .link-effect a {
