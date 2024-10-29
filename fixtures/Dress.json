@@ -41,8 +41,8 @@
       "color": "красный",
       "length": "мини",
       "material": "лён",
-      "photo": "products_images/dress3.JPG",
-      "photo_hover": "products_images/dress3.1.JPG",
+      "photo": "products_images/dress47.jpeg",
+      "photo_hover": "products_images/dress47.1.JPG",
       "category": 2,
       "model": "прилегающее"
     }
@@ -745,8 +745,8 @@
       "color": "красный",
       "length": "мини",
       "material": "синтетика",
-      "photo": "products_images/dress47.jpeg",
-      "photo_hover": "products_images/dress47.1.JPG",
+      "photo": "products_images/dress3.JPG",
+      "photo_hover": "products_images/dress3.1.JPG",
       "category": 3,
       "model": "прилегающее"
     }

@@ -3,7 +3,7 @@ const dressItems = document.querySelectorAll('.dress-item');
 
 (function ($) {
     $(document).ready(function($) {
-        $('.product-controls li').on('click', function () {
+        $('.product-controls li:not(:last-child)').on('click', function () {
             var filterValue = $(this).attr('data-filter');
 
             $('.product-controls li').removeClass('active');
@@ -16,6 +16,20 @@ const dressItems = document.querySelectorAll('.dress-item');
                 $('#product-list .dress-item' + filterValue).show();
             }
         });
+
+        $('#color-filter-select').on('change', function () {
+            var color = $(this).val();
+
+            $('.product-controls li').removeClass('active');
+
+            if (color === "") {
+                $('#product-list .dress-item').show();
+            } else {
+                $('#product-list .dress-item').hide();
+                $('#product-list .dress-item[data-color="' + color + '"]').show();
+            }
+        });
+
         // testimonial sliders
         $(".testimonial-sliders").owlCarousel({
             items: 1,
