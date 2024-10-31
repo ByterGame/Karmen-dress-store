@@ -28,6 +28,13 @@ def cart(request):
         return render(request, 'cart.html')
 
 
+
+def search(request):
+    query = request.GET.get('query', '')
+    products = Dress.objects.filter(name__icontains=query) if query else Dress.objects.all()
+    return render(request, 'search.html', {'products': products, 'query': query})
+
+
 def single_product(request, id):
     dress = get_object_or_404(Dress, id=id)
     all_dresses = Dress.objects.order_by('id')

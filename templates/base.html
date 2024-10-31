@@ -213,8 +213,10 @@
                 <div class="search-bar">
                     <div class="search-bar-tablecell">
                         <h3>Search For:</h3>
-                        <input type="text" placeholder="Keywords">
-                        <button type="submit">Search <i class="fas fa-search"></i></button>
+                        <form id="search-form" action="{% url 'products:search' %}" method="GET">
+                           <input type="text" name="query" placeholder="Keywords" required>
+                           <button type="submit"><i class="fas fa-search"></i> Search</button>
+                       </form>
                     </div>
                 </div>
             </div>
@@ -261,7 +263,6 @@
     </div>
 </div>
 <!-- jquery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
 <!-- bootstrap -->
 <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
@@ -276,6 +277,7 @@
 <!-- magnific popup -->
 <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
 <!-- mean menu -->
+<script src="{% static 'js/jquery.meanmenu.min.js' %}"></script>
 <!-- sticker js -->
 <script src="{% static 'js/sticker.js' %}"></script>
 <!-- main js -->
