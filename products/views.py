@@ -19,7 +19,14 @@ def checkout(request):
 
 
 def cart(request):
-    return render(request, 'cart.html')
+    if request.user.is_authenticated:
+        context = {
+            'carted_dresses': request.user.cart.all()
+        }
+        return render(request, 'cart.html', context)
+    else:
+        return render(request, 'cart.html')
+
 
 def single_product(request, id):
     dress = get_object_or_404(Dress, id=id)

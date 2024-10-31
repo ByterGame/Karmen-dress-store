@@ -1,8 +1,10 @@
 from django.contrib import messages, auth
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 from django.urls import reverse
 from .forms import UserLoginForm, UserRegisterForm
 from django.http import JsonResponse
+from users.models import User
+from products.models import Dress
 
 
 def sign_in(request):
@@ -30,6 +32,21 @@ def sign_up(request):
         else:
             return JsonResponse({'status': 'error', 'errors': form.errors})
     return JsonResponse({'status': 'error', 'errors': {'__all__': ['Invalid request method.']}})
+
+
+def logout(request):
+    auth.logout(request)
+    referer_url = request.META.get('HTTP_REFERER', 'products:index')
+    return HttpResponseRedirect(referer_url)
+
+def add_to_cart(request):
+    if request.user.is_authenticated:
+        dress_id = request.POST.get('dress_id')
+        dress = get_object_or_404(Dress, id=dress_id)
+        request.user.cart.add(dress)
+        return JsonResponse({'status': 'success', 'message': 'Товар добавлен в корзину.'})
+    return JsonResponse({'status': 'error', 'message': 'Пожалуйста, войдите в систему.'})
+
 
 #
 # def sign_in(request):
@@ -78,10 +95,7 @@ def sign_up(request):
 #         return JsonResponse({'status': 'error', 'message': 'Inwalid login or password.'})
 #     return JsonResponse({'status': 'error', 'message': 'Inwalid login or password.'})
 
-def logout(request):
-    auth.logout(request)
-    referer_url = request.META.get('HTTP_REFERER', 'products:index')
-    return HttpResponseRedirect(referer_url)
+
 
 
 # old form loader

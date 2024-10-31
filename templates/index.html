@@ -131,9 +131,10 @@
                             <h5 class="element-title text-uppercase fs-5 mt-3">
                                 <a href="{% url 'products:single_product' dress.id %}">{{ dress.name }}</a>
                             </h5>
-                            <a href="#" class="text-decoration-none" data-after="Add to cart">
+                            <a href="{% url 'users:add_to_cart' %}" class="text-decoration-none" data-dress-id="{{ dress.id }}" data-after="Add to cart">
                                 <span>${{ dress.cost }}</span>
                             </a>
+
                         </div>
                     </div>
                 </div>

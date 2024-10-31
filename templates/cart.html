@@ -12,8 +12,13 @@
             <div class="row">
                 <div class="col-lg-8 offset-lg-2 text-center">
                     <div class="breadcrumb-text">
-                        <p>Fresh and Organic</p>
+                        {% if user.is_authenticated %}
+                        <p>Buy Some New Dresses!</p>
                         <h1>Cart</h1>
+                            {% else %}
+                            <p>Authorize before you have access to cart</p>
+                        <h1>Cart is empty</h1>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -25,6 +30,7 @@
     <div class="cart-section mt-150 mb-150">
         <div class="container">
             <div class="row">
+            {% if user.is_authenticated %}
                 <div class="col-lg-8 col-md-12">
                     <div class="cart-table-wrap">
                         <table class="cart-table">
@@ -39,33 +45,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="table-body-row">
+                            {% if user.is_authenticated %}
+                                {% for dress in carted_dresses %}
+                                <tr class="table-body-row">
                                 <td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-                                <td class="product-image"><img src="{% static 'img/products/product-img-1.jpg' %}"
-                                                               alt=""></td>
-                                <td class="product-name">Strawberry</td>
-                                <td class="product-price">$85</td>
-                                <td class="product-quantity"><input type="number" placeholder="0"></td>
-                                <td class="product-total">1</td>
+                                <td class="product-image"><a href="{% url 'products:single_product' dress.id %}"><img src="{{ dress.photo.url }}" alt="{{ dress.name }}"></a></td>
+                                <td class="product-name">{{ dress.name }}</td>
+                                <td class="product-price">${{ dress.cost }}</td>
+                                <td class="product-quantity"><input type="number" placeholder="1"></td>
+                                <td class="product-total">${{ dress.cost }}</td>
                             </tr>
-                            <tr class="table-body-row">
-                                <td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-                                <td class="product-image"><img src="{% static 'img/products/product-img-2.jpg' %}"
-                                                               alt=""></td>
-                                <td class="product-name">Berry</td>
-                                <td class="product-price">$70</td>
-                                <td class="product-quantity"><input type="number" placeholder="0"></td>
-                                <td class="product-total">1</td>
-                            </tr>
-                            <tr class="table-body-row">
-                                <td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-                                <td class="product-image"><img src="{% static 'img/products/product-img-3.jpg' %}"
-                                                               alt=""></td>
-                                <td class="product-name">Lemon</td>
-                                <td class="product-price">$35</td>
-                                <td class="product-quantity"><input type="number" placeholder="0"></td>
-                                <td class="product-total">1</td>
-                            </tr>
+                                {% endfor %}
+                            {% endif %}
                             </tbody>
                         </table>
                     </div>
@@ -101,6 +92,7 @@
                         </div>
                     </div>
                 </div>
+            {% endif %}
             </div>
         </div>
     </div>

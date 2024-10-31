@@ -62,8 +62,8 @@
                         <ul>
                             <li><a href="{% url 'products:index' %}">Shop</a></li>
                             <li><a href="{% url 'products:about' %}">About</a></li>
-                            <li><a href="{% url 'products:cart' %}">Cart</a></li>
                             {% if user.is_authenticated %}
+                                <li><a href="{% url 'products:cart' %}">Cart</a></li>
                                 <li><a>{{ user.username }}</a></li>
                                 <li><a href="{% url 'users:logout' %}">Logout</a></li>
                                 {% if user.is_superuser or user.is_staff %}
@@ -75,8 +75,10 @@
                             {% endif %}
                             <li>
                                 <div class="header-icons">
+                                    {% if user.is_authenticated %}
                                     <a class="shopping-cart" href="{% url 'products:cart' %}"><i
                                             class="fas fa-shopping-cart"></i></a>
+                                    {% endif %}
                                     <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
                                 </div>
                             </li>
@@ -365,6 +367,64 @@ $(document).ready(function() {
         $('#loginModal').modal('hide'); // Закрыть текущее окно входа
     });
 });
+</script>
+<script>
+    $(document).on('click', '.text-decoration-none', function(e) {
+        e.preventDefault();
+
+        const dressId = $(this).data('dress-id');
+        const $link = $(this);
+        {#alert(dressId)#}
+
+        $.ajax({
+            url: "{% url 'users:add_to_cart' %}",
+            type: "POST",
+            data: {
+                'dress_id': dressId,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    $link.attr("data-after", "In Cart");
+                    {#alert(response.message);#}
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('Error. Please try again.');
+            }
+        });
+    });
+</script>
+<script>
+    $(document).on('click', '.cart-btn', function(e) {
+        e.preventDefault();
+
+        const dressId = $(this).data('dress-id');
+        const $link = $(this);
+        {#alert(dressId)#}
+
+        $.ajax({
+            url: "{% url 'users:add_to_cart' %}",
+            type: "POST",
+            data: {
+                'dress_id': dressId,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    $link.html('<i class="fas fa-shopping-cart"></i> In Cart').addClass('in-cart');
+                    {#alert(response.message);#}
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('Error. Please try again.');
+            }
+        });
+    });
 </script>
 </body>
 </html>

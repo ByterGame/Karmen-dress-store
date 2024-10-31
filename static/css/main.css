@@ -328,7 +328,7 @@ p:last-child {
 }
 
 .mb-150 {
-  margin-bottom: 150px;
+  margin-bottom: 100px;
 }
 
 @media only screen and (max-width: 767.96px) {
@@ -1241,9 +1241,21 @@ a.cart-btn {
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;
+  background-color: #801818;
+  color: #fff;
 }
 
 a.cart-btn:hover {
+  background-color: #000000;
+  color: #801818;
+}
+
+a.cart-btn.in-cart {
+  background-color: #801818;
+  color: #fff;
+}
+
+a.cart-btn.in-cart:hover {
   background-color: #000000;
   color: #801818;
 }
@@ -3457,4 +3469,14 @@ a:focus,
 .form-control{
     width: 100%;
     margin-right: 10px;
+}
+
+.alert-warning {
+    background-color: #fff; /* Светло-красный фон */
+    color: #801818; /* Темно-красный текст */
+    padding: 15px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 10px 0;
 }
