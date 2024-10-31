@@ -3454,12 +3454,7 @@ a:focus,
     box-shadow: none;
 }
 
-.error-message {
-  position: absolute;
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    padding: 10px;
-    border-radius: 4px;
-    margin-top: 10px;
+.form-control{
+    width: 100%;
+    margin-right: 10px;
 }

@@ -301,7 +301,7 @@ $(document).ready(function() {
                     // Отображение ошибок в форме
                     $.each(response.errors, function(field, messages) {
                         if (field === '__all__') {
-                            $('#login-form').prepend(`<div class="error-message">${messages[0]}</div>`);
+                            $('#login-form').prepend(`<div class="error-message text-danger">${messages[0]}</div>`);
                         } else {
                             const input = form.find(`[name="${field}"]`);
                             input.addClass('is-invalid');
@@ -334,13 +334,15 @@ $(document).ready(function() {
             data: form.serialize(),
             success: function(response) {
                 if (response.status === 'success') {
-                    alert('Account created successfully!');
-                    location.reload(); // обновление страницы после успешной регистрации
+                    //alert('Account created successfully!');
+                    //location.reload(); // обновление страницы после успешной регистрации
+                    $('#registrationModal').modal('hide'); // Закрываем окно регистрации
+                    $('#loginModal').modal('show'); // Открываем окно входа
                 } else {
                     // Отображение ошибок в форме
                     $.each(response.errors, function(field, messages) {
                         if (field === '__all__') {
-                            $('#register-form').prepend(`<div class="error-message">${messages[0]}</div>`);
+                            $('#register-form').prepend(`<div class="error-message text-danger">${messages[0]}</div>`);
                         } else {
                             const input = form.find(`[name="${field}"]`);
                             input.addClass('is-invalid');
