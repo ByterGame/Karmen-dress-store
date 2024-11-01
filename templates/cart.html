@@ -48,13 +48,15 @@
                             {% if user.is_authenticated %}
                                 {% for dress in carted_dresses %}
                                 <tr class="table-body-row">
-                                <td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-                                <td class="product-image"><a href="{% url 'products:single_product' dress.id %}"><img src="{{ dress.photo.url }}" alt="{{ dress.name }}"></a></td>
-                                <td class="product-name">{{ dress.name }}</td>
-                                <td class="product-price">${{ dress.cost }}</td>
-                                <td class="product-quantity"><input type="number" placeholder="1"></td>
-                                <td class="product-total">${{ dress.cost }}</td>
-                            </tr>
+                                    <td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
+                                    <td class="product-image"><a href="{% url 'products:single_product' dress.id %}"><img src="{{ dress.photo.url }}" alt="{{ dress.name }}"></a></td>
+                                    <td class="product-name">{{ dress.name }}</td>
+                                    <td class="product-price">${{ dress.cost }}</td>
+                                    <td class="product-quantity">
+                                        <input type="number" class="quantity-input" value="1" min="1" data-cost="{{ dress.cost }}">
+                                    </td>
+                                    <td class="product-total">${{ dress.cost }}</td>
+                                </tr>
                                 {% endfor %}
                             {% endif %}
                             </tbody>
