@@ -6,13 +6,13 @@
       "name": "Youthful Elegance",
       "description": "red dress",
       "cost": "5999.00",
-      "color": "Красный",
-      "length": "Мини",
-      "material": "Лён",
+      "color": "red",
+      "length": "mini",
+      "material": "flax",
       "photo": "products_images/dress1.jpeg",
       "photo_hover": "products_images/dress1.1.png",
       "category": 4,
-      "model": "Прилегающее"
+      "model": "fitted"
     }
   },
   {
@@ -22,13 +22,13 @@
       "name": "Trendy Twirl",
       "description": "black dress",
       "cost": "4999.00",
-      "color": "черный",
-      "length": "мини",
-      "material": "Синтетика",
+      "color": "black",
+      "length": "mini",
+      "material": "synthetics",
       "photo": "products_images/dress2.jpg",
       "photo_hover": "products_images/dress2.1.png",
       "category": 1,
-      "model": "платье-пиджак"
+      "model": "jacket dress"
     }
   },
   {
@@ -38,13 +38,13 @@
       "name": "Fashionista Flair",
       "description": "red dress",
       "cost": "5499.00",
-      "color": "красный",
-      "length": "мини",
-      "material": "лён",
+      "color": "red",
+      "length": "mini",
+      "material": "flax",
       "photo": "products_images/dress47.jpeg",
       "photo_hover": "products_images/dress47.1.JPG",
       "category": 2,
-      "model": "прилегающее"
+      "model": "fitted"
     }
   },
   {
@@ -54,13 +54,13 @@
       "name": "Classic Chic",
       "description": "black dress",
       "cost": "3999.00",
-      "color": "черный",
-      "length": "мини",
-      "material": "лён",
+      "color": "black",
+      "length": "mini",
+      "material": "flax",
       "photo": "products_images/dress4.jpg",
       "photo_hover": "products_images/dress4.1.png",
       "category": 2,
-      "model": "прилегающее"
+      "model": "fitted"
     }
   },
   {
@@ -70,13 +70,13 @@
       "name": "Red Wings",
       "description": "red dress",
       "cost": "4599.00",
-      "color": "красный",
-      "length": "мини",
-      "material": "синтетика",
+      "color": "red",
+      "length": "mini",
+      "material": "synthetics",
       "photo": "products_images/dress5.jpg",
       "photo_hover": "products_images/dress5.1.png",
       "category": 3,
-      "model": "полуприлегающее"
+      "model": "semi-fitted"
     }
   },
   {
@@ -86,13 +86,13 @@
       "name": "Modern Muse",
       "description": "black dress",
       "cost": "4299.00",
-      "color": "черный",
-      "length": "мини",
-      "material": "лён",
+      "color": "black",
+      "length": "mini",
+      "material": "flax",
       "photo": "products_images/dress6.jpg",
       "photo_hover": "products_images/dress6.1.png",
       "category": 4,
-      "model": "прилегающее"
+      "model": "fitted"
     }
   },
   {
@@ -102,13 +102,13 @@
       "name": "Street Style Chic",
       "description": "red dress",
       "cost": "6999.00",
-      "color": "красный",
-      "length": "мини",
-      "material": "синтетика",
+      "color": "red",
+      "length": "mini",
+      "material": "synthetics",
       "photo": "products_images/dress7.jpg",
       "photo_hover": "products_images/dress7.1.png",
       "category": 4,
-      "model": "прилегающее"
+      "model": "fitted"
     }
   },
   {
@@ -118,13 +118,13 @@
       "name": "Vintage Vixen",
       "description": "black dress",
       "cost": "9999.00",
-      "color": "черный",
-      "length": "миди",
-      "material": "лён",
+      "color": "black",
+      "length": "midi",
+      "material": "flax",
       "photo": "products_images/dress8.png",
       "photo_hover": "products_images/dress8.1.JPG",
       "category": 1,
-      "model": "свободное"
+      "model": "loose"
     }
   },
   {
@@ -134,13 +134,13 @@
       "name": "Couture Queen",
       "description": "black dress",
       "cost": "3999.00",
-      "color": "черный",
-      "length": "миди",
-      "material": "хлопок",
+      "color": "black",
+      "length": "midi",
+      "material": "cotton",
       "photo": "products_images/dress9.jpeg",
       "photo_hover": "products_images/dress9.1.png",
       "category": 1,
-      "model": "раздельное"
+      "model": "costume"
     }
   },
   {
@@ -150,13 +150,13 @@
       "name": "Daring Diva",
       "description": "grey dress",
       "cost": "4999.00",
-      "color": "серый",
-      "length": "мини",
-      "material": "синтетика",
+      "color": "grey",
+      "length": "mini",
+      "material": "synthetics",
       "photo": "products_images/dress10.jpeg",
       "photo_hover": "products_images/dress10.1.png",
       "category": 1,
-      "model": "платье-пиджак"
+      "model": "jacket dress"
     }
   },
   {
@@ -166,13 +166,13 @@
       "name": "Sassy Style",
       "description": "grey dress",
       "cost": "3599.00",
-      "color": "серый",
-      "length": "мини",
-      "material": "синтетика",
+      "color": "grey",
+      "length": "mini",
+      "material": "synthetics",
       "photo": "products_images/dress11.jpeg",
       "photo_hover": "products_images/dress11.1.png",
       "category": 1,
-      "model": "платье-пиджак"
+      "model": "jacket dress"
     }
   },
   {
@@ -182,13 +182,13 @@
       "name": "Edgy Elegance",
       "description": "blue dress",
       "cost": "2999.00",
-      "color": "голубой",
-      "length": "мини",
-      "material": "синтетика",
+      "color": "blue",
+      "length": "mini",
+      "material": "synthetics",
       "photo": "products_images/dress12.jpeg",
       "photo_hover": "products_images/dress12.1.png",
       "category": 1,
-      "model": "платье-пиджак"
+      "model": "jacket dress"
     }
   },
   {
@@ -198,13 +198,13 @@
       "name": "Twilight Twirl",
       "description": "red dress",
       "cost": "3299.00",
-      "color": "красный",
-      "length": "макси",
-      "material": "хлопок",
+      "color": "red",
+      "length": "maxi",
+      "material": "cotton",
       "photo": "products_images/dress13.jpeg",
       "photo_hover": "products_images/dress13.1.JPG",
       "category": 3,
-      "model": "прилегающее"
+      "model": "fitted"
     }
   },
   {
@@ -214,13 +214,13 @@
       "name": "Urban Chic",
       "description": "black dress",
       "cost": "5999.00",
-      "color": "черный",
-      "length": "мини",
-      "material": "лён",
+      "color": "black",
+      "length": "mini",
+      "material": "flax",
       "photo": "products_images/dress14.jpeg",
       "photo_hover": "products_images/dress14.1.png",
       "category": 1,
-      "model": "полуприлегающее"
+      "model": "semi-fitted"
     }
   },
   {
@@ -230,13 +230,13 @@
       "name": "Playful Pleats",
       "description": "Black dress",
       "cost": "2599.00",
-      "color": "черный",
-      "length": "мини",
-      "material": "лён",
+      "color": "black",
+      "length": "mini",
+      "material": "flax",
       "photo": "products_images/dress15.jpeg",
       "photo_hover": "products_images/dress15.1.png",
       "category": 1,
-      "model": "полуприлегающее"
+      "model": "semi-fitted"
     }
   },
   {
@@ -246,13 +246,13 @@
       "name": "Dreamy Drape",
       "description": "Blue dress",
       "cost": "5599.00",
-      "color": "голубой",
-      "length": "миди",
-      "material": "хлопок",
+      "color": "blue",
+      "length": "midi",
+      "material": "cotton",
       "photo": "products_images/dress16.JPG",
       "photo_hover": "products_images/dress16.1.JPG",
       "category": 2,
-      "model": "свободное"
+      "model": "loose"
     }
   },
   {
@@ -262,13 +262,13 @@
       "name": "Blossom Beauty",
       "description": "yellow dress",
       "cost": "4999.00",
-      "color": "желтый",
-      "length": "мини",
-      "material": "лён",
+      "color": "yellow",
+      "length": "mini",
+      "material": "flax",
       "photo": "products_images/dress17.jpeg",
       "photo_hover": "products_images/dress17.1.JPG",
       "category": 1,
-      "model": "полуприлегающее"
+      "model": "semi-fitted"
     }
   },
   {
@@ -278,13 +278,13 @@
       "name": "Vintage Vibe",
       "description": "yellow dress",
       "cost": "3999.00",
-      "color": "желтый",
-      "length": "мини",
-      "material": "синтетика",
+      "color": "yellow",
+      "length": "mini",
+      "material": "synthetics",
       "photo": "products_images/dress18.jpeg",
       "photo_hover": "products_images/dress18.1.png",
       "category": 2,
-      "model": "свободное"
+      "model": "loose"
     }
   },
   {
@@ -294,13 +294,13 @@
       "name": "Chic Charm",
       "description": "beige dress",
       "cost": "3599.00",
-      "color": "бежевый",
-      "length": "мини",
-      "material": "синтетика",
+      "color": "beige",
+      "length": "mini",
+      "material": "synthetics",
       "photo": "products_images/dress19.jpeg",
       "photo_hover": "products_images/dress19.1.JPG",
       "category": 2,
-      "model": "свободное"
+      "model": "loose"
     }
   },
   {
@@ -310,13 +310,13 @@
       "name": "Dazzling Demeanor",
       "description": "yellow dress",
       "cost": "6599.00",
-      "color": "желтый",
-      "length": "мини",
-      "material": "лён",
+      "color": "yellow",
+      "length": "mini",
+      "material": "flax",
       "photo": "products_images/dress20.jpeg",
       "photo_hover": "products_images/dress20.1.JPG",
       "category": 2,
-      "model": "свободное"
+      "model": "loose"
     }
   },
   {
@@ -326,13 +326,13 @@
       "name": "Sleek Sophistication",
       "description": "blue dress",
       "cost": "13999.00",
-      "color": "голубой",
-      "length": "мини",
-      "material": "хлопок",
+      "color": "blue",
+      "length": "mini",
+      "material": "cotton",
       "photo": "products_images/dress21.jpeg",
       "photo_hover": "products_images/dress21.1.JPG",
       "category": 1,
-      "model": "раздельное"
+      "model": "costume"
     }
   },
   {
@@ -342,13 +342,13 @@
       "name": "Ethereal Elegance",
       "description": "grey dress",
       "cost": "4899.00",
-      "color": "серый",
-      "length": "мини",
-      "material": "лён",
+      "color": "grey",
+      "length": "mini",
+      "material": "flax",
       "photo": "products_images/dress22.jpeg",
       "photo_hover": "products_images/dress22.1.jpeg",
       "category": 1,
-      "model": "полуприлегающее"
+      "model": "semi-fitted"
     }
   },
   {
@@ -358,13 +358,13 @@
       "name": "Kaleid Couture",
       "description": "beige dress",
       "cost": "3599.00",
-      "color": "бежевый",
-      "length": "мини",
-      "material": "хлопок",
+      "color": "beige",
+      "length": "mini",
+      "material": "cotton",
       "photo": "products_images/dress23.jpeg",
       "photo_hover": "products_images/dress23.1.jpeg",
       "category": 1,
-      "model": "свободное"
+      "model": "loose"
     }
   },
   {
@@ -374,13 +374,13 @@
       "name": "Radiant Reverie",
       "description": "white dress",
       "cost": "4999.00",
-      "color": "белый",
-      "length": "мини",
-      "material": "синтетика",
+      "color": "white",
+      "length": "mini",
+      "material": "synthetics",
       "photo": "products_images/dress24.jpeg",
       "photo_hover": "<contextlib.nullcontext object at 0x10c8f4bd0>",
       "category": 1,
-      "model": "полуприлегающее"
+      "model": "semi-fitted"
     }
   },
   {
@@ -390,13 +390,13 @@
       "name": "Illusion Infusion",
       "description": "multicolored dress",
       "cost": "3499.00",
-      "color": "разноцветный",
-      "length": "мини",
-      "material": "хлопок",
+      "color": "multicolored",
+      "length": "mini",
+      "material": "cotton",
       "photo": "products_images/dress25.jpeg",
       "photo_hover": "products_images/dress25.1.jpeg",
       "category": 2,
-      "model": "прилегающее"
+      "model": "fitted"
     }
   },
   {
@@ -406,13 +406,13 @@
       "name": "Artful Asymmetry",
       "description": "black dress",
       "cost": "7999.00",
-      "color": "черный",
-      "length": "мини",
-      "material": "лён",
+      "color": "black",
+      "length": "mini",
+      "material": "flax",
       "photo": "products_images/dress26.jpeg",
       "photo_hover": "products_images/dress26.1.png",
       "category": 3,
-      "model": "прилегающее"
+      "model": "fitted"
     }
   },
   {
@@ -422,13 +422,13 @@
       "name": "Ruffled Romance",
       "description": "black dress",
       "cost": "5999.00",
-      "color": "черный",
-      "length": "миди",
-      "material": "хлопок",
+      "color": "black",
+      "length": "midi",
+      "material": "cotton",
       "photo": "products_images/dress27.jpeg",
       "photo_hover": "products_images/dress27.1.JPG",
       "category": 3,
-      "model": "прилегающее"
+      "model": "fitted"
     }
   },
   {
@@ -438,13 +438,13 @@
       "name": "Belle of the Ball",
       "description": "black dress",
       "cost": "4599.00",
-      "color": "черный",
-      "length": "мини",
-      "material": "синтетика",
+      "color": "black",
+      "length": "mini",
+      "material": "synthetics",
       "photo": "products_images/dress28.jpeg",
       "photo_hover": "products_images/dress28.1.JPG",
       "category": 3,
-      "model": "прилегающее"
+      "model": "fitted"
     }
   },
   {
@@ -454,13 +454,13 @@
       "name": "Floral Fantasy",
       "description": "black dress",
       "cost": "5699.00",
-      "color": "черный",
-      "length": "мини",
-      "material": "синтетика",
+      "color": "black",
+      "length": "mini",
+      "material": "synthetics",
       "photo": "products_images/dress29.jpeg",
       "photo_hover": "products_images/dress29.1.png",
       "category": 3,
-      "model": "прилегающее"
+      "model": "fitted"
     }
   },
   {
@@ -470,13 +470,13 @@
       "name": "Mod Moxie",
       "description": "grey dress",
       "cost": "3999.00",
-      "color": "серый",
-      "length": "мини",
-      "material": "хлопок",
+      "color": "grey",
+      "length": "mini",
+      "material": "cotton",
       "photo": "products_images/dress30.jpeg",
       "photo_hover": "products_images/dress30.1.png",
       "category": 2,
-      "model": "полуприлегающее"
+      "model": "semi-fitted"
     }
   },
   {
@@ -486,13 +486,13 @@
       "name": "Daring Debut",
       "description": "beige dress",
       "cost": "4599.00",
-      "color": "бежевый",
-      "length": "мини",
-      "material": "хлопок",
+      "color": "beige",
+      "length": "mini",
+      "material": "cotton",
       "photo": "products_images/dress31.jpeg",
       "photo_hover": "products_images/dress31.1.png",
       "category": 1,
-      "model": "свободное"
+      "model": "loose"
     }
   },
   {
@@ -502,13 +502,13 @@
       "name": "Style Savvy",
       "description": "blue dress",
       "cost": "2999.00",
-      "color": "голубой",
-      "length": "мини",
-      "material": "синтетика",
+      "color": "blue",
+      "length": "mini",
+      "material": "synthetics",
       "photo": "products_images/dress32.jpeg",
       "photo_hover": "products_images/dress32.1.png",
       "category": 1,
-      "model": "раздельное"
+      "model": "costume"
     }
   },
   {
@@ -518,13 +518,13 @@
       "name": "Spring Fling",
       "description": "black dress",
       "cost": "9999.00",
-      "color": "черный",
-      "length": "мини",
-      "material": "хлопок",
+      "color": "black",
+      "length": "mini",
+      "material": "cotton",
       "photo": "products_images/dress33.jpeg",
       "photo_hover": "products_images/dress33.1.JPG",
       "category": 1,
-      "model": "полуприлегающее"
+      "model": "semi-fitted"
     }
   },
   {
@@ -534,13 +534,13 @@
       "name": "Golden Gala",
       "description": "black dress",
       "cost": "8999.00",
-      "color": "черный",
-      "length": "мини",
-      "material": "синтетика",
+      "color": "black",
+      "length": "mini",
+      "material": "synthetics",
       "photo": "products_images/dress34.jpeg",
       "photo_hover": "products_images/dress34.1.JPG",
       "category": 1,
-      "model": "раздельное"
+      "model": "costume"
     }
   },
   {
@@ -550,13 +550,13 @@
       "name": "Sun-kissed Siren",
       "description": "pink dress",
       "cost": "3899.00",
-      "color": "розовый",
-      "length": "мини",
-      "material": "лён",
+      "color": "pink",
+      "length": "mini",
+      "material": "flax",
       "photo": "products_images/dress35.jpeg",
       "photo_hover": "products_images/dress35.1.jpeg",
       "category": 3,
-      "model": "полуприлегающее"
+      "model": "semi-fitted"
     }
   },
   {
@@ -566,13 +566,13 @@
       "name": "Crystal Cascade",
       "description": "black dress",
       "cost": "4599.00",
-      "color": "черный",
-      "length": "миди",
-      "material": "синтетика",
+      "color": "black",
+      "length": "midi",
+      "material": "synthetics",
       "photo": "products_images/dress36.jpeg",
       "photo_hover": "products_images/dress36.1.jpeg",
       "category": 2,
-      "model": "прилегающее"
+      "model": "fitted"
     }
   },
   {
@@ -582,13 +582,13 @@
       "name": "Modern Mirage",
       "description": "grey dress",
       "cost": "2999.00",
-      "color": "серый",
-      "length": "макси",
-      "material": "синтетика",
+      "color": "grey",
+      "length": "maxi",
+      "material": "synthetics",
       "photo": "products_images/dress37.jpeg",
       "photo_hover": "products_images/dress37.1.png",
       "category": 3,
-      "model": "раздельное"
+      "model": "costume"
     }
   },
   {
@@ -598,13 +598,13 @@
       "name": "Modern Seastorm",
       "description": "grey dress",
       "cost": "4999.00",
-      "color": "серый",
-      "length": "мини",
-      "material": "хлопок",
+      "color": "grey",
+      "length": "mini",
+      "material": "cotton",
       "photo": "products_images/dress38.jpeg",
       "photo_hover": "products_images/dress38.1.jpeg",
       "category": 1,
-      "model": "прилегающее"
+      "model": "fitted"
     }
   },
   {
@@ -614,13 +614,13 @@
       "name": "Celestial Chic",
       "description": "grey dress",
       "cost": "5799.00",
-      "color": "серый",
-      "length": "макси",
-      "material": "синтетика",
+      "color": "grey",
+      "length": "maxi",
+      "material": "synthetics",
       "photo": "products_images/dress39.jpeg",
       "photo_hover": "products_images/dress39.1.png",
       "category": 3,
-      "model": "раздельное"
+      "model": "costume"
     }
   },
   {
@@ -630,13 +630,13 @@
       "name": "Aurora Amore",
       "description": "pink dress",
       "cost": "7999.00",
-      "color": "розовый",
-      "length": "мини",
-      "material": "синтетика",
+      "color": "pink",
+      "length": "mini",
+      "material": "synthetics",
       "photo": "products_images/dress40.jpeg",
       "photo_hover": "products_images/dress40.1.jpeg",
       "category": 1,
-      "model": "раздельное"
+      "model": "costume"
     }
   },
   {
@@ -646,13 +646,13 @@
       "name": "Prism Perfection",
       "description": "grey dress",
       "cost": "4999.00",
-      "color": "серый",
-      "length": "мини",
-      "material": "хлопок",
+      "color": "grey",
+      "length": "mini",
+      "material": "cotton",
       "photo": "products_images/dress41.jpeg",
       "photo_hover": "products_images/dress41.1.png",
       "category": 2,
-      "model": "свободное"
+      "model": "loose"
     }
   },
   {
@@ -662,13 +662,13 @@
       "name": "Fusion Finesse",
       "description": "white dress",
       "cost": "5999.00",
-      "color": "белый",
-      "length": "миди",
-      "material": "хлопок",
+      "color": "white",
+      "length": "midi",
+      "material": "cotton",
       "photo": "products_images/dress42.jpeg",
       "photo_hover": "products_images/dress42.1.JPG",
       "category": 2,
-      "model": "свободное"
+      "model": "loose"
     }
   },
   {
@@ -678,13 +678,13 @@
       "name": "Jungle Jive",
       "description": "black dress",
       "cost": "3999.00",
-      "color": "черный",
-      "length": "миди",
-      "material": "лён",
+      "color": "black",
+      "length": "midi",
+      "material": "flax",
       "photo": "products_images/dress43.jpeg",
       "photo_hover": "products_images/dress43.1.png",
       "category": 1,
-      "model": "свободное"
+      "model": "loose"
     }
   },
   {
@@ -694,13 +694,13 @@
       "name": "Cosmic Couture",
       "description": "black dress",
       "cost": "2999.00",
-      "color": "черный",
-      "length": "мини",
-      "material": "хлопок",
+      "color": "black",
+      "length": "mini",
+      "material": "cotton",
       "photo": "products_images/dress44.jpeg",
       "photo_hover": "products_images/dress44.1.JPG",
       "category": 1,
-      "model": "полуприлегающее"
+      "model": "semi-fitted"
     }
   },
   {
@@ -710,13 +710,13 @@
       "name": "Coral Cascade",
       "description": "white dress",
       "cost": "4999.00",
-      "color": "белый",
-      "length": "мини",
-      "material": "лён",
+      "color": "white",
+      "length": "mini",
+      "material": "flax",
       "photo": "products_images/dress45.png",
       "photo_hover": "products_images/dress45.1.JPG",
       "category": 1,
-      "model": "полуприлегающее"
+      "model": "semi-fitted"
     }
   },
   {
@@ -726,13 +726,13 @@
       "name": "Lavender Luxe",
       "description": "grey dress",
       "cost": "6999.00",
-      "color": "серый",
-      "length": "мини",
-      "material": "лён",
+      "color": "grey",
+      "length": "mini",
+      "material": "flax",
       "photo": "products_images/dress46.jpg",
       "photo_hover": "products_images/dress46.1.png",
       "category": 1,
-      "model": "полуприлегающее"
+      "model": "semi-fitted"
     }
   },
   {
@@ -742,13 +742,13 @@
       "name": "Enchanted Elegance",
       "description": "red dress",
       "cost": "5999.00",
-      "color": "красный",
-      "length": "мини",
-      "material": "синтетика",
+      "color": "red",
+      "length": "mini",
+      "material": "synthetics",
       "photo": "products_images/dress3.JPG",
       "photo_hover": "products_images/dress3.1.JPG",
       "category": 3,
-      "model": "прилегающее"
+      "model": "fitted"
     }
   }
 ]

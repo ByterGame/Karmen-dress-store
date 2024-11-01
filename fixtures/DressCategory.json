@@ -3,7 +3,7 @@
     "model": "products.dresscategory",
     "pk": 1,
     "fields": {
-      "name": "Office",
+      "name": "office",
       "description": ""
     }
   },
@@ -11,7 +11,7 @@
     "model": "products.dresscategory",
     "pk": 2,
     "fields": {
-      "name": "Summer",
+      "name": "summer",
       "description": ""
     }
   },
@@ -19,7 +19,7 @@
     "model": "products.dresscategory",
     "pk": 3,
     "fields": {
-      "name": "Evening",
+      "name": "evening",
       "description": ""
     }
   },
@@ -27,7 +27,7 @@
     "model": "products.dresscategory",
     "pk": 4,
     "fields": {
-      "name": "Cocktail",
+      "name": "cocktail",
       "description": ""
     }
   }

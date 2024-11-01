@@ -31,7 +31,7 @@ def cart(request):
 
 def search(request):
     query = request.GET.get('query', '')
-    products = Dress.objects.filter(name__icontains=query) if query else Dress.objects.all()
+    products = Dress.objects.filter(name__icontains=query) and Dress.objects.filter(color__icontains=query) and Dress.objects.filter(model__icontains=query) or Dress.objects.filter(length__icontains=query) if query else Dress.objects.all()
     return render(request, 'search.html', {'products': products, 'query': query})
 
 
