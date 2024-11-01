@@ -41,12 +41,17 @@
                     <p>Model: {{ dress.model }}</p>
                     <p>Category: {{ dress.category.name }}</p>
                     <div class="single-product-form">
-                        <form action="index.html">
-                            <p>Size:
-                            <input type="number" placeholder="44" min="40" max="52" step="2">
-                            </p>
-                        </form>
+{#                        <form action="index.html">#}
+{#                            <p>Size:#}
+{#                            <input type="number" placeholder="44" min="40" max="52" step="2">#}
+{#                            </p>#}
+{#                        </form>#}
                         <a href="{% url 'users:add_to_cart' %}" class="cart-btn" data-dress-id="{{ dress.id }}"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                    <a href="{% url 'users:add_to_likes' %}" class="btn-icon btn-wishlist {% if dress.id in liked_dresses %}liked{% endif %}" data-dress-id="{{ dress.id }}">
+                                <svg width="50" height="50" viewBox="0 0 24 24">
+                                    <use href="#heart"></use>
+                                </svg>
+                            </a>
                     </div>
                 </div>
             </div>
@@ -81,15 +86,15 @@
                             </a>
                         </div>
                         <div class="product-content">
-							<a href="index.html" class="btn-icon btn-wishlist">
+							<a href="{% url 'users:add_to_likes' %}" class="btn-icon btn-wishlist {% if dress.id in liked_dresses %}liked{% endif %}" data-dress-id="{{ dress.id }}">
                                 <svg width="24" height="24" viewBox="0 0 24 24">
-                                    <use xlink:href="#heart"></use>
+                                    <use href="#heart"></use>
                                 </svg>
                             </a>
                             <h5 class="element-title text-uppercase fs-5 mt-3">
                                 <a href="{% url 'products:single_product' dress.id %}">{{ dress.name }}</a>
                             </h5>
-                            <a href="{% url 'users:add_to_cart' %}" class="text-decoration-none" data-dress-id="{{ dress.id }}" data-after="Add to cart">
+                            <a href="{% url 'users:add_to_cart' %}" class="text-decoration-none" data-dress-id="{{ dress.id }}" {% if dress.id in carted_dresses %}data-after="In Cart"{% else %}data-after="Add to cart"{% endif %}>
                                 <span>${{ dress.cost }}</span>
                             </a>
                         </div>

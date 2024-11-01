@@ -2470,6 +2470,7 @@ input[type="number"] {
 }
 
 .single-product-form a.cart-btn {
+  margin-top: 15px;
   margin-bottom: 15px;
 }
 
@@ -3363,9 +3364,7 @@ p {
 }
 
 a:hover,
-a:focus,
-.btn:hover,
-.btn:focus {
+.btn:hover{
   color: #801818;
   text-decoration: none;
 }
@@ -3479,4 +3478,12 @@ a:focus,
     border-radius: 5px;
     font-weight: bold;
     margin: 10px 0;
+}
+
+.liked {
+    color: #801818;
+}
+
+.liked:hover {
+    color: #000000;
 }

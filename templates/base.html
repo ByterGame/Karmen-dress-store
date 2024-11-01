@@ -64,7 +64,8 @@
                             <li><a href="{% url 'products:about' %}">About</a></li>
                             {% if user.is_authenticated %}
                                 <li><a href="{% url 'products:cart' %}">Cart</a></li>
-                                <li><a>{{ user.username }}</a></li>
+                                <li><a href="{% url 'products:likes' %}">Favorites</a></li>
+                                <li><a href="{% url 'products:index' %}">{{ user.username }}</a></li>
                                 <li><a href="{% url 'users:logout' %}">Logout</a></li>
                                 {% if user.is_superuser or user.is_staff %}
                                     <li><a href="{% url 'admin:index' %}">Admin-panel</a></li>
@@ -389,7 +390,43 @@ $(document).ready(function() {
                 if (response.status === 'success') {
                     $link.attr("data-after", "In Cart");
                     {#alert(response.message);#}
-                } else {
+                } else if(response.status === 'removed'){
+                    $link.attr("data-after", "Add To Cart");
+                }
+                else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('Error. Please try again.');
+            }
+        });
+    });
+</script>
+<script>
+    $(document).on('click', '.btn-wishlist', function(e) {
+        e.preventDefault();
+
+        const dressId = $(this).data('dress-id');
+        const $link = $(this);
+        {#alert(dressId)#}
+
+        $.ajax({
+            url: "{% url 'users:add_to_likes' %}",
+            type: "POST",
+            data: {
+                'dress_id': dressId,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    $link.addClass('liked');
+                    {#alert(response.message);#}
+                }else if(response.status === 'removed'){
+                    $link.removeClass('liked');
+                 }
+                    else
+                 {
                     alert(response.message);
                 }
             },
@@ -418,6 +455,36 @@ $(document).ready(function() {
                 if (response.status === 'success') {
                     $link.html('<i class="fas fa-shopping-cart"></i> In Cart').addClass('in-cart');
                     {#alert(response.message);#}
+                } else if (response.status === 'removed'){
+                $link.html('<i class="fas fa-shopping-cart"></i> Add to Cart').removeClass('in-cart');
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('Error. Please try again.');
+            }
+        });
+    });
+</script>
+<script>
+    $(document).on('click', '.fa-window-close', function(e) {
+        e.preventDefault();
+
+        const dressId = $(this).data('dress-id');
+        const $row = $(`#row-${dressId}`);
+        {#alert(dressId)#}
+
+        $.ajax({
+            url: "{% url 'users:add_to_cart' %}",
+            type: "POST",
+            data: {
+                'dress_id': dressId,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.status === 'removed'){
+                $row.remove();
                 } else {
                     alert(response.message);
                 }

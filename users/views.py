@@ -43,12 +43,38 @@ def add_to_cart(request):
     if request.user.is_authenticated:
         dress_id = request.POST.get('dress_id')
         dress = get_object_or_404(Dress, id=dress_id)
-        request.user.cart.add(dress)
-        return JsonResponse({'status': 'success', 'message': 'Товар добавлен в корзину.'})
-    return JsonResponse({'status': 'error', 'message': 'Пожалуйста, войдите в систему.'})
+        if dress in request.user.cart.all():
+            request.user.cart.remove(dress)
+            return JsonResponse({'status': 'removed', 'message': 'Product removed from cart.'})
+        else:
+            request.user.cart.add(dress)
+            return JsonResponse({'status': 'success', 'message': 'Product added successfully!'})
+    return JsonResponse({'status': 'error', 'message': 'Please login first.'})
 
+def add_to_likes(request):
+    if request.user.is_authenticated:
+        dress_id = request.POST.get('dress_id')
+        dress = get_object_or_404(Dress, id=dress_id)
+        if dress in request.user.like.all():
+            request.user.like.remove(dress)
+            return JsonResponse({'status': 'removed', 'message': 'Product removed from likes.'})
+        else:
+            request.user.like.add(dress)
+            return JsonResponse({'status': 'success', 'message': 'Product added successfully!'})
+    return JsonResponse({'status': 'error', 'message': 'Please login first.'})
 
-#
+def remove_from_cart(request):
+    dress_id = request.POST.get('dress_id')
+    dress = get_object_or_404(Dress, id=dress_id)
+    request.user.cart.remove(dress)
+    return JsonResponse({'status': 'removed', 'message': 'Product removed from cart.'})
+
+def remove_from_likes(request):
+    dress_id = request.POST.get('dress_id')
+    dress = get_object_or_404(Dress, id=dress_id)
+    request.user.like.remove(dress)
+    return JsonResponse({'status': 'removed', 'message': 'Product removed from likes.'})
+
 # def sign_in(request):
 #     form = UserLoginForm(data=request.POST or None)
 #     referer_url = request.META.get('HTTP_REFERER', 'products:index')
