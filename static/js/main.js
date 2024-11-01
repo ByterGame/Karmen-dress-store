@@ -3,6 +3,44 @@ const dressItems = document.querySelectorAll('.dress-item');
 
 (function ($) {
     $(document).ready(function ($) {
+
+        function animateValue(element, start, end, duration) {
+            let startTimestamp = null;
+
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                element.textContent = `$${(start + (end - start) * progress).toFixed(0)}`;
+
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            }
+
+            requestAnimationFrame(step);
+        }
+
+        function updateTotal(element) {
+            const quantityInput = element;
+            const row = quantityInput.closest('tr');
+            const price = parseFloat(quantityInput.getAttribute('data-cost'));
+            const totalCell = row.querySelector('.product-total');
+
+            const newQuantity = parseInt(quantityInput.value);
+            const newTotal = price * newQuantity;
+            const currentTotal = parseFloat(totalCell.textContent.replace('$', ''));
+
+            animateValue(totalCell, currentTotal, newTotal, 1500);
+        }
+
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            input.addEventListener('input', function() {
+                updateTotal(this);
+            });
+        });
+
+
+
         $('.product-controls li:not(:last-child)').on('click', function () {
             var filterValue = $(this).attr('data-filter');
 

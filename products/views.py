@@ -1,5 +1,6 @@
 from products.models import Dress, DressCategory
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Q
 
 def index(request):
     liked_dresses = request.user.like.values_list('id', flat=True) if request.user.is_authenticated else []
@@ -46,7 +47,16 @@ def likes(request):
 
 def search(request):
     query = request.GET.get('query', '')
-    products = Dress.objects.filter(name__icontains=query) if query else Dress.objects.all()
+    if query:
+        products = Dress.objects.filter(
+            Q(name__icontains=query) |
+            Q(color__icontains=query) |
+            Q(model__icontains=query) |
+            Q(length__icontains=query)
+        )
+    else:
+        products = Dress.objects.all()
+
     return render(request, 'search.html', {'products': products, 'query': query})
 
 

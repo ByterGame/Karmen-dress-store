@@ -46,7 +46,7 @@
 {#                            <input type="number" placeholder="44" min="40" max="52" step="2">#}
 {#                            </p>#}
 {#                        </form>#}
-                        <a href="{% url 'users:add_to_cart' %}" class="cart-btn" data-dress-id="{{ dress.id }}"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                        <a href="{% url 'users:add_to_cart' %}" class="cart-btn" data-dress-id="{{ dress.id }}"><i class="fas fa-shopping-cart"></i>{% if dress.id in carted_dresses %}In Cart{% else %}Add to Cart{% endif %}</a>
                     <a href="{% url 'users:add_to_likes' %}" class="btn-icon btn-wishlist {% if dress.id in liked_dresses %}liked{% endif %}" data-dress-id="{{ dress.id }}">
                                 <svg width="50" height="50" viewBox="0 0 24 24">
                                     <use href="#heart"></use>

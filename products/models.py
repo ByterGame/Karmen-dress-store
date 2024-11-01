@@ -14,7 +14,7 @@ class DressCategory(models.Model):
 class Dress(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField()
-    cost = models.DecimalField(max_digits=8, decimal_places=2)
+    cost = models.DecimalField(max_digits=8, decimal_places=0)
     color = models.CharField(max_length=256)
     length = models.CharField(max_length=256)
     material = models.CharField(max_length=256)

@@ -3471,8 +3471,8 @@ a:hover,
 }
 
 .alert-warning {
-    background-color: #fff; /* Светло-красный фон */
-    color: #801818; /* Темно-красный текст */
+    background-color: #fff; /* Светло-red фон */
+    color: #801818; /* Темно-red текст */
     padding: 15px;
     border: 1px solid #f5c6cb;
     border-radius: 5px;
