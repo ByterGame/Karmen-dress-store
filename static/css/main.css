@@ -16,6 +16,7 @@ html {
   font-weight: 400;
   line-height: 28px;
   height: 100%;
+  cursor: default;
 }
 
 body {
@@ -2158,15 +2159,15 @@ a.video-play-btn {
 }
 
 .team-bg-1 {
-  background-image: url(../img/team/team-1.jpg);
+  background-image: url(../img/team/team1.jpg);
 }
 
 .team-bg-2 {
-  background-image: url(../img/team/team-2.jpg);
+  background-image: url(../img/team/team2.jpg);
 }
 
 .team-bg-3 {
-  background-image: url(../img/team/team-3.jpg);
+  background-image: url(../img/team/team3.jpg);
 }
 
 .team-bg {
