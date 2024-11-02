@@ -16,7 +16,6 @@ const dressItems = document.querySelectorAll('.dress-item');
                     requestAnimationFrame(step);
                 }
             }
-
             requestAnimationFrame(step);
         }
 
@@ -31,6 +30,26 @@ const dressItems = document.querySelectorAll('.dress-item');
             const currentTotal = parseFloat(totalCell.textContent.replace('$', ''));
 
             animateValue(totalCell, currentTotal, newTotal, 1500);
+
+            const totalTotalCell = document.getElementById('total-data-cost');
+            const currentTotalTotal = parseFloat(totalTotalCell.textContent.replace('$', ''));
+            const grandTotal = currentTotalTotal + price;
+
+            animateValue(totalTotalCell, currentTotalTotal, grandTotal, 1500);
+
+            let itemCount = 0;
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                itemCount += parseInt(input.value) || 0;
+            });
+            const shippingCost = parseInt(100 / itemCount);
+            const shippingCell = document.getElementById('total-shipping-cost');
+            const currentShipping = parseFloat(shippingCell.textContent.replace('$', ''));
+            animateValue(shippingCell, currentShipping, shippingCost, 1500);
+
+            const totalAllCell = document.getElementById('total-all-cost');
+            const grandAllTotal = currentTotalTotal + price + currentShipping;
+
+            animateValue(totalAllCell, currentTotalTotal, grandAllTotal, 1500);
         }
 
         document.querySelectorAll('.quantity-input').forEach(input => {
@@ -38,8 +57,6 @@ const dressItems = document.querySelectorAll('.dress-item');
                 updateTotal(this);
             });
         });
-
-
 
         $('.product-controls li:not(:last-child)').on('click', function () {
             var filterValue = $(this).attr('data-filter');

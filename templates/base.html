@@ -471,6 +471,48 @@ $(document).ready(function() {
     });
 </script>
 <script>
+         function animateValue(element, start, end, duration) {
+            let startTimestamp = null;
+
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                element.textContent = `$${(start + (end - start) * progress).toFixed(0)}`;
+
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            }
+            requestAnimationFrame(step);
+        }
+
+        function updateGrandTotal() {
+        let grandTotal = 0;
+        document.querySelectorAll('.product-total').forEach(cell => {
+            const cellValue = parseFloat(cell.textContent.replace('$', ''));
+            grandTotal += !isNaN(cellValue) ? cellValue : 0;
+        });
+
+        const totalTotalCell = document.getElementById('total-data-cost');
+        const currentTotalTotal = parseFloat(totalTotalCell.textContent.replace('$', ''));
+        animateValue(totalTotalCell, currentTotalTotal, grandTotal, 1500);
+
+        let itemCount = 0;
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                itemCount += parseInt(input.value) || 0;
+            });
+        const shippingCost = parseInt(100 / itemCount);
+
+        const shippingCell = document.getElementById('total-shipping-cost');
+        const currentShipping = parseFloat(shippingCell.textContent.replace('$', ''));
+        animateValue(shippingCell, currentShipping, shippingCost, 1500);
+
+        const totalAllCell = document.getElementById('total-all-cost');
+        grandTotal += currentShipping;
+        animateValue(totalAllCell, currentTotalTotal, grandTotal, 1500);
+        // totalTotalCell.textContent = `$${grandTotal}`;
+        }
+
     $(document).on('click', '.fa-window-close-cart', function(e) {
         e.preventDefault();
 
@@ -488,6 +530,7 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.status === 'removed'){
                 $row.remove();
+                updateGrandTotal();
                 } else {
                     alert(response.message);
                 }

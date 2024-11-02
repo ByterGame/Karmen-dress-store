@@ -45,10 +45,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% if user.is_authenticated %}
                                 {% for dress in carted_dresses %}
                                     <tr class="table-body-row" id="row-{{ dress.id }}">
-                                        <td class="product-remove"><a href="{% url 'users:remove_from_cart' %}"><i class="far fa-window-close fa-window-close-cart" data-dress-id="{{ dress.id }}"></i></a></td>
+                                        <td class="product-remove"><a href="{% url 'users:remove_from_cart' %}"><i class="far fa-window-close fa-window-close-cart" data-dress-id="{{ dress.id }}" id="remove"></i></a></td>
                                     <td class="product-image"><a href="{% url 'products:single_product' dress.id %}"><img src="{{ dress.photo.url }}" alt="{{ dress.name }}"></a></td>
                                     <td class="product-name">{{ dress.name }}</td>
                                     <td class="product-price">${{ dress.cost }}</td>
@@ -58,7 +57,6 @@
                                     <td class="product-total">${{ dress.cost }}</td>
                                 </tr>
                                 {% endfor %}
-                            {% endif %}
                             </tbody>
                         </table>
                     </div>
@@ -76,15 +74,15 @@
                             <tbody>
                             <tr class="total-data">
                                 <td><strong>Subtotal: </strong></td>
-                                <td>$500</td>
+                                <td id="total-data-cost">${{ total_cost }}</td>
                             </tr>
                             <tr class="total-data">
                                 <td><strong>Shipping: </strong></td>
-                                <td>$45</td>
+                                <td id="total-shipping-cost">${{ shipping_cost }}</td>
                             </tr>
                             <tr class="total-data">
                                 <td><strong>Total: </strong></td>
-                                <td>$545</td>
+                                <td id="total-all-cost">${{ result_cost }}</td>
                             </tr>
                             </tbody>
                         </table>
