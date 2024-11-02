@@ -3,8 +3,12 @@ from django.http import HttpResponseRedirect
 from yoomoney.payment import create_payment
 
 
-def create_payment_view(request):
-    confirmation_url = create_payment(request.user.id)
+def create_payment_view(request, total):
+    data = {
+        'user_id' : request.user.id,
+        'total' : total,
+    }
+    confirmation_url = create_payment(data)
     return HttpResponseRedirect(confirmation_url)
 
 # def create_payment_acceptance(request): вьюшка для обработки результата оплаты

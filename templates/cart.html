@@ -78,7 +78,7 @@
                             </tr>
                             <tr class="total-data">
                                 <td><strong>Shipping: </strong></td>
-                                <td id="total-shipping-cost">₽{{ shipping_cost }}</td>
+                                <td id="total-shipping-cost">${{ shipping_cost }}</td>
                             </tr>
                             <tr class="total-data">
                                 <td><strong>Total: </strong></td>
@@ -87,7 +87,7 @@
                             </tbody>
                         </table>
                         <div class="cart-buttons">
-                            <a href="{% url 'yoomoney:create_payment' %}" class="boxed-btn black" type="submit">Pay</a>
+                            <a href="{% url 'yoomoney:create_payment' total=result_cost %}" class="boxed-btn black" type="submit">Payment</a>
                         </div>
                     </div>
                 </div>
