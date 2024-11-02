@@ -26,9 +26,14 @@ def checkout(request):
 def cart(request):
     if request.user.is_authenticated:
         carted_dresses = request.user.cart.all()
-        total_cost = carted_dresses.aggregate(total=Sum('cost'))['total']
         item_count = carted_dresses.count()
-        shipping_cost = int(100/item_count)
+        if item_count != 0:
+            total_cost = carted_dresses.aggregate(total=Sum('cost'))['total']
+            shipping_cost = int(1000/item_count) if int(1000/item_count) > 100 else 0
+        else:
+            total_cost = 0
+            shipping_cost = 0
+
         result_cost = total_cost + shipping_cost
         context = {
             'carted_dresses': carted_dresses,

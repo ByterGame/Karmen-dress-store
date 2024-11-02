@@ -477,7 +477,7 @@ $(document).ready(function() {
             const step = (timestamp) => {
                 if (!startTimestamp) startTimestamp = timestamp;
                 const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                element.textContent = `$${(start + (end - start) * progress).toFixed(0)}`;
+                element.textContent = `₽${(start + (end - start) * progress).toFixed(0)}`;
 
                 if (progress < 1) {
                     requestAnimationFrame(step);
@@ -489,28 +489,34 @@ $(document).ready(function() {
         function updateGrandTotal() {
         let grandTotal = 0;
         document.querySelectorAll('.product-total').forEach(cell => {
-            const cellValue = parseFloat(cell.textContent.replace('$', ''));
+            const cellValue = parseFloat(cell.textContent.replace('₽', ''));
             grandTotal += !isNaN(cellValue) ? cellValue : 0;
         });
 
         const totalTotalCell = document.getElementById('total-data-cost');
-        const currentTotalTotal = parseFloat(totalTotalCell.textContent.replace('$', ''));
+        const currentTotalTotal = parseFloat(totalTotalCell.textContent.replace('₽', ''));
         animateValue(totalTotalCell, currentTotalTotal, grandTotal, 1500);
 
         let itemCount = 0;
             document.querySelectorAll('.quantity-input').forEach(input => {
                 itemCount += parseInt(input.value) || 0;
             });
-        const shippingCost = parseInt(100 / itemCount);
+            let finalShippingCost =0;
+            if (itemCount <= 0) {
+                finalShippingCost = 0;
+            } else {
+                const shippingCost = 1000 / itemCount;
+                finalShippingCost = shippingCost < 100 ? 0 : shippingCost;
+            }
 
         const shippingCell = document.getElementById('total-shipping-cost');
-        const currentShipping = parseFloat(shippingCell.textContent.replace('$', ''));
-        animateValue(shippingCell, currentShipping, shippingCost, 1500);
+        const currentShipping = parseFloat(shippingCell.textContent.replace('₽', ''));
+        animateValue(shippingCell, currentShipping, finalShippingCost, 1500);
 
         const totalAllCell = document.getElementById('total-all-cost');
-        grandTotal += currentShipping;
-        animateValue(totalAllCell, currentTotalTotal, grandTotal, 1500);
-        // totalTotalCell.textContent = `$${grandTotal}`;
+        const currentAllTotal = parseFloat(totalAllCell.textContent.replace('₽', ''));
+        grandTotal += finalShippingCost;
+        animateValue(totalAllCell, currentAllTotal, grandTotal, 1500);
         }
 
     $(document).on('click', '.fa-window-close-cart', function(e) {

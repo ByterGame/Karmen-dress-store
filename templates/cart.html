@@ -50,11 +50,11 @@
                                         <td class="product-remove"><a href="{% url 'users:remove_from_cart' %}"><i class="far fa-window-close fa-window-close-cart" data-dress-id="{{ dress.id }}" id="remove"></i></a></td>
                                     <td class="product-image"><a href="{% url 'products:single_product' dress.id %}"><img src="{{ dress.photo.url }}" alt="{{ dress.name }}"></a></td>
                                     <td class="product-name">{{ dress.name }}</td>
-                                    <td class="product-price">${{ dress.cost }}</td>
+                                    <td class="product-price">₽{{ dress.cost }}</td>
                                     <td class="product-quantity">
                                         <input type="number" class="quantity-input" value="1" min="1" data-cost="{{ dress.cost }}">
                                     </td>
-                                    <td class="product-total">${{ dress.cost }}</td>
+                                    <td class="product-total">₽{{ dress.cost }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -74,21 +74,20 @@
                             <tbody>
                             <tr class="total-data">
                                 <td><strong>Subtotal: </strong></td>
-                                <td id="total-data-cost">${{ total_cost }}</td>
+                                <td id="total-data-cost">₽{{ total_cost }}</td>
                             </tr>
                             <tr class="total-data">
                                 <td><strong>Shipping: </strong></td>
-                                <td id="total-shipping-cost">${{ shipping_cost }}</td>
+                                <td id="total-shipping-cost">₽{{ shipping_cost }}</td>
                             </tr>
                             <tr class="total-data">
                                 <td><strong>Total: </strong></td>
-                                <td id="total-all-cost">${{ result_cost }}</td>
+                                <td id="total-all-cost">₽{{ result_cost }}</td>
                             </tr>
                             </tbody>
                         </table>
                         <div class="cart-buttons">
-                            <a href="cart.html" class="boxed-btn">Update Cart</a>
-                            <a href="{% url 'yoomoney:create_payment' %}" class="boxed-btn black" type="submit">Check Out</a>
+                            <a href="{% url 'yoomoney:create_payment' %}" class="boxed-btn black" type="submit">Pay</a>
                         </div>
                     </div>
                 </div>

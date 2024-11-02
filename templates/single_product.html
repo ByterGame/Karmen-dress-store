@@ -34,7 +34,7 @@
             <div class="col-md-7">
                 <div class="single-product-content">
                     <h3>{{ dress.name }}</h3>
-                    <p class="single-product-pricing">$ {{ dress.cost }}</p>
+                    <p class="single-product-pricing">₽ {{ dress.cost }}</p>
                     <p>Color: {{ dress.color }}</p>
                     <p>Length: {{ dress.length }}</p>
                     <p>Material: {{ dress.material }}</p>
@@ -95,7 +95,7 @@
                                 <a href="{% url 'products:single_product' dress.id %}">{{ dress.name }}</a>
                             </h5>
                             <a href="{% url 'users:add_to_cart' %}" class="text-decoration-none" data-dress-id="{{ dress.id }}" {% if dress.id in carted_dresses %}data-after="In Cart"{% else %}data-after="Add to cart"{% endif %}>
-                                <span>${{ dress.cost }}</span>
+                                <span>₽{{ dress.cost }}</span>
                             </a>
                         </div>
                     </div>
