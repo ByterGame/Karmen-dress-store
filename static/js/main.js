@@ -255,6 +255,73 @@ const dressItems = document.querySelectorAll('.dress-item');
         jQuery(".loader").fadeOut(1000);
     });
 
+    document.getElementById('phone-input').addEventListener('input', function(e) {
+        let input = e.target.value.replace(/\D/g, ''); // Удаляем все нечисловые символы
+
+        if (!input.startsWith("7") && !input.startsWith("8")) {
+            input = "7" + input;
+        }
+
+        if (e.inputType === 'deleteContentBackward') {
+            return;
+        }
+
+        let formattedInput = '+7 ';
+        if (input.length > 1) {
+            formattedInput += '(' + input.substring(1, 4);
+        }
+        if (input.length >= 4) {
+            formattedInput += ') ' + input.substring(4, 7);
+        }
+        if (input.length >= 7) {
+            formattedInput += '-' + input.substring(7, 9);
+        }
+        if (input.length >= 9) {
+            formattedInput += '-' + input.substring(9, 11);
+        }
+
+        e.target.value = formattedInput;
+    });
+
+
+//     const addressInput = document.getElementById('address');
+// const suggestionsList = document.getElementById('suggestions');
+//
+// addressInput.addEventListener('input', () => {
+//     const query = addressInput.value;
+//
+//     if (query.length > 3) {
+//         fetch("https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address", {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json",
+//                 "Accept": "application/json",
+//                 "Authorization": "Token YOUR_API_KEY"
+//             },
+//             body: JSON.stringify({ "query": query })
+//         })
+//         .then(response => response.json())
+//         .then(data => {
+//             suggestionsList.innerHTML = "";  // Очистка предыдущих подсказок
+//             const suggestions = data.suggestions;
+//
+//             suggestions.forEach(suggestion => {
+//                 const item = document.createElement('li');
+//                 item.textContent = suggestion.value;
+//                 item.addEventListener('click', () => {
+//                     addressInput.value = suggestion.value;  // Подставляем выбранное значение
+//                     suggestionsList.innerHTML = "";  // Очищаем подсказки
+//                 });
+//                 suggestionsList.appendChild(item);
+//             });
+//         })
+//         .catch(error => console.error("Error:", error));
+//     } else {
+//         suggestionsList.innerHTML = "";  // Убираем подсказки, если длина текста < 3
+//     }
+// });
+
+
 
 }(jQuery));
 
@@ -326,114 +393,4 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-});
-
-
-$(document).ready(function () {
-    // Закрытие окна входа при нажатии на ссылку открытия окна регистрации
-    $('#loginModal').on('click', '[data-target="#registrationModal"]', function () {
-        $('#loginModal').modal('hide'); // Закрыть текущее окно входа
-    });
-});
-
-$(document).ready(function () {
-    $('#register-form').on('submit', function (event) {
-        event.preventDefault();
-        const form = $(this);
-
-        // Очистка предыдущих ошибок перед отправкой
-        form.find('.error-message').remove();
-        form.find('.is-invalid').removeClass('is-invalid');
-
-        $.ajax({
-            type: 'POST',
-            url: form.attr('action'),
-            data: form.serialize(),
-            success: function (response) {
-                if (response.status === 'success') {
-                    //alert('Account created successfully!');
-                    //location.reload(); // обновление страницы после успешной регистрации
-                    $('#registrationModal').modal('hide'); // Закрываем окно регистрации
-                    $('#loginModal').modal('show'); // Открываем окно входа
-                } else {
-                    // Отображение ошибок в форме
-                    $.each(response.errors, function (field, messages) {
-                        if (field === '__all__') {
-                            $('#register-form').prepend(`<div class="error-message text-danger">${messages[0]}</div>`);
-                        } else {
-                            const input = form.find(`[name="${field}"]`);
-                            input.addClass('is-invalid');
-                            input.after(`<div class="error-message text-danger">${messages[0]}</div>`);
-                        }
-                    });
-                }
-            },
-            error: function () {
-                alert('An unexpected error occurred. Please try again.');
-            }
-        });
-    });
-});
-
-$(document).ready(function () {
-    $('#login-form').on('submit', function (event) {
-        event.preventDefault(); // предотвратить обычную отправку формы
-        const form = $(this);
-
-        // Очистите предыдущие ошибки перед отправкой
-        form.find('.error-message').remove();
-        form.find('.is-invalid').removeClass('is-invalid');
-
-        $.ajax({
-            type: 'POST',
-            url: form.attr('action'), // путь к представлению
-            data: form.serialize(),
-            success: function (response) {
-                if (response.status === 'success') {
-                    //alert('Successfully logged in!');
-                    location.reload();
-                } else {
-                    // Отображение ошибок в форме
-                    $.each(response.errors, function (field, messages) {
-                        if (field === '__all__') {
-                            $('#login-form').prepend(`<div class="error-message text-danger">${messages[0]}</div>`);
-                        } else {
-                            const input = form.find(`[name="${field}"]`);
-                            input.addClass('is-invalid');
-                            input.after(`<div class="error-message text-danger">${messages[0]}</div>`);
-                        }
-                    });
-                }
-            },
-            error: function () {
-                alert('An unexpected error occurred. Please try again.');
-            }
-        });
-    });
-});
-
-
-$(document).on('click', '.add-to-cart', function(e) {
-    e.preventDefault();
-
-    const dressId = $(this).data('dress-id');
-
-    $.ajax({
-    url: "{% url 'add_to_cart' %}",
-    type: "POST",
-    data: {
-    'dress_id': dressId,
-    'csrfmiddlewaretoken': '{{ csrf_token }}'
-},
-    success: function(response) {
-    if (response.status === 'success') {
-    alert(response.message);
-} else {
-    alert(response.message);
-}
-},
-    error: function() {
-    alert('Произошла ошибка. Попробуйте снова.');
-}
-});
 });

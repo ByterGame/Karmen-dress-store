@@ -3488,3 +3488,33 @@ a:hover,
 .liked:hover {
     color: #000000;
 }
+
+.total-data {
+    position: relative;
+}
+
+.suggestions-list {
+    position: absolute;
+    list-style-type: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    width: 100%;
+    z-index: 1000;
+}
+
+.suggestions-list li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestions-list li:hover {
+    background-color: #f0f0f0;
+}
+
+.tr.input{
+  width: 100%;
+}
