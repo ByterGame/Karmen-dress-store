@@ -5,17 +5,17 @@ from yookassa import Configuration, Payment
 Configuration.account_id = 484924
 Configuration.secret_key = 'test_XtVlzBPW40VDbdG6kogjB43VgTk0XzGmoCSHGHmldZM'
 
-def create_payment(uuid):
+def create_payment(data):
 
     change = BalanceChange.objects.create(
-        user_id=uuid,
+        user_id=data['user_id'],
         amount_value=300,
         is_accepted=True, #так как результат платежа не обрабатывается на локал хосте, то по дефолту ставим True
     )
 
     payment = Payment.create({
         'amount': {
-            'value': 300,
+            'value': data['total'],
             'currency': 'RUB',
         },
         'payment_method_data': {
@@ -27,11 +27,11 @@ def create_payment(uuid):
         },
         'metadata': {
             'table_id': change.id,
-            'user_id': uuid,
+            'user_id': data['user_id'],
         },
         'capture': True,
         'refundable': False,
-        'description': 'Оплата на сумму ' + str(300),
+        'description': 'Оплата на сумму ' + str(data['total']),
     })
 
 
