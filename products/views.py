@@ -1,6 +1,7 @@
 from products.models import Dress, DressCategory
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Sum
+from users.forms import UserShippingForm
 
 def index(request):
     liked_dresses = request.user.like.values_list('id', flat=True) if request.user.is_authenticated else []
@@ -27,6 +28,17 @@ def cart(request):
     if request.user.is_authenticated:
         carted_dresses = request.user.cart.all()
         item_count = carted_dresses.count()
+
+        initial_data = {
+            'fullname': request.user.fullname,
+            'phone': request.user.phone,
+            'address': request.user.address,
+            'postal_code': request.user.postal_code,
+        }
+
+        has_initial_data = all(initial_data.values())
+        form = UserShippingForm(initial=initial_data if has_initial_data else None)
+
         if item_count != 0:
             total_cost = carted_dresses.aggregate(total=Sum('cost'))['total']
             shipping_cost = int(1000/item_count) if int(1000/item_count) > 100 else 0
@@ -40,6 +52,8 @@ def cart(request):
             'total_cost': total_cost or 0,
             'shipping_cost': shipping_cost or 0,
             'result_cost': result_cost,
+            'form': form,
+        'has_initial_data': has_initial_data,
         }
         return render(request, 'cart.html', context)
     else:

@@ -32,3 +32,26 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'password1', 'password2')
+
+
+class UserShippingForm(forms.ModelForm):
+    fullname = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': "Enter your full name"
+    }))
+    phone = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': "+7 (___) ___-__-__"
+    }))
+    address = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': "Enter your address"
+    }))
+    postal_code = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': "Enter your postal code"
+    }))
+
+    class Meta:
+        model = User
+        fields = ('fullname', 'phone', 'address', 'postal_code')

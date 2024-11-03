@@ -60,7 +60,7 @@
                                 <a href="{% url 'products:single_product' dress.id %}">{{ dress.name }}</a>
                             </h5>
                             <a href="{% url 'users:add_to_cart' %}" class="text-decoration-none" data-dress-id="{{ dress.id }}" {% if dress.id in carted_dresses %}data-after="In Cart"{% else %}data-after="Add to cart"{% endif %}>
-                                <span>${{ dress.cost }}</span>
+                                <span>₽{{ dress.cost }}</span>
                             </a>
                         </div>
                     </div>
