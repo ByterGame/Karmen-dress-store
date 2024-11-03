@@ -33,7 +33,14 @@ const dressItems = document.querySelectorAll('.dress-item');
 
             const totalTotalCell = document.getElementById('total-data-cost');
             const currentTotalTotal = parseFloat(totalTotalCell.textContent.replace('₽', ''));
-            const grandTotal = currentTotalTotal + price;
+            let grandTotal = 0;
+                document.querySelectorAll('.table-body-row').forEach(row => {
+                    const cell = row.querySelector('.product-price');
+                    const count = row.querySelector('.quantity-input');
+                    const cellValue = parseFloat(cell.textContent.replace('₽', ''));
+                    const countValue = parseInt(count.value) || 0;
+                    grandTotal += !isNaN(cellValue) && !isNaN(countValue) ? cellValue * countValue : 0;
+                });
 
             animateValue(totalTotalCell, currentTotalTotal, grandTotal, 1500);
 

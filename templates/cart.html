@@ -39,6 +39,7 @@
                                 <th class="product-remove"></th>
                                 <th class="product-image">Product Image</th>
                                 <th class="product-name">Name</th>
+                                <th class="product-size">Size</th>
                                 <th class="product-price">Price</th>
                                 <th class="product-quantity">Quantity</th>
                                 <th class="product-total">Total</th>
@@ -50,6 +51,7 @@
                                         <td class="product-remove"><a href="{% url 'users:remove_from_cart' %}"><i class="far fa-window-close fa-window-close-cart" data-dress-id="{{ dress.id }}" id="remove"></i></a></td>
                                     <td class="product-image"><a href="{% url 'products:single_product' dress.id %}"><img src="{{ dress.photo.url }}" alt="{{ dress.name }}"></a></td>
                                     <td class="product-name">{{ dress.name }}</td>
+                                        <td class="product-size"><input type="number" value="42" min="42" max="54" step="2"></td>
                                     <td class="product-price">₽{{ dress.cost }}</td>
                                     <td class="product-quantity">
                                         <input type="number" class="quantity-input" value="1" min="1" data-cost="{{ dress.cost }}">
@@ -88,13 +90,9 @@
                         </table>
                     </div>
 
-
-                <form class="form" id="shipping-form" method="post" action="{% url 'users:add_shipping_information' %}">
-                <div class="cart-buttons">
-                    <button type="submit" class="transparent-btn"><a  class="boxed-btn black mb-5" type="submit">Payment</a></button>
-                        </div>
+    <form class="form" id="shipping-form" method="post" action="{% url 'users:add_shipping_information' %}">
     {% csrf_token %}
-    <div class="total-section">
+    <div class="total-section mt-5">
         <table class="total-table">
             <thead class="total-table-head">
                 <tr class="table-total-row">
@@ -120,6 +118,9 @@
                 </tr>
             </tbody>
         </table>
+        <div class="cart-buttons">
+                    <button type="submit" class="transparent-btn"><a  class="boxed-btn black mb-5" type="submit">Payment</a></button>
+                        </div>
     </div>
 </form>
             </div>

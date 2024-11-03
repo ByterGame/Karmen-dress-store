@@ -1,7 +1,12 @@
+from lib2to3.fixes.fix_input import context
+
 from products.models import Dress, DressCategory
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Sum
 from users.forms import UserShippingForm
+from users.models import User
+from django.http import JsonResponse
+import json
 
 def index(request):
     liked_dresses = request.user.like.values_list('id', flat=True) if request.user.is_authenticated else []
@@ -110,3 +115,18 @@ def single_product(request, id):
         'carted_dresses': carted_dresses,
     }
     return render(request, 'single_product.html', context)
+
+
+def admin_panel(request):
+    users = User.objects.all()
+    context = {
+        'users': users,
+    }
+    return render(request, 'admin.html', context)
+
+def admin_dresses(request):
+    dresses = Dress.objects.all()
+    context = {
+        'dresses': dresses,
+    }
+    return render(request, 'admin_dresses.html', context)

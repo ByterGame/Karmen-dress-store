@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Admin-Panel
+{% endblock %}
+
+{% block content %}
+    {% load static %}
+    <!-- breadcrumb-section -->
+    <div class="breadcrumb-section breadcrumb-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 text-center">
+                    <div class="breadcrumb-text">
+                        <h1>Admin Panel</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<section class="py-5">
+    <div class="container">
+			<div class="product-filter">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="section-title">
+                        <ul class="product-controls">
+                            <li><a href="{% url 'products:admin_panel' %}">Users</a></li>
+                            <li><a href="{% url 'products:admin_dresses' %}">Dresses</a></li>
+                        </ul>
+                        </div>
+                </div>
+            </div>
+      </div>
+
+<div class="col-lg-12 col-md-12">
+    <div class="cart-table-wrap">
+        <table class="cart-table">
+            <thead class="cart-table-head">
+                <tr class="table-head-row">
+                    <th class="dress-id">Id</th>
+                    <th class="dress-photo">Photo 1</th>
+                    <th class="dress-photo-hover">Photo 2</th>
+                    <th class="dress-name">Name</th>
+                    <th class="dress-description">Description</th>
+                    <th class="dress-color">Color</th>
+                    <th class="dress-length">Length</th>
+                    <th class="dress-material">Material</th>
+                    <th class="dress-cost">Price</th>
+                    <th class="change">Change</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dress in dresses %}
+                <tr class="table-body-row">
+                <td class="dress-id">{{ dress.id }}</td>
+                    <td class="product-image"><a href="{% url 'products:single_product' dress.id %}"><img src="{{ dress.photo.url }}" alt="{{ dress.name }}"></a></td>
+                    <td class="product-image"><a href="{% url 'products:single_product' dress.id %}"><img src="{{ dress.photo_hover.url }}" alt="{{ dress.name }}"></a></td>
+                    <td class="dress-name">{{ dress.name }}</td>
+                    <td class="dress-description">{{ dress.description }}</td>
+                    <td class="dress-color">{{ dress.color }}</td>
+                    <td class="dress-length">{{ dress.length }}</td>
+                    <td class="dress-material">{{ dress.material }}</td>
+                    <td class="dress-cost">₽{{ dress.cost }}</td>
+                <td class="cart-buttons">
+                        <a href="#" class="boxed-btn black edit-btn" data-editing="false">Change</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+    </div>
+</section>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Обработка нажатия на кнопку Change/Submit
+    document.querySelectorAll('.edit-btn').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            const row = this.closest('.table-body-row');
+            const isEditing = this.getAttribute('data-editing') === 'true';
+
+            if (isEditing) {
+                // Если кнопка в режиме Submit
+                saveChanges(row);
+                this.textContent = 'Change';
+                this.setAttribute('data-editing', 'false');
+            } else {
+                // Если кнопка в режиме Change
+                enableEditing(row);
+                this.textContent = 'Submit';
+                this.setAttribute('data-editing', 'true');
+            }
+        });
+    });
+
+    // Включение режима редактирования
+    function enableEditing(row) {
+        row.querySelectorAll('.dress-name, .dress-description, .dress-color, .dress-length, .dress-material, .dress-cost').forEach(cell => {
+            const text = cell.textContent.replace('₽', '').trim();
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = text;
+            cell.textContent = '';
+            cell.appendChild(input);
+        });
+
+        row.querySelectorAll('.photo-container img').forEach(img => {
+            img.addEventListener('dragover', event => event.preventDefault());
+            img.addEventListener('drop', event => handleImageDrop(event, img));
+        });
+    }
+
+    // Сохранение изменений
+    function saveChanges(row) {
+        const dressId = row.getAttribute('data-dress-id');
+        const updatedData = {
+            id: dressId,
+            name: row.querySelector('.dress-name input').value,
+            description: row.querySelector('.dress-description input').value,
+            color: row.querySelector('.dress-color input').value,
+            length: row.querySelector('.dress-length input').value,
+            material: row.querySelector('.dress-material input').value,
+            cost: parseFloat(row.querySelector('.dress-cost input').value),
+            photo: row.querySelector('.dress-photo').src,
+            photo_hover: row.querySelector('.dress-photo-hover').src
+        };
+
+        // Отправка данных на сервер
+        fetch(`/admin/update-dress/${dressId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify(updatedData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Dress updated successfully!');
+                disableEditing(row, updatedData);
+            } else {
+                alert('Failed to update dress.');
+            }
+        });
+    }
+
+    // Отключение режима редактирования и обновление данных в таблице
+    function disableEditing(row, data) {
+        row.querySelector('.dress-name').textContent = data.name;
+        row.querySelector('.dress-description').textContent = data.description;
+        row.querySelector('.dress-color').textContent = data.color;
+        row.querySelector('.dress-length').textContent = data.length;
+        row.querySelector('.dress-material').textContent = data.material;
+        row.querySelector('.dress-cost').textContent = '₽' + data.cost;
+        row.querySelector('.dress-photo').src = data.photo;
+        row.querySelector('.dress-photo-hover').src = data.photo_hover;
+    }
+
+    // Обработка замены изображений методом drag-and-drop
+    function handleImageDrop(event, imgElement) {
+        event.preventDefault();
+        const file = event.dataTransfer.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            imgElement.src = e.target.result;
+            imgElement.dataset.newImage = e.target.result;  // Сохраняем новое изображение для отправки на сервер
+        };
+
+        reader.readAsDataURL(file);
+    }
+});
+</script>
+
+
+{% endblock %}
