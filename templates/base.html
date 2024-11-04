@@ -68,7 +68,7 @@
                                 <li><a href="{% url 'products:index' %}">{{ user.username }}</a></li>
                                 <li><a href="{% url 'users:logout' %}">Logout</a></li>
                                 {% if user.is_superuser or user.is_staff %}
-                                    <li><a href="{% url 'admin:index' %}">Admin-panel</a></li>
+                                    <li><a href="{% url 'products:admin-panel' %}">Admin-panel</a></li>
                                 {% endif %}
                             {% else %}
                                 <li><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></li>

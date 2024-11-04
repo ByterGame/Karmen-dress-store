@@ -12,12 +12,25 @@
             <div class="row">
                 <div class="col-lg-8 offset-lg-2 text-center">
                     <div class="breadcrumb-text">
+                        {% if user.is_authenticated %}
+                            {% if user.is_superuser or user.is_staff %}
                         <h1>Admin Panel</h1>
+                        {% else %}
+                                <p>You Do Not Have Access To This Section</p>
+                                <h1>Please Log In As Admin</h1>
+                                {% endif %}
+                            {% else %}
+                            <p>You Do Not Have Access To This Section</p>
+                                <h1>Please Log In As Admin</h1>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+{% if user.is_authenticated %}
+                            {% if user.is_superuser or user.is_staff %}
 <section class="py-5">
     <div class="container">
 			<div class="product-filter">
@@ -25,8 +38,8 @@
                     <div class="col-lg-12 text-center">
                         <div class="section-title">
                         <ul class="product-controls">
-                            <li><a href="{% url 'products:admin_panel' %}">Users</a></li>
-                            <li><a href="{% url 'products:admin_dresses' %}">Dresses</a></li>
+                            <li><a href="{% url 'products:admin-panel' %}">Users</a></li>
+                            <li><a href="{% url 'products:admin-dresses' %}">Dresses</a></li>
                         </ul>
                         </div>
                 </div>
@@ -44,6 +57,7 @@
                     <th class="dress-name">Name</th>
                     <th class="dress-description">Description</th>
                     <th class="dress-color">Color</th>
+                    <th class="dress-model">Model</th>
                     <th class="dress-length">Length</th>
                     <th class="dress-material">Material</th>
                     <th class="dress-cost">Price</th>
@@ -52,18 +66,19 @@
             </thead>
             <tbody>
                 {% for dress in dresses %}
-                <tr class="table-body-row">
+                <tr class="table-body-row" data-dress-id="{{ dress.id }}">
                 <td class="dress-id">{{ dress.id }}</td>
                     <td class="product-image"><a href="{% url 'products:single_product' dress.id %}"><img src="{{ dress.photo.url }}" alt="{{ dress.name }}"></a></td>
                     <td class="product-image"><a href="{% url 'products:single_product' dress.id %}"><img src="{{ dress.photo_hover.url }}" alt="{{ dress.name }}"></a></td>
                     <td class="dress-name">{{ dress.name }}</td>
                     <td class="dress-description">{{ dress.description }}</td>
                     <td class="dress-color">{{ dress.color }}</td>
+                    <td class="dress-model">{{ dress.model }}</td>
                     <td class="dress-length">{{ dress.length }}</td>
                     <td class="dress-material">{{ dress.material }}</td>
                     <td class="dress-cost">₽{{ dress.cost }}</td>
                 <td class="cart-buttons">
-                        <a href="#" class="boxed-btn black edit-btn" data-editing="false">Change</a>
+                        <a href="{% url 'products:update_dress' dress.id %}" class="boxed-btn black edit-btn" data-editing="false">Change</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -75,107 +90,115 @@
     </div>
 </section>
 
-    <script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Обработка нажатия на кнопку Change/Submit
-    document.querySelectorAll('.edit-btn').forEach(button => {
-        button.addEventListener('click', function(event) {
-            event.preventDefault();
-            const row = this.closest('.table-body-row');
-            const isEditing = this.getAttribute('data-editing') === 'true';
+    {% endif %}
+    {% endif %}
 
-            if (isEditing) {
-                // Если кнопка в режиме Submit
-                saveChanges(row);
-                this.textContent = 'Change';
-                this.setAttribute('data-editing', 'false');
-            } else {
-                // Если кнопка в режиме Change
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".cart-buttons a").forEach(button => {
+        button.addEventListener("click", function() {
+            const row = this.closest("tr");
+            if (this.textContent === "Change") {
                 enableEditing(row);
-                this.textContent = 'Submit';
-                this.setAttribute('data-editing', 'true');
+            } else if (this.textContent === "Submit") {
+                submitChanges(row);
             }
         });
     });
-
-    // Включение режима редактирования
-    function enableEditing(row) {
-        row.querySelectorAll('.dress-name, .dress-description, .dress-color, .dress-length, .dress-material, .dress-cost').forEach(cell => {
-            const text = cell.textContent.replace('₽', '').trim();
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.value = text;
-            cell.textContent = '';
-            cell.appendChild(input);
-        });
-
-        row.querySelectorAll('.photo-container img').forEach(img => {
-            img.addEventListener('dragover', event => event.preventDefault());
-            img.addEventListener('drop', event => handleImageDrop(event, img));
-        });
-    }
-
-    // Сохранение изменений
-    function saveChanges(row) {
-        const dressId = row.getAttribute('data-dress-id');
-        const updatedData = {
-            id: dressId,
-            name: row.querySelector('.dress-name input').value,
-            description: row.querySelector('.dress-description input').value,
-            color: row.querySelector('.dress-color input').value,
-            length: row.querySelector('.dress-length input').value,
-            material: row.querySelector('.dress-material input').value,
-            cost: parseFloat(row.querySelector('.dress-cost input').value),
-            photo: row.querySelector('.dress-photo').src,
-            photo_hover: row.querySelector('.dress-photo-hover').src
-        };
-
-        // Отправка данных на сервер
-        fetch(`/admin/update-dress/${dressId}/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: JSON.stringify(updatedData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Dress updated successfully!');
-                disableEditing(row, updatedData);
-            } else {
-                alert('Failed to update dress.');
-            }
-        });
-    }
-
-    // Отключение режима редактирования и обновление данных в таблице
-    function disableEditing(row, data) {
-        row.querySelector('.dress-name').textContent = data.name;
-        row.querySelector('.dress-description').textContent = data.description;
-        row.querySelector('.dress-color').textContent = data.color;
-        row.querySelector('.dress-length').textContent = data.length;
-        row.querySelector('.dress-material').textContent = data.material;
-        row.querySelector('.dress-cost').textContent = '₽' + data.cost;
-        row.querySelector('.dress-photo').src = data.photo;
-        row.querySelector('.dress-photo-hover').src = data.photo_hover;
-    }
-
-    // Обработка замены изображений методом drag-and-drop
-    function handleImageDrop(event, imgElement) {
-        event.preventDefault();
-        const file = event.dataTransfer.files[0];
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-            imgElement.src = e.target.result;
-            imgElement.dataset.newImage = e.target.result;  // Сохраняем новое изображение для отправки на сервер
-        };
-
-        reader.readAsDataURL(file);
-    }
 });
+
+function enableEditing(row) {
+    event.preventDefault();
+    row.querySelectorAll('td').forEach((cell) => {
+        if (cell.classList.contains('dress-name') || cell.classList.contains('dress-description') ||
+            cell.classList.contains('dress-color') || cell.classList.contains('dress-length') ||
+            cell.classList.contains('dress-material') || cell.classList.contains('dress-cost') ||
+            cell.classList.contains('dress-model')){
+
+            const value = cell.textContent.trim();
+            cell.innerHTML = `<input type="text" value="${value}" class="input-field">`;
+        }
+    });
+
+    const button = row.querySelector('.cart-buttons a');
+    button.textContent = 'Submit';
+}
+
+function disableEditing(row, data) {
+    row.querySelectorAll('td').forEach((cell) => {
+        if (cell.classList.contains('dress-name')) {
+            cell.innerHTML = data.name;
+        } else if (cell.classList.contains('dress-description')) {
+            cell.innerHTML = data.description;
+        } else if (cell.classList.contains('dress-color')) {
+            cell.innerHTML = data.color;
+        }else if (cell.classList.contains('dress-model')) {
+            cell.innerHTML = data.model;
+        } else if (cell.classList.contains('dress-length')) {
+            cell.innerHTML = data.length;
+        } else if (cell.classList.contains('dress-material')) {
+            cell.innerHTML = data.material;
+        } else if (cell.classList.contains('dress-cost')) {
+            cell.innerHTML = `₽${data.cost}`;
+        }
+    });
+
+    const button = row.querySelector('.cart-buttons a');
+    button.textContent = 'Change';
+}
+
+function submitChanges(row) {
+    event.preventDefault();
+    const dressId = row.querySelector('.dress-id').textContent;
+    const updatedData = {};
+
+    row.querySelectorAll('td').forEach((cell) => {
+        const input = cell.querySelector('input');
+        if (input) {
+            if (cell.classList.contains('dress-name')) updatedData.name = input.value;
+            else if (cell.classList.contains('dress-description')) updatedData.description = input.value;
+            else if (cell.classList.contains('dress-color')) updatedData.color = input.value;
+            else if (cell.classList.contains('dress-model')) updatedData.model = input.value;
+            else if (cell.classList.contains('dress-length')) updatedData.length = input.value;
+            else if (cell.classList.contains('dress-material')) updatedData.material = input.value;
+            else if (cell.classList.contains('dress-cost')) updatedData.cost = parseFloat(input.value.replace('₽', ''));
+        }
+    });
+
+    fetch(`/update-dress/${dressId}/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify(updatedData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            disableEditing(row, updatedData);
+        } else {
+            alert('Ошибка при обновлении данных');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 </script>
 
 

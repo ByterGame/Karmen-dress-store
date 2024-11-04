@@ -1,5 +1,4 @@
 from lib2to3.fixes.fix_input import context
-
 from products.models import Dress, DressCategory
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Sum
@@ -130,3 +129,28 @@ def admin_dresses(request):
         'dresses': dresses,
     }
     return render(request, 'admin_dresses.html', context)
+
+
+def update_dress(request, id):
+    dress = get_object_or_404(Dress, id=id)
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            dress = Dress.objects.get(pk=id)
+
+            dress.name = data.get('name', dress.name)
+            dress.description = data.get('description', dress.description)
+            dress.color = data.get('color', dress.color)
+            dress.model = data.get('model', dress.model)
+            dress.length = data.get('length', dress.length)
+            dress.material = data.get('material', dress.material)
+            dress.cost = data.get('cost', dress.cost)
+
+            dress.save()  # Сохранение изменений
+            return JsonResponse({'success': True})
+
+        except Dress.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Dress not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+    return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=405)
