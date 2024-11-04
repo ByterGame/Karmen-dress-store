@@ -10,6 +10,7 @@ import json
 def index(request):
     liked_dresses = request.user.like.values_list('id', flat=True) if request.user.is_authenticated else []
     carted_dresses = request.user.cart.values_list('id', flat=True) if request.user.is_authenticated else []
+
     context = {
         'title': 'Karmen Dress',
         'products': Dress.objects.all(),
@@ -50,9 +51,15 @@ def cart(request):
             total_cost = 0
             shipping_cost = 0
 
+        dresses = list(carted_dresses.values_list('name', flat=True))
+        dresses = ', '.join(dresses)
+        total_cost = carted_dresses.aggregate(total=Sum('cost'))['total']
+        item_count = carted_dresses.count()
+        shipping_cost = int(100/item_count)
         result_cost = total_cost + shipping_cost
         context = {
             'carted_dresses': carted_dresses,
+            'dresses': dresses,
             'total_cost': total_cost or 0,
             'shipping_cost': shipping_cost or 0,
             'result_cost': result_cost,

@@ -120,6 +120,9 @@
         </table>
         <div class="cart-buttons">
                     <button type="submit" class="transparent-btn"><a  class="boxed-btn black mb-5" type="submit">Payment</a></button>
+                        <div class="cart-buttons">
+                            <a href="cart.html" class="boxed-btn">Update Cart</a>
+                            <a href="{% url 'yoomoney:create_payment' total=result_cost str_dresses=dresses%}" class="boxed-btn black">Check Out</a>
                         </div>
     </div>
 </form>
