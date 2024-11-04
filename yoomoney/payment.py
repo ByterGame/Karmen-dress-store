@@ -9,8 +9,9 @@ def create_payment(data):
 
     change = BalanceChange.objects.create(
         user_id=data['user_id'],
-        amount_value=300,
-        is_accepted=True, #так как результат платежа не обрабатывается на локал хосте, то по дефолту ставим True
+        amount_value=data['total'],
+        purchase=f'Были куплены: {data['str_dresses']}',
+        is_accepted=True,
     )
 
     payment = Payment.create({
@@ -23,7 +24,7 @@ def create_payment(data):
         },
         'confirmation': {
             'type': 'redirect',
-            'return_url': 'https://example.com',
+            'return_url': 'https://e5a1-77-34-100-114.ngrok-free.app/',
         },
         'metadata': {
             'table_id': change.id,
@@ -38,18 +39,18 @@ def create_payment(data):
     return payment.confirmation.confirmation_url
 
 
-# def payment_acceptance(response): функция для обработки результата оплаты
-#     try:
-#         table = BalanceChange.objects.get(
-#             id=response['object']['metadata']['table_id'],
-#         )
-#     except BalanceChange.DoesNotExist:
-#         # payment_id = response['object']['id']
-#         return False
-#
-#     if response['event'] == 'payment.succeeded':
-#         table.is_accepted = True
-#         table.save()
-#     elif response['event'] == 'payment.canceled':
-#         table.is_accepted = False
-#     return True
+def payment_acceptance(response):
+    try:
+        table = BalanceChange.objects.get(
+            id=response['object']['metadata']['table_id'],
+        )
+    except BalanceChange.DoesNotExist:
+        # payment_id = response['object']['id']
+        return False
+
+    if response['event'] == 'payment.succeeded':
+        table.is_accepted = True
+        table.save()
+    elif response['event'] == 'payment.canceled':
+        table.is_accepted = False
+    return True

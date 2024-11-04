@@ -18,10 +18,10 @@ def sign_in(request):
                 auth.login(request, user)
                 return JsonResponse({'status': 'success', 'message': 'You successfully logged in.'})
             else:
-                return JsonResponse({'status': 'error', 'errors': {'__all__': ['Invalid login or password.']}})
+                return JsonResponse({'status': 'error', 'errors': {'username': ['Invalid login or password.']}})
         else:
-            return JsonResponse({'status': 'error', 'errors': form.errors})
-    return JsonResponse({'status': 'error', 'errors': {'__all__': ['Invalid request method.']}})
+            return JsonResponse({'status': 'error', 'errors': {'username': form.errors['__all__']}})
+    return JsonResponse({'status': 'error', 'errors': {'username': ['Invalid request method.']}})
 
 def sign_up(request):
     form = UserRegisterForm(data=request.POST or None)

@@ -4,9 +4,10 @@ from django.utils import timezone
 
 class BalanceChange(models.Model):
     user_id = models.IntegerField()
-    amount_value = models.DecimalField(decimal_places=2, max_digits=99)
+    amount_value = models.IntegerField(max_length=100)
     date = models.DateTimeField(_("payment's date"), default=timezone.now)
     is_accepted = models.BooleanField(default=False)
+    purchase = models.TextField()
 
     def __str__(self):
         status = 'Accepted' if self.is_accepted else 'Declined'

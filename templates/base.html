@@ -135,7 +135,7 @@
                                     <span class="input-group-text">
                                         <i class="material-icons">Password</i>
                                         </span>
-                                    <input type="text" name="password" class="form-control" placeholder="Password..." autofocus="" required="" id="id_password">
+                                    <input type="password" name="password" class="form-control" placeholder="Password..." autofocus="" required="" id="id_password">
                                 </div>
                                 {{ form.password }}
                             </div>
@@ -318,9 +318,9 @@ $(document).ready(function() {
                     });
                 }
             },
-            error: function() {
-                alert('An unexpected error occurred. Please try again.');
-            }
+           // error: function() {
+            //    alert('An unexpected error occurred. Please try again.');
+            //}
         });
     });
 });
@@ -343,9 +343,9 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.status === 'success') {
                     //alert('Account created successfully!');
-                    //location.reload(); // обновление страницы после успешной регистрации
-                    $('#registrationModal').modal('hide'); // Закрываем окно регистрации
-                    $('#loginModal').modal('show'); // Открываем окно входа
+                    location.reload(); // обновление страницы после успешной регистрации
+                    //$('#registrationModal').modal('hide'); // Закрываем окно регистрации
+                    //$('#loginModal').modal('show'); // Открываем окно входа
                 } else {
                     // Отображение ошибок в форме
                     $.each(response.errors, function(field, messages) {
@@ -359,9 +359,9 @@ $(document).ready(function() {
                     });
                 }
             },
-            error: function() {
-                alert('An unexpected error occurred. Please try again.');
-            }
+            //error: function() {
+            //    alert('An unexpected error occurred. Please try again.');
+            //}
         });
     });
 });
