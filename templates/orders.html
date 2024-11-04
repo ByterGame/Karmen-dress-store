@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Orders
+{% endblock %}
+
+{% block content %}
+    {% load static %}
+    <!-- breadcrumb-section -->
+    <div class="breadcrumb-section breadcrumb-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 text-center">
+                    <div class="breadcrumb-text">
+                        {% if user.is_authenticated %}
+                        <p>Thank you for your order!</p>
+                        <h1>Orders</h1>
+                            {% else %}
+                            <p>Authorize before you have access to orders list.</p>
+                        <h1>You Have no Orders</h1>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end breadcrumb section -->
+
+ <div class="col-lg-8 col-md-12">
+    <div class="cart-table-wrap">
+        <table class="cart-table">
+            <thead class="cart-table-head">
+                <tr class="table-head-row">
+                    <th class="order-number">Order Number</th>
+                    <th class="order-details">Order Details</th>
+                    <th class="order-date">Order Date</th>
+                    <th class="delivery-date">Estimated Delivery Date</th>
+                    <th class="post-address">Post Office Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr class="table-body-row">
+                    <!-- Номер заказа -->
+                    <td class="order-number">{{ order.number }}</td>
+
+                    <!-- Список товаров -->
+                    <td class="order-details">
+                        <table class="cart-table">
+                            <thead class="cart-table-head">
+                                <tr class="table-head-row">
+                                    <th class="product-image">Product Image</th>
+                                    <th class="product-name">Name</th>
+                                    <th class="product-size">Size</th>
+                                    <th class="product-price">Price</th>
+                                    <th class="product-quantity">Quantity</th>
+                                    <th class="product-total">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order.items %}
+                                <tr class="table-body-row">
+                                    <td class="product-image"><img src="{{ item.product.photo.url }}" alt="{{ item.product.name }}"></td>
+                                    <td class="product-name">{{ item.product.name }}</td>
+                                    <td class="product-size">{{ item.size }}</td>
+                                    <td class="product-price">₽{{ item.price }}</td>
+                                    <td class="product-quantity">{{ item.quantity }}</td>
+                                    <td class="product-total">₽{{ item.price_total }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+
+                    <!-- Дата заказа -->
+                    <td class="order-date">{{ order.order_date }}</td>
+
+                    <!-- Ориентировочная дата доставки (через 2 недели) -->
+                    <td class="delivery-date">{{ order.order_date|add:"14" }}</td>
+
+                    <!-- Адрес почтового отделения -->
+                    <td class="post-address">{{ order.post_office_address }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

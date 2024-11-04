@@ -1,7 +1,7 @@
 from django.contrib import messages, auth
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 from django.urls import reverse
-from .forms import UserLoginForm, UserRegisterForm
+from .forms import UserLoginForm, UserRegisterForm, UserShippingForm
 from django.http import JsonResponse
 from users.models import User
 from products.models import Dress
@@ -39,6 +39,7 @@ def logout(request):
     referer_url = request.META.get('HTTP_REFERER', 'products:index')
     return HttpResponseRedirect(referer_url)
 
+
 def add_to_cart(request):
     if request.user.is_authenticated:
         dress_id = request.POST.get('dress_id')
@@ -50,6 +51,7 @@ def add_to_cart(request):
             request.user.cart.add(dress)
             return JsonResponse({'status': 'success', 'message': 'Product added successfully!'})
     return JsonResponse({'status': 'error', 'message': 'Please login first.'})
+
 
 def add_to_likes(request):
     if request.user.is_authenticated:
@@ -63,14 +65,28 @@ def add_to_likes(request):
             return JsonResponse({'status': 'success', 'message': 'Product added successfully!'})
     return JsonResponse({'status': 'error', 'message': 'Please login first.'})
 
+
 def remove_from_cart(request):
     dress_id = request.POST.get('dress_id')
     dress = get_object_or_404(Dress, id=dress_id)
     request.user.cart.remove(dress)
     return JsonResponse({'status': 'removed', 'message': 'Product removed from cart.'})
 
+
 def remove_from_likes(request):
     dress_id = request.POST.get('dress_id')
     dress = get_object_or_404(Dress, id=dress_id)
     request.user.like.remove(dress)
     return JsonResponse({'status': 'removed', 'message': 'Product removed from likes.'})
+
+def add_shipping_information(request):
+    if request.method == 'POST':
+        form = UserShippingForm(data=request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'status': 'success', 'message': 'Shipping information added successfully!'})
+        else:
+            messages.error(request, "Please correct the errors below.")
+            return JsonResponse({'status': 'error', 'errors': form.errors, 'message': 'Please correct the errors below.'} )
+
+    return JsonResponse({'status': 'error', 'errors': {'__all__': ['Invalid request method.']}, 'message': 'Please correct the errors below.'})

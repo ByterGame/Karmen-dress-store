@@ -39,6 +39,7 @@
                                 <th class="product-remove"></th>
                                 <th class="product-image">Product Image</th>
                                 <th class="product-name">Name</th>
+                                <th class="product-size">Size</th>
                                 <th class="product-price">Price</th>
                                 <th class="product-quantity">Quantity</th>
                                 <th class="product-total">Total</th>
@@ -50,11 +51,12 @@
                                         <td class="product-remove"><a href="{% url 'users:remove_from_cart' %}"><i class="far fa-window-close fa-window-close-cart" data-dress-id="{{ dress.id }}" id="remove"></i></a></td>
                                     <td class="product-image"><a href="{% url 'products:single_product' dress.id %}"><img src="{{ dress.photo.url }}" alt="{{ dress.name }}"></a></td>
                                     <td class="product-name">{{ dress.name }}</td>
-                                    <td class="product-price">${{ dress.cost }}</td>
+                                        <td class="product-size"><input type="number" value="42" min="42" max="54" step="2"></td>
+                                    <td class="product-price">₽{{ dress.cost }}</td>
                                     <td class="product-quantity">
                                         <input type="number" class="quantity-input" value="1" min="1" data-cost="{{ dress.cost }}">
                                     </td>
-                                    <td class="product-total">${{ dress.cost }}</td>
+                                    <td class="product-total">₽{{ dress.cost }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -63,7 +65,7 @@
                 </div>
 
                 <div class="col-lg-4">
-                    <div class="total-section">
+                <div class="total-section">
                         <table class="total-table">
                             <thead class="total-table-head">
                             <tr class="table-total-row">
@@ -74,27 +76,89 @@
                             <tbody>
                             <tr class="total-data">
                                 <td><strong>Subtotal: </strong></td>
-                                <td id="total-data-cost">${{ total_cost }}</td>
+                                <td id="total-data-cost">₽{{ total_cost }}</td>
                             </tr>
                             <tr class="total-data">
                                 <td><strong>Shipping: </strong></td>
-                                <td id="total-shipping-cost">${{ shipping_cost }}</td>
+                                <td id="total-shipping-cost">₽{{ shipping_cost }}</td>
                             </tr>
                             <tr class="total-data">
                                 <td><strong>Total: </strong></td>
-                                <td id="total-all-cost">${{ result_cost }}</td>
+                                <td id="total-all-cost">₽{{ result_cost }}</td>
                             </tr>
                             </tbody>
                         </table>
+                    </div>
+
+    <form class="form" id="shipping-form" method="post" action="{% url 'users:add_shipping_information' %}">
+    {% csrf_token %}
+    <div class="total-section mt-5">
+        <table class="total-table">
+            <thead class="total-table-head">
+                <tr class="table-total-row">
+                    <th colspan="2">Shipping Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="total-data">
+                    <td><strong>Full name: </strong></td>
+                    <td><input class="input-field" type="text" name="fullname" id="fullname" value="{{ form.fullname.value }}" placeholder="{{ user.fullname }}" required></td>
+                </tr>
+                <tr class="total-data">
+                    <td><strong>Phone number: </strong></td>
+                    <td><input class="input-field" type="text" name="phone" value="{{ form.phone.value }}" placeholder="{{ user.phone }}" id="phone-input" required></td>
+                </tr>
+                <tr class="total-data">
+                    <td><strong>Address: </strong></td>
+                    <td><input class="input-field" type="text" id="address" name="address" value="{{ form.address.value }}" placeholder="{{ user.address }}" required></td>
+                </tr>
+                <tr class="total-data">
+                    <td><strong>Postal code: </strong></td>
+                    <td><input class="input-field" type="text" name="postal_code" value="{{ form.postal_code.value }}" placeholder="{{ user.postal_code }}" required></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="cart-buttons">
+                    <button type="submit" class="transparent-btn"><a  class="boxed-btn black mb-5" type="submit">Payment</a></button>
                         <div class="cart-buttons">
                             <a href="cart.html" class="boxed-btn">Update Cart</a>
                             <a href="{% url 'yoomoney:create_payment' total=result_cost str_dresses=dresses%}" class="boxed-btn black">Check Out</a>
                         </div>
-                    </div>
-                </div>
-            {% endif %}
+    </div>
+</form>
             </div>
         </div>
     </div>
+    </div>
+    {% endif %}
     <!-- end cart -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {% if user.is_authenticated %}
+<script>
+$(document).ready(function() {
+    $('#shipping-form').on('submit', function(event) {
+        event.preventDefault();
+        const form = $(this);
+
+        $.ajax({
+            type: 'POST',
+            url: form.attr('action'),
+            data: form.serialize(),
+            success: function(response) {
+                if (response.status === 'success') {
+                    const paymentUrl = "{% url 'yoomoney:create_payment' total=result_cost %}";
+                    window.location.href = paymentUrl;
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('An unexpected error occurred. Please try again.');
+            }
+        });
+    });
+});
+</script>
+{% endif %}
+
 {% endblock %}

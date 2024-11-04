@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Admin-Panel
+{% endblock %}
+
+{% block content %}
+    {% load static %}
+    <!-- breadcrumb-section -->
+    <div class="breadcrumb-section breadcrumb-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 text-center">
+                    <div class="breadcrumb-text">
+                        <h1>Admin Panel</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<section class="py-5">
+    <div class="container">
+			<div class="product-filter">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="section-title">
+                        <ul class="product-controls">
+                            <li><a href="{% url 'products:admin_panel' %}">Users</a></li>
+                            <li><a href="{% url 'products:admin_dresses' %}">Dresses</a></li>
+                        </ul>
+                        </div>
+                </div>
+            </div>
+      </div>
+
+<div class="col-lg-12 col-md-12">
+    <div class="cart-table-wrap">
+        <table class="cart-table">
+            <thead class="cart-table-head">
+                <tr class="table-head-row">
+                    <th class="user-id">ID</th>
+                    <th class="username">Username</th>
+                    <th class="is-superuser">Is Superuser</th>
+                    <th class="view-orders">Orders</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr class="table-body-row">
+                    <td class="user-id">{{ user.id }}</td>
+                    <td class="username">{{ user.username }}</td>
+                    <td class="is-superuser">
+                        <input type="checkbox"
+                               class="superuser-checkbox"
+                               {% if user.is_superuser %}checked{% endif %}
+                               data-user-id="{{ user.id }}">
+                    </td>
+
+                    <td class="view-orders">
+                        <a class="view-orders-btn">View Orders</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+    </div>
+</section>
+
+
+{% endblock %}

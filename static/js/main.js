@@ -10,7 +10,7 @@ const dressItems = document.querySelectorAll('.dress-item');
             const step = (timestamp) => {
                 if (!startTimestamp) startTimestamp = timestamp;
                 const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                element.textContent = `$${(start + (end - start) * progress).toFixed(0)}`;
+                element.textContent = `₽${(start + (end - start) * progress).toFixed(0)}`;
 
                 if (progress < 1) {
                     requestAnimationFrame(step);
@@ -27,13 +27,20 @@ const dressItems = document.querySelectorAll('.dress-item');
 
             const newQuantity = parseInt(quantityInput.value);
             const newTotal = price * newQuantity;
-            const currentTotal = parseFloat(totalCell.textContent.replace('$', ''));
+            const currentTotal = parseFloat(totalCell.textContent.replace('₽', ''));
 
             animateValue(totalCell, currentTotal, newTotal, 1500);
 
             const totalTotalCell = document.getElementById('total-data-cost');
-            const currentTotalTotal = parseFloat(totalTotalCell.textContent.replace('$', ''));
-            const grandTotal = currentTotalTotal + price;
+            const currentTotalTotal = parseFloat(totalTotalCell.textContent.replace('₽', ''));
+            let grandTotal = 0;
+                document.querySelectorAll('.table-body-row').forEach(row => {
+                    const cell = row.querySelector('.product-price');
+                    const count = row.querySelector('.quantity-input');
+                    const cellValue = parseFloat(cell.textContent.replace('₽', ''));
+                    const countValue = parseInt(count.value) || 0;
+                    grandTotal += !isNaN(cellValue) && !isNaN(countValue) ? cellValue * countValue : 0;
+                });
 
             animateValue(totalTotalCell, currentTotalTotal, grandTotal, 1500);
 
@@ -41,15 +48,22 @@ const dressItems = document.querySelectorAll('.dress-item');
             document.querySelectorAll('.quantity-input').forEach(input => {
                 itemCount += parseInt(input.value) || 0;
             });
-            const shippingCost = parseInt(100 / itemCount);
+            let finalShippingCost = 0;
+            if (itemCount <= 0) {
+                finalShippingCost = 0;
+            } else {
+                const shippingCost = 1000 / itemCount;
+                finalShippingCost = shippingCost < 100 ? 0 : shippingCost;
+            }
             const shippingCell = document.getElementById('total-shipping-cost');
-            const currentShipping = parseFloat(shippingCell.textContent.replace('$', ''));
-            animateValue(shippingCell, currentShipping, shippingCost, 1500);
+            const currentShipping = parseFloat(shippingCell.textContent.replace('₽', ''));
+            animateValue(shippingCell, currentShipping, finalShippingCost, 1500);
 
             const totalAllCell = document.getElementById('total-all-cost');
-            const grandAllTotal = currentTotalTotal + price + currentShipping;
 
-            animateValue(totalAllCell, currentTotalTotal, grandAllTotal, 1500);
+            const grandAllTotal = grandTotal + finalShippingCost;
+            const currentAllTotal = parseFloat(totalAllCell.textContent.replace('₽', ''));
+            animateValue(totalAllCell, currentAllTotal, grandAllTotal, 1500);
         }
 
         document.querySelectorAll('.quantity-input').forEach(input => {
@@ -247,6 +261,73 @@ const dressItems = document.querySelectorAll('.dress-item');
     jQuery(window).on("load", function () {
         jQuery(".loader").fadeOut(1000);
     });
+
+    document.getElementById('phone-input').addEventListener('input', function(e) {
+        let input = e.target.value.replace(/\D/g, ''); // Удаляем все нечисловые символы
+
+        if (!input.startsWith("7") && !input.startsWith("8")) {
+            input = "7" + input;
+        }
+
+        if (e.inputType === 'deleteContentBackward') {
+            return;
+        }
+
+        let formattedInput = '+7 ';
+        if (input.length > 1) {
+            formattedInput += '(' + input.substring(1, 4);
+        }
+        if (input.length >= 4) {
+            formattedInput += ') ' + input.substring(4, 7);
+        }
+        if (input.length >= 7) {
+            formattedInput += '-' + input.substring(7, 9);
+        }
+        if (input.length >= 9) {
+            formattedInput += '-' + input.substring(9, 11);
+        }
+
+        e.target.value = formattedInput;
+    });
+
+
+//     const addressInput = document.getElementById('address');
+// const suggestionsList = document.getElementById('suggestions');
+//
+// addressInput.addEventListener('input', () => {
+//     const query = addressInput.value;
+//
+//     if (query.length > 3) {
+//         fetch("https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address", {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json",
+//                 "Accept": "application/json",
+//                 "Authorization": "Token YOUR_API_KEY"
+//             },
+//             body: JSON.stringify({ "query": query })
+//         })
+//         .then(response => response.json())
+//         .then(data => {
+//             suggestionsList.innerHTML = "";  // Очистка предыдущих подсказок
+//             const suggestions = data.suggestions;
+//
+//             suggestions.forEach(suggestion => {
+//                 const item = document.createElement('li');
+//                 item.textContent = suggestion.value;
+//                 item.addEventListener('click', () => {
+//                     addressInput.value = suggestion.value;  // Подставляем выбранное значение
+//                     suggestionsList.innerHTML = "";  // Очищаем подсказки
+//                 });
+//                 suggestionsList.appendChild(item);
+//             });
+//         })
+//         .catch(error => console.error("Error:", error));
+//     } else {
+//         suggestionsList.innerHTML = "";  // Убираем подсказки, если длина текста < 3
+//     }
+// });
+
 
 
 }(jQuery));

@@ -3489,6 +3489,75 @@ a:hover,
     color: #000000;
 }
 
-.text-danger{
-  font-size: 12px;
+.total-data {
+    position: relative;
 }
+
+.suggestions-list {
+    position: absolute;
+    list-style-type: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    width: 100%;
+    z-index: 1000;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.suggestions-list li {
+    padding: 10px;
+    cursor: pointer;
+  width: 100%;
+}
+
+.suggestions-list li:hover {
+    background-color: #f0f0f0;
+}
+
+.tr.input{
+  width: 100%;
+}
+
+.input-field{
+  width: 100%;
+}
+
+.total-table td:first-child {
+    width: 30%;
+}
+
+.total-table td:last-child {
+    width: 70%;
+}
+
+.transparent-btn{
+  background: transparent;
+  border: transparent;
+}
+
+.suggestions-suggestions {
+  color: #801818;
+  width: 100%;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+.suggestions-suggestion {
+  color: #801818;
+  width: 100%;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* Изменение стиля для выделенной подсказки */
+.suggestions-suggestion--selected {
+    background-color: #e0e0e0;
+    color: #801818;
+}
+
