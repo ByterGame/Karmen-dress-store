@@ -80,6 +80,36 @@
 </div>
     </div>
 </section>
+                                <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('.superuser-checkbox');
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const userId = this.getAttribute('data-user-id');
+            const isSuperuser = this.checked;
+
+            fetch(`/accounts/make-superuser/${userId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ is_superuser: isSuperuser })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    //alert(data.message);
+                } else {
+                    alert('Error catched during changin status.');
+                }
+            })
+            .catch(error => console.error('Ошибка:', error));
+        });
+    });
+});
+</script>
 {% endif %}
 {% endif %}
 {% endblock %}

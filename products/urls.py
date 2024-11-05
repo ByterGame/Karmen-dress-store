@@ -13,5 +13,6 @@ urlpatterns = [
     path('search/', search, name='search'),
     path('admin-panel/', admin_panel, name='admin-panel'),
     path('admin-dresses/', admin_dresses, name='admin-dresses'),
-    path('update-dress/<int:id>/', update_dress, name='update_dress')
+    path('update-dress/<int:id>/', update_dress, name='update_dress'),
+    path('add-dress/', add_dress, name='add-dress'),
 ]

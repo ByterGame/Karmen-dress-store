@@ -5,6 +5,7 @@ from .forms import UserLoginForm, UserRegisterForm, UserShippingForm
 from django.http import JsonResponse
 from users.models import User
 from products.models import Dress
+import json
 
 
 def sign_in(request):
@@ -79,6 +80,7 @@ def remove_from_likes(request):
     request.user.like.remove(dress)
     return JsonResponse({'status': 'removed', 'message': 'Product removed from likes.'})
 
+
 def add_shipping_information(request):
     if request.method == 'POST':
         form = UserShippingForm(data=request.POST, instance=request.user)
@@ -90,3 +92,16 @@ def add_shipping_information(request):
             return JsonResponse({'status': 'error', 'errors': form.errors, 'message': 'Please correct the errors below.'} )
 
     return JsonResponse({'status': 'error', 'errors': {'__all__': ['Invalid request method.']}, 'message': 'Please correct the errors below.'})
+
+
+def make_superuser(request, id):
+    if request.method == 'POST':
+        user = get_object_or_404(User, id=id)
+        data = json.loads(request.body)
+        is_superuser = data.get('is_superuser', user.is_superuser)
+
+        user.is_superuser = is_superuser
+        user.save()
+
+        return JsonResponse({'status': 'success', 'message': 'Admin status changed.'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)

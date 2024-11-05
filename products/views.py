@@ -1,5 +1,5 @@
-from django.views.decorators.http import require_http_methods
 from lib2to3.fixes.fix_input import context
+from django.core.management import call_command
 from products.models import Dress, DressCategory
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Sum
@@ -7,6 +7,7 @@ from users.forms import UserShippingForm
 from users.models import User
 from django.http import JsonResponse
 import json
+from users.forms import DressForm
 
 def index(request):
     liked_dresses = request.user.like.values_list('id', flat=True) if request.user.is_authenticated else []
@@ -56,7 +57,7 @@ def cart(request):
         dresses = ', '.join(dresses)
         total_cost = carted_dresses.aggregate(total=Sum('cost'))['total']
         item_count = carted_dresses.count()
-        shipping_cost = int(100/item_count)
+        #shipping_cost = int(100/item_count)
         result_cost = total_cost + shipping_cost
         context = {
             'carted_dresses': carted_dresses,
@@ -65,7 +66,10 @@ def cart(request):
             'shipping_cost': shipping_cost or 0,
             'result_cost': result_cost,
             'form': form,
-        'has_initial_data': has_initial_data,
+            'has_initial_data': has_initial_data,
+            'itemCount': '0',
+            'itemSize': '0',
+
         }
         return render(request, 'cart.html', context)
     else:
@@ -152,7 +156,11 @@ def update_dress(request, id):
             dress.length = data.get('length', dress.length)
             dress.material = data.get('material', dress.material)
             dress.cost = data.get('cost', dress.cost)
-            dress.save()  # Сохранение изменений
+            dress.save()
+
+            with open('fixtures/Dress.json', 'w', encoding='utf-8') as f:
+                call_command('dumpdata', 'products.Dress', format='json', indent=4, stdout=f)
+
             return JsonResponse({'success': True})
 
         except Dress.DoesNotExist:
@@ -160,3 +168,102 @@ def update_dress(request, id):
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)}, status=500)
     return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=405)
+
+
+def add_dress(request):
+    if request.method == 'POST':
+        try:
+            print("Request body:", request.POST.decode('utf-8'))
+
+            dress = Dress.objects.create(
+                photo=request.POST.get('photo',''),
+                photo_hover=request.POST.get('photo_hover',''),
+                name=request.POST.get('name',''),
+                description=request.POST.get('description',''),
+                color=request.POST.get('color',''),
+                model=request.POST.get('model',''),
+                length=request.POST.get('length',''),
+                category_id=request.POST('category_id',1),
+                material=request.POST.get('material',''),
+                cost=request.POST.get('cost',''),
+                #photo=data.get('photo', ''),
+                # photo_hover=data.get('photo_hover', ''),
+                # name=data.get('name', ''),
+                # description=data.get('description', ''),
+                # color=data.get('color', ''),
+                # model=data.get('model', ''),
+                # length=data.get('length', ''),
+                # category_id=1,
+                # material=data.get('material', ''),
+                # cost=int(data.get('cost', 10)),
+            )
+            dress.save()
+
+            with open('fixtures/Dress.json', 'w', encoding='utf-8') as f:
+                call_command('dumpdata', 'products.Dress', format='json', indent=4, stdout=f)
+
+            return JsonResponse({'success': True})
+
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'error': 'Invalid JSON format'}, status=400)
+
+        except Exception as e:
+            # Вывод исключения в консоль для диагностики
+            print("Ошибка:", e)
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=405)
+
+# def add_dress(request):
+#     if request.method == 'POST':
+#         try:
+#             photo = request.POST.get('photo')
+#             photo_hover = request.POST.get('photo_hover')
+#             name = request.POST.get('name')
+#             description = request.POST.get('description')
+#             color = request.POST.get('color')
+#             model = request.POST.get('model')
+#             length = request.POST.get('length')
+#             material = request.POST.get('material')
+#             category = request.POST.get('category')
+#             cost = request.POST.get('cost')
+#
+#             dress = Dress.objects.create(
+#                 photo=photo,
+#                 photo_hover=photo_hover,
+#                 name=name,
+#                 description=description,
+#                 color=color,
+#                 model=model,
+#                 length=length,
+#                 material=material,
+#                 category=category,
+#                 cost=cost
+#             )
+#             dress.save()
+#
+#             with open('fixtures/Dress.json', 'w', encoding='utf-8') as f:
+#                 call_command('dumpdata', 'products.Dress', format='json', indent=4, stdout=f)
+#
+#             dresses = Dress.objects.all()
+#             context = {
+#                 'dresses': dresses,
+#             }
+#             return render(request, 'admin_dresses.html', context)
+#
+#         except Exception as e:
+#             return JsonResponse({'status': 'error', 'error': str(e)}, status=500)
+#
+#     return JsonResponse({'status': 'error', 'errors': {'__all__': ['Invalid request method.']},
+#                              'message': 'Please correct the errors below.'})
+
+
+# def add_dress(request):
+#     if request.method == 'POST':
+#         form = DressForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return JsonResponse({'status': 'success', 'message': 'Dress added successfully!'})
+#         else:
+#             return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
+#     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
