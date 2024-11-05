@@ -1,5 +1,5 @@
 from lib2to3.fixes.fix_input import context
-
+from django.core.management import call_command
 from products.models import Dress, DressCategory
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Sum
@@ -56,7 +56,7 @@ def cart(request):
         dresses = ', '.join(dresses)
         total_cost = carted_dresses.aggregate(total=Sum('cost'))['total']
         item_count = carted_dresses.count()
-        shipping_cost = int(100/item_count)
+        #shipping_cost = int(100/item_count)
         result_cost = total_cost + shipping_cost
         context = {
             'carted_dresses': carted_dresses,
@@ -140,3 +140,32 @@ def admin_dresses(request):
         'dresses': dresses,
     }
     return render(request, 'admin_dresses.html', context)
+
+
+def update_dress(request, id):
+    dress = get_object_or_404(Dress, id=id)
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            dress = Dress.objects.get(pk=id)
+
+            dress.name = data.get('name', dress.name)
+            dress.description = data.get('description', dress.description)
+            dress.color = data.get('color', dress.color)
+            dress.model = data.get('model', dress.model)
+            dress.length = data.get('length', dress.length)
+            dress.material = data.get('material', dress.material)
+            dress.cost = data.get('cost', dress.cost)
+
+            dress.save()
+
+            with open('fixtures/Dress.json', 'w', encoding='utf-8') as f:
+                call_command('dumpdata', 'products.Dress', format='json', indent=4, stdout=f)
+
+            return JsonResponse({'success': True})
+
+        except Dress.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Dress not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+    return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=405)
