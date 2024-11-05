@@ -1,10 +1,10 @@
-from lib2to3.fixes.fix_input import context
 from django.core.management import call_command
 from products.models import Dress, DressCategory
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Sum
 from users.forms import UserShippingForm
-from users.models import User
+from users.models import User, Order
+from yoomoney.models import BalanceChange
 from django.http import JsonResponse
 import json
 from users.forms import DressForm
@@ -15,7 +15,7 @@ def index(request):
 
     context = {
         'title': 'Karmen Dress',
-        'products': Dress.objects.all(),
+        'products': Dress.objects.filter(is_available=True),
         'categories': DressCategory.objects.all(),
         'liked_dresses': liked_dresses,
         'carted_dresses': carted_dresses,
@@ -55,8 +55,7 @@ def cart(request):
 
         dresses = list(carted_dresses.values_list('name', flat=True))
         dresses = ', '.join(dresses)
-        total_cost = carted_dresses.aggregate(total=Sum('cost'))['total']
-        item_count = carted_dresses.count()
+        # item_count = carted_dresses.count()
         #shipping_cost = int(100/item_count)
         result_cost = total_cost + shipping_cost
         context = {
@@ -175,8 +174,6 @@ def update_dress(request, id):
 def add_dress(request):
     if request.method == 'POST':
         try:
-            print("Request body:", request.POST.decode('utf-8'))
-
             dress = Dress.objects.create(
                 photo=request.POST.get('photo',''),
                 photo_hover=request.POST.get('photo_hover',''),
@@ -185,7 +182,7 @@ def add_dress(request):
                 color=request.POST.get('color',''),
                 model=request.POST.get('model',''),
                 length=request.POST.get('length',''),
-                category_id=request.POST('category_id',1),
+                category_id=request.POST.get('category_id',1),
                 material=request.POST.get('material',''),
                 cost=request.POST.get('cost',''),
                 #photo=data.get('photo', ''),
@@ -210,11 +207,122 @@ def add_dress(request):
             return JsonResponse({'success': False, 'error': 'Invalid JSON format'}, status=400)
 
         except Exception as e:
-            # Вывод исключения в консоль для диагностики
             print("Ошибка:", e)
             return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
     return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=405)
+
+
+def orders(request):
+    if request.user.is_authenticated:
+        user_orders = Order.objects.filter(user_id=request.user.id, is_paid=True)
+        orders_with_items = []
+
+        # Проходим по каждому заказу и извлекаем товары
+        for order in user_orders:
+            items_data = []
+            for i,item in enumerate(order.items, start=1):
+                try:
+                    dress = Dress.objects.get(id=item['id'])
+                    items_data.append({
+                        'number': i,
+                        'dress': dress,
+                        'size': item['size'],
+                        'quantity': item['quantity'],
+                        'total': dress.cost * int(item['quantity'])
+                    })
+                except Dress.DoesNotExist:
+                    # Если товар не найден, пропускаем его
+                    continue
+
+            balance_change = BalanceChange.objects.filter(order_id=order.id).last()
+            order_date = balance_change.date
+
+            order_status = order.status
+
+            orders_with_items.append({
+                'order': order,
+                'items': items_data,
+                'order_sum': order.order_sum,
+                'order_date': order_date,
+                'status': order_status,
+            })
+
+        context = {
+            'orders': orders_with_items,
+        }
+        return render(request, "orders.html", context)
+    else:
+        return render(request, "orders.html")
+
+def admin_orders(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        orders = Order.objects.all()
+        orders_with_items = []
+
+        # Проходим по каждому заказу и извлекаем товары
+        for order in orders:
+            items_data = []
+            for i,item in enumerate(order.items, start=1):
+                try:
+                    dress = Dress.objects.get(id=item['id'])
+                    items_data.append({
+                        'number': i,
+                        'dress': dress,
+                        'size': item['size'],
+                        'quantity': item['quantity'],
+                        'total': dress.cost * int(item['quantity'])
+                    })
+                except Dress.DoesNotExist:
+                    # Если товар не найден, пропускаем его
+                    continue
+
+            balance_change = BalanceChange.objects.filter(order_id=order.id).last()
+            order_date = balance_change.date
+
+            order_status = order.status
+
+            orders_with_items.append({
+                'order': order,
+                'items': items_data,
+                'order_sum': order.order_sum,
+                'order_date': order_date,
+                'status': order_status,
+            })
+
+        context = {
+            'orders': orders_with_items,
+        }
+        return render(request, "admin_orders.html", context)
+    else:
+        return render(request, "admin_orders.html")
+
+def make_available(request, id):
+    if request.method == 'POST':
+        dress = get_object_or_404(Dress, id=id)
+        data = json.loads(request.body)
+        is_available = data.get('is_available', dress.is_available)
+
+        dress.is_available = is_available
+        dress.save()
+
+        return JsonResponse({'status': 'success', 'message': 'Dress status changed.'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
+
+
+def update_order_status(request,id):
+    if request.method == 'POST':
+        order_id = request.POST.get('order_id')
+        new_status = request.POST.get('status')
+        try:
+            order = Order.objects.get(id=order_id)
+            order.status = new_status
+            order.save()
+            return JsonResponse({'status': 'success'})
+        except Order.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Заказ не найден'})
+
+    return JsonResponse({'status': 'error', 'message': 'Неверный запрос'})
 
 # def add_dress(request):
 #     if request.method == 'POST':

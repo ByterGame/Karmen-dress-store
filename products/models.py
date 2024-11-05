@@ -22,6 +22,7 @@ class Dress(models.Model):
     photo_hover = models.ImageField(upload_to='products_images')
     category = models.ForeignKey(to=DressCategory, on_delete=models.CASCADE)
     model = models.CharField(max_length=256)
+    is_available = models.BooleanField(default=True)
 
     def __str__(self):
         return f'Продукт: {self.name} | Категория: {self.category.name}'

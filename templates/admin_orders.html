@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Orders
+{% endblock %}
+
+{% block content %}
+    {% load static %}
+    <!-- breadcrumb-section -->
+    <div class="breadcrumb-section breadcrumb-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 text-center">
+                    <div class="breadcrumb-text">
+                        {% if user.is_authenticated %}
+                            {% if user.is_superuser or user.is_staff %}
+                        <h1>Orders for all users</h1>
+                            {% else %}
+                                <p>You Do Not Have Access To This Section</p>
+                                <h1>Please Log In As Admin</h1>
+                                {% endif %}
+                            {% else %}
+                            <p>You Do Not Have Access To This Section</p>
+                                <h1>Please Log In As Admin</h1>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if user.is_authenticated %}
+        {% if user.is_superuser or user.is_staff %}
+    <sectoin class="py-5">
+    <div class="container">
+ <div class="mt-150 mb-150">
+    <div class="cart-table-wrap">
+        <table class="cart-table pl-5 pr-5">
+            <thead class="cart-table-head">
+                <tr class="table-head-row">
+                    <th class="order-id">Order Id</th>
+                    <th class="order-user">User Id</th>
+                    <th class="product-name">Name</th>
+                                    <th class="product-size">Size</th>
+                                    <th class="product-price">Price</th>
+                                    <th class="product-quantity">Quantity</th>
+                                    <th class="product-total">Total</th>
+                    <th class="order-sum">Order Cost</th>
+                    <th class="order-date">Order Date</th>
+                    <th class="post-address">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr class="table-body-row">
+                    <td class="order-id">{{ order.order.id }}</td>
+                <td class="order-user">{{ order.order.user_id }}</td>
+
+                    <td class="col-md-12 order-details" colspan="5">
+                        <table class="cart-table">
+    <tbody>
+        {% for item in order.items %}
+        <tr class="table-body-row">
+            <td class="product-name">{{ item.dress.name }}</td>
+            <td class="product-size">{{ item.size }}</td>
+            <td class="product-price">{{ item.dress.cost }}</td>
+            <td class="product-quantity">{{ item.quantity }}</td>
+            <td class="product-total">{{ item.total }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+                        </table>
+                    </td>
+                <td class="order-sum">{{order.order.order_sum}}</td>
+                    <td class="order-date">{{ order.order_date }}</td>
+                    <td class="order-status">
+    <input class="order-status-input" value="{{ order.order.status }}">
+    <a class="boxed-btn black edit-btn mt-5" data-order-id="{{ order.order.id }}">Submit</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+        </div>
+    </sectoin>
+            <script>
+$(document).ready(function() {
+    $('.edit-btn').on('click', function() {
+        const orderId = $(this).data('order-id');
+        const newStatus = $(this).siblings('.order-status-input').val();
+        debugger;
+
+        $.ajax({
+            url: `/update_order_status/${orderId}/`,
+            type: 'POST',
+            data: {
+                'order_id': orderId,
+                'status': newStatus,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    {#alert('Статус обновлен');#}
+                } else {
+                    alert('Не удалось обновить статус');
+                }
+            },
+            error: function() {
+                alert('Произошла ошибка');
+            }
+        });
+    });
+});
+            </script>
+
+{% endif %}
+    {% endif %}
+
+{% endblock %}

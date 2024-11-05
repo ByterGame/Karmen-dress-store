@@ -47,7 +47,9 @@
                             </thead>
                             <tbody>
                             {% for dress in carted_dresses %}
-                                <tr class="table-body-row" id="row-{{ dress.id }}">
+                                <tr class="table-body-row items-items-items" id="row-{{ dress.id }}">
+                                    <td class="product-id" hidden="hidden">
+                                        <input class="product-input-id" type="number" value={{ dress.id }}></td>
                                     <td class="product-remove"><a href="{% url 'users:remove_from_cart' %}"><i
                                             class="far fa-window-close fa-window-close-cart"
                                             data-dress-id="{{ dress.id }}" id="remove"></i></a></td>
@@ -55,8 +57,9 @@
                                             href="{% url 'products:single_product' dress.id %}"><img
                                             src="{{ dress.photo.url }}" alt="{{ dress.name }}"></a></td>
                                     <td class="product-name">{{ dress.name }}</td>
-                                    <td class="product-size"><input type="number" value="42" min="42" max="54"
-                                                                    step="2" class="size-input"></td>
+                                    <td class="product-size">
+                                        <input type="number" value="42" min="42" max="54"
+                                               step="2" class="size-input"></td>
                                     <td class="product-price">₽{{ dress.cost }}</td>
                                     <td class="product-quantity">
                                         <input type="number" class="quantity-input" value="1" min="1"
@@ -144,40 +147,53 @@
                 </div>
             {% endif %}
     <!-- end cart -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     {% if user.is_authenticated %}
         <script>
+            function getFormData($form) {
+                var unindexed_array = $form.serializeArray();
+                var indexed_array = {};
+
+                $.map(unindexed_array, function (n, i) {
+                    indexed_array[n['name']] = n['value'];
+                });
+                return indexed_array;
+            }
+
             $(document).ready(function () {
                 $('#shipping-form').on('submit', function (event) {
                     event.preventDefault();
                     const form = $(this);
+                    const card_items = [];
+                    $('.items-items-items').each((_, elem) => {
+                            const new_obj = {};
+                            [...elem.children].forEach((cell) => {
+                                const input = cell.querySelector('input');
+                                if (input === null) return;
+                                if (input.classList.contains('product-input-id')) new_obj['id'] = input.value;
+                                if (input.classList.contains('size-input')) new_obj['size'] = input.value;
+                                if (input.classList.contains('quantity-input')) new_obj['quantity'] = input.value;
+                            })
+                            card_items.push(new_obj)
+                        }
+                    )
 
+                    const card_data = getFormData(form);
+                    card_data['items'] = card_items;
                     $.ajax({
                         type: 'POST',
                         url: form.attr('action'),
-                        data: form.serialize(),
+                        data: JSON.stringify(card_data),
+                        contentType: "application/json; charset=utf-8",
                         success: function (response) {
+                            {#debugger;#}
                             if (response.status === 'success') {
-                                let itemCount = [];
-                                document.querySelectorAll('.quantity-input').forEach(input => {
-                                    itemCount.push((input.value) || 0);
-                                });
-                                itemCount = itemCount.join(', ');
-                                let itemSize = [];
-                                document.querySelectorAll('.size-input').forEach(input => {
-                                    itemSize.push(input.value || 0);
-                                });
-                                itemSize = itemSize.join(', ');
-
-
-                                console.log('Sizes: ' + itemSize);
-                                console.log('Count: ' + itemCount);
-                                window.location.href = "{% url 'yoomoney:create_payment' total=result_cost str_dresses=dresses count=itemCount sizes=itemSize %}";
+                                {#debugger;#}
+                                window.location.href = response.url_to_redirect;
                             } else {
                                 alert(response.message);
                             }
                         },
-                        error: function () {
+                        error: function (err) {
                             alert('An unexpected error occurred. Please try again.');
                         }
                     });

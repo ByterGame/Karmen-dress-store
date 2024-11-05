@@ -753,18 +753,18 @@
 },
 {
     "model": "products.dress",
-    "pk": 56,
+    "pk": 57,
     "fields": {
-        "name": "",
-        "description": "",
-        "cost": "10",
-        "color": "",
-        "length": "",
-        "material": "",
-        "photo": "",
-        "photo_hover": "",
+        "name": "The Newest",
+        "description": "new dress",
+        "cost": "9999",
+        "color": "blue",
+        "length": "mini",
+        "material": "flax",
+        "photo": "products_images/dress17.jpeg",
+        "photo_hover": "products_images/dress17.1.jpg",
         "category": 1,
-        "model": ""
+        "model": "fitted"
     }
 }
 ]

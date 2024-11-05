@@ -1,10 +1,14 @@
 from django.contrib import messages, auth
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+
+from yoomoney.payment import create_payment
 from .forms import UserLoginForm, UserRegisterForm, UserShippingForm
-from django.http import JsonResponse
-from users.models import User
+from django.http import JsonResponse, HttpResponse
+from users.models import User, Order
 from products.models import Dress
+import json
 import json
 
 
@@ -23,6 +27,7 @@ def sign_in(request):
         else:
             return JsonResponse({'status': 'error', 'errors': {'username': form.errors['__all__']}})
     return JsonResponse({'status': 'error', 'errors': {'username': ['Invalid request method.']}})
+
 
 def sign_up(request):
     form = UserRegisterForm(data=request.POST or None)
@@ -81,17 +86,32 @@ def remove_from_likes(request):
     return JsonResponse({'status': 'removed', 'message': 'Product removed from likes.'})
 
 
+@csrf_exempt
 def add_shipping_information(request):
-    if request.method == 'POST':
-        form = UserShippingForm(data=request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'status': 'success', 'message': 'Shipping information added successfully!'})
-        else:
-            messages.error(request, "Please correct the errors below.")
-            return JsonResponse({'status': 'error', 'errors': form.errors, 'message': 'Please correct the errors below.'} )
+    if request.method != 'POST':
+        return JsonResponse({'status': 'error', 'errors': {'__all__': ['Invalid request method.']},
+                             'message': 'Please correct the errors below.'})
+    data = json.loads(request.body)
 
-    return JsonResponse({'status': 'error', 'errors': {'__all__': ['Invalid request method.']}, 'message': 'Please correct the errors below.'})
+    if len(data['items']) == 0:
+        return HttpResponse(status=502)
+    order = Order(user=request.user, items=data['items'],)
+    order.shipping_info = dict(address=data["address"],
+                                          fullname = data["fullname"],
+                                          postal_code = data["postal_code"],
+                                          phone = data["phone"])
+    order.calculate_order_sum()
+    order.save()
+    request.user.address = data["address"]
+    request.user.fullname = data["fullname"]
+    request.user.postal_code = data["postal_code"]
+    request.user.phone = data["phone"]
+    request.user.save()
+
+    confirmation_url = create_payment(request.user.id, order)
+    request.user.cart.clear()
+
+    return JsonResponse(dict(url_to_redirect=confirmation_url, status='success'))
 
 
 def make_superuser(request, id):

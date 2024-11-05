@@ -14,14 +14,14 @@
                     <div class="breadcrumb-text">
                         {% if user.is_authenticated %}
                             {% if user.is_superuser or user.is_staff %}
-                        <h1>Admin Panel</h1>
-                        {% else %}
+                                <h1>Admin Panel</h1>
+                            {% else %}
                                 <p>You Do Not Have Access To This Section</p>
                                 <h1>Please Log In As Admin</h1>
-                                {% endif %}
-                            {% else %}
+                            {% endif %}
+                        {% else %}
                             <p>You Do Not Have Access To This Section</p>
-                                <h1>Please Log In As Admin</h1>
+                            <h1>Please Log In As Admin</h1>
                         {% endif %}
                     </div>
                 </div>
@@ -29,243 +29,297 @@
         </div>
     </div>
 
-{% if user.is_authenticated %}
-                            {% if user.is_superuser or user.is_staff %}
-<section class="py-5">
-    <div class="container">
-			<div class="product-filter">
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <div class="section-title">
-                        <ul class="product-controls ml-3">
-                            <li><a href="{% url 'products:admin-panel' %}">Users</a></li>
-                            <li><a href="{% url 'products:admin-dresses' %}">Dresses</a></li>
-                        </ul>
+    {% if user.is_authenticated %}
+        {% if user.is_superuser or user.is_staff %}
+            <section class="py-5">
+                <div class="container">
+                    <div class="product-filter">
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <div class="section-title">
+                                    <ul class="product-controls ml-3">
+                                        <li><a href="{% url 'products:admin-panel' %}">Users</a></li>
+                                        <li><a href="{% url 'products:admin-dresses' %}">Dresses</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12">
+                        <div class="cart-table-wrap">
+                            <table class="cart-table">
+                                <thead class="cart-table-head">
+                                <tr class="table-head-row">
+                                    <th class="dress-id">Id</th>
+                                    <th class="dress-photo">Photo 1</th>
+                                    <th class="dress-photo-hover">Photo 2</th>
+                                    <th class="dress-name">Name</th>
+                                    <th class="dress-description">Description</th>
+                                    <th class="dress-color">Color</th>
+                                    <th class="dress-model">Model</th>
+                                    <th class="dress-length">Length</th>
+                                    <th class="dress-material">Material</th>
+                                    <th class="dress-category">Category Id</th>
+                                    <th class="dress-cost">Price</th>
+                                    <th class="dress-available">Is Avaliable</th>
+                                    <th class="change">Change</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr id="addRow">
+                                    <td class="dress-id">Auto</td>
+                                    <td><input class="product-image dress-photo in" type="text" name="photo"></td>
+                                    <td><input class="product-image dress-hover-photo in" type="text"
+                                               name="photo_hover"></td>
+                                    <td><input class="dress-name in" type="text" name="name" placeholder="Name"></td>
+                                    <td><input class="dress-description in" type="text" name="description"
+                                               placeholder="Description"></td>
+                                    <td><input class="dress-color in" type="text" name="color" placeholder="Color"></td>
+                                    <td><input class="dress-model in" type="text" name="model" placeholder="Model"></td>
+                                    <td><input class="dress-length in" type="text" name="length" placeholder="Length">
+                                    </td>
+                                    <td><input class="dress-material in" type="text" name="material"
+                                               placeholder="Material"></td>
+                                    <td><input class="dress-category in" type="number" name="category" value="1" min="1" max="4"
+                                               placeholder="Category Id"></td>
+                                    <td><input class="dress-cost in" type="number" name="cost" value="1" min="1" placeholder="Price"></td>
+                                    <td><input type="checkbox"
+                                               class="dress-available in"
+                                               {% if dress.is_available %}checked{% endif %}
+                                               data-dress-id="{{ dress.id }}">
+                                    </td>
+                                    <td class="cart-buttons"><a href="{% url 'products:add-dress' %}"
+                                                                class="boxed-btn black edit-btn">Add</a></td>
+                                </tr>
+                                {% for dress in dresses %}
+                                    <tr class="table-body-row" data-dress-id="{{ dress.id }}">
+                                        <td class="dress-id">{{ dress.id }}</td>
+                                        <td class="product-image"><a
+                                                href="{% url 'products:single_product' dress.id %}"><img
+                                                src="{{ dress.photo.url }}" alt="{{ dress.name }}"></a></td>
+                                        <td class="product-image"><a
+                                                href="{% url 'products:single_product' dress.id %}"><img
+                                                src="{{ dress.photo_hover.url }}" alt="{{ dress.name }}"></a></td>
+                                        <td class="dress-name">{{ dress.name }}</td>
+                                        <td class="dress-description">{{ dress.description }}</td>
+                                        <td class="dress-color">{{ dress.color }}</td>
+                                        <td class="dress-model">{{ dress.model }}</td>
+                                        <td class="dress-length">{{ dress.length }}</td>
+                                        <td class="dress-material">{{ dress.material }}</td>
+                                        <td class="dress-category">{{ dress.category }}</td>
+                                        <td class="dress-cost">₽{{ dress.cost }}</td>
+                                        <td><input type="checkbox"
+                                               class="dress-available in"
+                                               {% if dress.is_available %}checked{% endif %}
+                                               data-dress-id="{{ dress.id }}">
+                                        </td>
+                                        <td class="cart-buttons">
+                                            <a href="{% url 'products:update_dress' dress.id %}"
+                                               class="boxed-btn black edit-btn" data-editing="false">Change</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
-      </div>
+            </section>
 
-<div class="col-lg-12 col-md-12">
-    <div class="cart-table-wrap">
-        <table class="cart-table">
-            <thead class="cart-table-head">
-                <tr class="table-head-row">
-                    <th class="dress-id">Id</th>
-                    <th class="dress-photo">Photo 1</th>
-                    <th class="dress-photo-hover">Photo 2</th>
-                    <th class="dress-name">Name</th>
-                    <th class="dress-description">Description</th>
-                    <th class="dress-color">Color</th>
-                    <th class="dress-model">Model</th>
-                    <th class="dress-length">Length</th>
-                    <th class="dress-material">Material</th>
-                    <th class="dress-category">Category</th>
-                    <th class="dress-cost">Price</th>
-                    <th class="change">Change</th>
-                </tr>
-            </thead>
-            <tbody>
-            <tr id="addRow">
-        <td class="dress-id">Auto</td>
-        <td><input class="product-image dress-photo in" type="text" name="photo"></td>
-        <td><input class="product-image dress-hover-photo in" type="text" name="photo_hover"></td>
-        <td><input class="dress-name in" type="text" name="name" placeholder="Name"></td>
-        <td><input class="dress-description in" type="text" name="description" placeholder="Description"></td>
-        <td><input class="dress-color in" type="text" name="color" placeholder="Color"></td>
-        <td><input class="dress-model in" type="text" name="model" placeholder="Model"></td>
-        <td><input class="dress-length in" type="text" name="length" placeholder="Length"></td>
-        <td><input class="dress-material in" type="text" name="material" placeholder="Material"></td>
-        <td><input class="dress-category in" type="text" name="material" placeholder="Category"></td>
-        <td><input class="dress-cost in" type="number" name="cost" placeholder="Price"></td>
-        <td class="cart-buttons"><a href="{% url 'products:add-dress' %}" class="boxed-btn black edit-btn">Add</a></td>
-</tr>
-                {% for dress in dresses %}
-                <tr class="table-body-row" data-dress-id="{{ dress.id }}">
-                <td class="dress-id">{{ dress.id }}</td>
-                    <td class="product-image"><a href="{% url 'products:single_product' dress.id %}"><img src="{{ dress.photo.url }}" alt="{{ dress.name }}"></a></td>
-                    <td class="product-image"><a href="{% url 'products:single_product' dress.id %}"><img src="{{ dress.photo_hover.url }}" alt="{{ dress.name }}"></a></td>
-                    <td class="dress-name">{{ dress.name }}</td>
-                    <td class="dress-description">{{ dress.description }}</td>
-                    <td class="dress-color">{{ dress.color }}</td>
-                    <td class="dress-model">{{ dress.model }}</td>
-                    <td class="dress-length">{{ dress.length }}</td>
-                    <td class="dress-material">{{ dress.material }}</td>
-                    <td class="dress-category">{{ dress.category }}</td>
-                    <td class="dress-cost">₽{{ dress.cost }}</td>
-                <td class="cart-buttons">
-                        <a href="{% url 'products:update_dress' dress.id %}" class="boxed-btn black edit-btn" data-editing="false">Change</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-
-    </div>
-</section>
-
-    {% endif %}
+        {% endif %}
     {% endif %}
     <script>
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll(".cart-buttons a").forEach(button => {
-        button.addEventListener("click", function() {
-            const row = this.closest("tr");
-            if (this.textContent === "Change") {
-                enableEditing(row);
-            } else if (this.textContent === "Submit") {
-                submitChanges(row);
-            } else if(this.textContent === "Add"){
-                createDress(row);
-            }
+    document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('.dress-available');
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const dressId = this.getAttribute('data-dress-id');
+            const isAvailable = this.checked;
+
+            fetch(`/make-available/${dressId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ is_available: isAvailable })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    //alert(data.message);
+                } else {
+                    alert('Error catched during changin status.');
+                }
+            })
+            .catch(error => console.error('Ошибка:', error));
         });
     });
 });
 
-function enableEditing(row) {
-    event.preventDefault();
-    row.querySelectorAll('td').forEach((cell) => {
-        if (cell.classList.contains('dress-name') || cell.classList.contains('dress-description') ||
-            cell.classList.contains('dress-color') || cell.classList.contains('dress-length') ||
-            cell.classList.contains('dress-material') ||
-            cell.classList.contains('dress-cost') || cell.classList.contains('dress-model')){
 
-            const value = cell.textContent.trim();
-            cell.innerHTML = `<input type="text" value="${value}" class="input-field">`;
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".cart-buttons a").forEach(button => {
+                button.addEventListener("click", function () {
+                    const row = this.closest("tr");
+                    if (this.textContent === "Change") {
+                        enableEditing(row);
+                    } else if (this.textContent === "Submit") {
+                        submitChanges(row);
+                    } else if (this.textContent === "Add") {
+                        createDress(row);
+                    }
+                });
+            });
+        });
+
+        function enableEditing(row) {
+            event.preventDefault();
+            row.querySelectorAll('td').forEach((cell) => {
+                if (cell.classList.contains('dress-name') || cell.classList.contains('dress-description') ||
+                    cell.classList.contains('dress-color') || cell.classList.contains('dress-length') ||
+                    cell.classList.contains('dress-material') ||
+                    cell.classList.contains('dress-cost') || cell.classList.contains('dress-model')) {
+
+                    const value = cell.textContent.trim();
+                    cell.innerHTML = `<input type="text" value="${value}" class="input-field">`;
+                }
+            });
+
+            const button = row.querySelector('.cart-buttons a');
+            button.textContent = 'Submit';
         }
-    });
 
-    const button = row.querySelector('.cart-buttons a');
-    button.textContent = 'Submit';
-}
+        function disableEditing(row, data) {
+            row.querySelectorAll('td').forEach((cell) => {
+                if (cell.classList.contains('dress-name')) {
+                    cell.innerHTML = data.name;
+                } else if (cell.classList.contains('dress-description')) {
+                    cell.innerHTML = data.description;
+                } else if (cell.classList.contains('dress-color')) {
+                    cell.innerHTML = data.color;
+                } else if (cell.classList.contains('dress-model')) {
+                    cell.innerHTML = data.model;
+                } else if (cell.classList.contains('dress-length')) {
+                    cell.innerHTML = data.length;
+                } else if (cell.classList.contains('dress-material')) {
+                    cell.innerHTML = data.material;
+                } else if (cell.classList.contains('dress-cost')) {
+                    cell.innerHTML = `₽${data.cost}`;
+                }
+            });
 
-function disableEditing(row, data) {
-    row.querySelectorAll('td').forEach((cell) => {
-        if (cell.classList.contains('dress-name')) {
-            cell.innerHTML = data.name;
-        } else if (cell.classList.contains('dress-description')) {
-            cell.innerHTML = data.description;
-        } else if (cell.classList.contains('dress-color')) {
-            cell.innerHTML = data.color;
-        }else if (cell.classList.contains('dress-model')) {
-            cell.innerHTML = data.model;
-        } else if (cell.classList.contains('dress-length')) {
-            cell.innerHTML = data.length;
-        } else if (cell.classList.contains('dress-material')) {
-            cell.innerHTML = data.material;
-        } else if (cell.classList.contains('dress-cost')) {
-            cell.innerHTML = `₽${data.cost}`;
+            const button = row.querySelector('.cart-buttons a');
+            button.textContent = 'Change';
         }
-    });
 
-    const button = row.querySelector('.cart-buttons a');
-    button.textContent = 'Change';
-}
+        function submitChanges(row) {
+            event.preventDefault();
+            const dressId = row.querySelector('.dress-id').textContent;
+            const updatedData = {};
 
-function submitChanges(row) {
-    event.preventDefault();
-    const dressId = row.querySelector('.dress-id').textContent;
-    const updatedData = {};
+            row.querySelectorAll('td').forEach((cell) => {
+                const input = cell.querySelector('input');
+                if (input) {
+                    if (cell.classList.contains('dress-name')) updatedData.name = input.value;
+                    else if (cell.classList.contains('dress-description')) updatedData.description = input.value;
+                    else if (cell.classList.contains('dress-color')) updatedData.color = input.value;
+                    else if (cell.classList.contains('dress-model')) updatedData.model = input.value;
+                    else if (cell.classList.contains('dress-length')) updatedData.length = input.value;
+                    else if (cell.classList.contains('dress-material')) updatedData.material = input.value;
+                    else if (cell.classList.contains('dress-cost')) updatedData.cost = parseFloat(input.value.replace('₽', ''));
+                }
+            });
 
-    row.querySelectorAll('td').forEach((cell) => {
-        const input = cell.querySelector('input');
-        if (input) {
-            if (cell.classList.contains('dress-name')) updatedData.name = input.value;
-            else if (cell.classList.contains('dress-description')) updatedData.description = input.value;
-            else if (cell.classList.contains('dress-color')) updatedData.color = input.value;
-            else if (cell.classList.contains('dress-model')) updatedData.model = input.value;
-            else if (cell.classList.contains('dress-length')) updatedData.length = input.value;
-            else if (cell.classList.contains('dress-material')) updatedData.material = input.value;
-            else if (cell.classList.contains('dress-cost')) updatedData.cost = parseFloat(input.value.replace('₽', ''));
+            fetch(`/update-dress/${dressId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify(updatedData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        disableEditing(row, updatedData);
+                    } else {
+                        alert('Ошибка при обновлении данных');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         }
-    });
 
-    fetch(`/update-dress/${dressId}/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken')
-        },
-        body: JSON.stringify(updatedData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            disableEditing(row, updatedData);
-        } else {
-            alert('Ошибка при обновлении данных');
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
             }
+            return cookieValue;
         }
-    }
-    return cookieValue;
-}
 
-function createDress(row) {
-    event.preventDefault();
-    const updatedData = {};
-
-    row.querySelectorAll('td').forEach((cell) => {
-        const input = cell.querySelector('input');
-        if (input) {
-            if (cell.classList.contains('dress-photo')) updatedData.photo = input.value;
-            else if (cell.classList.contains('dress-hover-photo')) updatedData.photo_hover = input.value;  // исправлено на photo_hover
-            else if (cell.classList.contains('dress-name')) updatedData.name = input.value;
-            else if (cell.classList.contains('dress-description')) updatedData.description = input.value;
-            else if (cell.classList.contains('dress-color')) updatedData.color = input.value;
-            else if (cell.classList.contains('dress-model')) updatedData.model = input.value;
-            else if (cell.classList.contains('dress-length')) updatedData.length = input.value;
-            else if (cell.classList.contains('dress-material')) updatedData.material = input.value;
-            else if (cell.classList.contains('dress-category')) updatedData.category = input.value;
-            else if (cell.classList.contains('dress-cost')) updatedData.cost = parseFloat(input.value);
+        function createDress(row) {
+            event.preventDefault();
+            const updatedData = {};
+            debugger;
+            {#$('#addRow')#}
+            row.querySelectorAll('td')
+                .forEach((cell) => {
+                const input = cell.querySelector('input');
+                if (input) {
+                    if (input.classList.contains('dress-photo')) updatedData.photo = input.value;
+                    else if (input.classList.contains('dress-hover-photo')) updatedData.photo_hover = input.value;  // исправлено на photo_hover
+                    else if (input.classList.contains('dress-name')) updatedData.name = input.value;
+                    else if (input.classList.contains('dress-description')) updatedData.description = input.value;
+                    else if (input.classList.contains('dress-color')) updatedData.color = input.value;
+                    else if (input.classList.contains('dress-model')) updatedData.model = input.value;
+                    else if (input.classList.contains('dress-length')) updatedData.length = input.value;
+                    else if (input.classList.contains('dress-material')) updatedData.material = input.value;
+                    else if (input.classList.contains('dress-category')) updatedData.category = input.value;
+                    else if (input.classList.contains('dress-cost')) updatedData.cost = parseFloat(input.value);
+                }
+            });
+            console.log(updatedData);
+            debugger;
+            $.ajax({
+                url: "{% url 'products:add-dress' %}",
+                type: "POST",
+                data: {
+                    'photo': updatedData.photo,
+                    'photo_hover': updatedData.photo_hover,
+                    'name': updatedData.name,
+                    'description': updatedData.description,
+                    'color': updatedData.color,
+                    'model': updatedData.model,
+                    'length': updatedData.length,
+                    'material': updatedData.material,
+                    'category': updatedData.category,
+                    'cost': updatedData.cost,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    if (response.success) {
+                        location.reload();
+                    } else {
+                        alert(response.error || 'Ошибка при добавлении данных');
+                    }
+                },
+                error: function () {
+                    alert('Error. Please try again.');
+                }
+            });
         }
-    });
-    console.log(updatedData);
-
-$.ajax({
-        url: "{% url 'products:add-dress' %}",
-        type: "POST",
-        data: {
-            'photo': updatedData.photo,
-            'photo_hover': updatedData.photo_hover,
-            'name': updatedData.name,
-            'description': updatedData.description,
-            'color': updatedData.color,
-            'model': updatedData.model,
-            'length': updatedData.length,
-            'material': updatedData.material,
-            'category': updatedData.category,
-            'cost': updatedData.cost,
-            'csrfmiddlewaretoken': '{{ csrf_token }}'
-        },
-        success: function(response) {
-            if (response.success) {
-                location.reload();
-            } else {
-                alert(response.error || 'Ошибка при добавлении данных');
-            }
-        },
-        error: function() {
-            alert('Error. Please try again.');
-        }
-    });
-}
-</script>
+    </script>
 
 
 {% endblock %}

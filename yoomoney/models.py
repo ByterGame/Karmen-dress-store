@@ -2,12 +2,16 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
+from users.models import Order
+
+
 class BalanceChange(models.Model):
     user_id = models.IntegerField()
     amount_value = models.IntegerField(max_length=100)
     date = models.DateTimeField(_("payment's date"), default=timezone.now)
     is_accepted = models.BooleanField(default=False)
     purchase = models.TextField()
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=False)
 
     def __str__(self):
         status = 'Accepted' if self.is_accepted else 'Declined'

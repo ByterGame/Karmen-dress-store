@@ -38,6 +38,8 @@
     <link
             href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Marcellus&display=swap"
             rel="stylesheet">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
 </head>
 <body>
@@ -65,7 +67,7 @@
                             {% if user.is_authenticated %}
                                 <li><a href="{% url 'products:cart' %}">Cart</a></li>
                                 <li><a href="{% url 'products:likes' %}">Favorites</a></li>
-                                <li><a href="{% url 'products:index' %}">{{ user.username }}</a></li>
+                                <li><a href="{% url 'products:orders' %}">Orders</a></li>
                                 <li><a href="{% url 'users:logout' %}">Logout</a></li>
                                 {% if user.is_superuser or user.is_staff %}
                                     <li><a href="{% url 'products:admin-panel' %}">Admin-panel</a></li>

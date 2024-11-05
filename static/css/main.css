@@ -27,6 +27,7 @@ body {
   line-height: 1.8;
   color: #000000;
   overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 body img {
@@ -866,6 +867,7 @@ a.mobile-show {
   background-color: #000000;
   color: #fff;
   padding: 150px 0;
+  bottom: 0;
 }
 
 h2.widget-title {
@@ -2534,7 +2536,7 @@ td.product-image img {
 
 .cart-table-wrap tbody tr td {
   border: 1px solid #efefef;
-  padding: 20px 0;
+  padding: 20px 1px;
   color: #000000;
 }
 
@@ -3565,6 +3567,10 @@ a:hover,
 }
 
 .in {
-    width: 120px;
+    width: 105px;
     max-width: 100%;
+}
+
+.cart-section{
+  height: 100%;
 }

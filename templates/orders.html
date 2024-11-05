@@ -14,7 +14,7 @@
                     <div class="breadcrumb-text">
                         {% if user.is_authenticated %}
                         <p>Thank you for your order!</p>
-                        <h1>Orders</h1>
+                        <h1>Orders for user {{ user.username }}</h1>
                             {% else %}
                             <p>Authorize before you have access to orders list.</p>
                         <h1>You Have no Orders</h1>
@@ -25,30 +25,32 @@
         </div>
     </div>
     <!-- end breadcrumb section -->
-
- <div class="col-lg-8 col-md-12">
+{% if user.is_authenticated %}
+    <sectoin class="py-5">
+    <div class="container">
+ <div class="mt-150 mb-150">
     <div class="cart-table-wrap">
-        <table class="cart-table">
+        <table class="cart-table pl-5 pr-5">
             <thead class="cart-table-head">
                 <tr class="table-head-row">
-                    <th class="order-number">Order Number</th>
+                    <th class="order-number">Order Id</th>
                     <th class="order-details">Order Details</th>
+                    <th class="order-sum">Order Cost</th>
                     <th class="order-date">Order Date</th>
-                    <th class="delivery-date">Estimated Delivery Date</th>
-                    <th class="post-address">Post Office Address</th>
+                    <th class="post-address">Status</th>
                 </tr>
             </thead>
             <tbody>
                 {% for order in orders %}
                 <tr class="table-body-row">
-                    <!-- Номер заказа -->
-                    <td class="order-number">{{ order.number }}</td>
+                    <td class="order-number">{{ order.order.id }}</td>
 
                     <!-- Список товаров -->
-                    <td class="order-details">
+                    <td class="col-md-12 order-details">
                         <table class="cart-table">
                             <thead class="cart-table-head">
                                 <tr class="table-head-row">
+                                    <th class="product-number"></th>
                                     <th class="product-image">Product Image</th>
                                     <th class="product-name">Name</th>
                                     <th class="product-size">Size</th>
@@ -57,34 +59,33 @@
                                     <th class="product-total">Total</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                {% for item in order.items %}
-                                <tr class="table-body-row">
-                                    <td class="product-image"><img src="{{ item.product.photo.url }}" alt="{{ item.product.name }}"></td>
-                                    <td class="product-name">{{ item.product.name }}</td>
-                                    <td class="product-size">{{ item.size }}</td>
-                                    <td class="product-price">₽{{ item.price }}</td>
-                                    <td class="product-quantity">{{ item.quantity }}</td>
-                                    <td class="product-total">₽{{ item.price_total }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
+    <tbody>
+        {% for item in order.items %}
+        <tr class="table-body-row">
+        <td class="product-number">{{ item.number }}</td>
+            <td class="product-image"><a href="{% url 'products:single_product' item.dress.id %}">
+                <img src="{{ item.dress.photo.url }}" alt="{{ item.dress.name }}"></a></td>
+            <td class="product-name">{{ item.dress.name }}</td>
+            <td class="product-size">{{ item.size }}</td>
+            <td class="product-price">{{ item.dress.cost }}</td>
+            <td class="product-quantity">{{ item.quantity }}</td>
+            <td class="product-total">{{ item.total }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
                         </table>
                     </td>
-
-                    <!-- Дата заказа -->
+                <td class="order-sum">{{order.order.order_sum}}</td>
                     <td class="order-date">{{ order.order_date }}</td>
-
-                    <!-- Ориентировочная дата доставки (через 2 недели) -->
-                    <td class="delivery-date">{{ order.order_date|add:"14" }}</td>
-
-                    <!-- Адрес почтового отделения -->
-                    <td class="post-address">{{ order.post_office_address }}</td>
+                <td class="status">{{ order.status}}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+        </div>
+    </sectoin>
+{% endif %}
 
 {% endblock %}
