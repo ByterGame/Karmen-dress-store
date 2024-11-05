@@ -10,7 +10,7 @@ def create_payment(data):
     change = BalanceChange.objects.create(
         user_id=data['user_id'],
         amount_value=data['total'],
-        purchase=f'Были куплены: {data['str_dresses']}',
+        purchase = f'Были куплены: {data["str_dresses"]}',
         is_accepted=True,
     )
 

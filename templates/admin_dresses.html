@@ -67,9 +67,20 @@
             <tbody>
                 {% for dress in dresses %}
                 <tr class="table-body-row" data-dress-id="{{ dress.id }}">
-                <td class="dress-id">{{ dress.id }}</td>
-                    <td class="product-image"><a href="{% url 'products:single_product' dress.id %}"><img src="{{ dress.photo.url }}" alt="{{ dress.name }}"></a></td>
-                    <td class="product-image"><a href="{% url 'products:single_product' dress.id %}"><img src="{{ dress.photo_hover.url }}" alt="{{ dress.name }}"></a></td>
+                    <td class="dress-id">{{ dress.id }}</td>
+                    <td class="product-image" data-role="drop-area">
+                        <a href="{% url 'products:single_product' dress.id %}">
+                            <img src="{{ dress.photo.url }}" alt="{{ dress.name }}" class="dress-photo">
+                            <input type="file" class="photo-input" accept="image/*" style="display:none">
+                        </a>
+                    </td>
+                    <td class="product-image" data-role="drop-area-hover">
+                        <a href="{% url 'products:single_product' dress.id %}">
+                            <img src="{{ dress.photo_hover.url }}" alt="{{ dress.name }}" class="dress-photo-hover">
+                            <input type="file" class="photo-input" accept="image/*" style="display:none">
+                        </a>
+                    </td>
+
                     <td class="dress-name">{{ dress.name }}</td>
                     <td class="dress-description">{{ dress.description }}</td>
                     <td class="dress-color">{{ dress.color }}</td>
@@ -77,12 +88,13 @@
                     <td class="dress-length">{{ dress.length }}</td>
                     <td class="dress-material">{{ dress.material }}</td>
                     <td class="dress-cost">₽{{ dress.cost }}</td>
-                <td class="cart-buttons">
+                    <td class="cart-buttons">
                         <a href="{% url 'products:update_dress' dress.id %}" class="boxed-btn black edit-btn" data-editing="false">Change</a>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
+
         </table>
     </div>
 </div>
@@ -93,15 +105,33 @@
     {% endif %}
     {% endif %}
 
-    <script>
+<script>
 document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll(".cart-buttons a").forEach(button => {
-        button.addEventListener("click", function() {
+        button.addEventListener("click", function(event) {
             const row = this.closest("tr");
             if (this.textContent === "Change") {
                 enableEditing(row);
             } else if (this.textContent === "Submit") {
                 submitChanges(row);
+            }
+        });
+    });
+
+    document.querySelectorAll('.product-image').forEach(cell => {
+        cell.addEventListener("dragover", (event) => {
+            event.preventDefault();
+        });
+
+        cell.addEventListener("drop", (event) => {
+            event.preventDefault();
+            const row = event.target.closest('tr');
+            const file = event.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const imgElement = cell.querySelector('img'); // Получаем изображение в текущей ячейке
+                imgElement.src = URL.createObjectURL(file); // Изменяем локально изображение
+                const inputFile = cell.querySelector('.photo-input');
+                inputFile.files = event.dataTransfer.files; // Сохраняем файл в скрытом input
             }
         });
     });
@@ -113,8 +143,7 @@ function enableEditing(row) {
         if (cell.classList.contains('dress-name') || cell.classList.contains('dress-description') ||
             cell.classList.contains('dress-color') || cell.classList.contains('dress-length') ||
             cell.classList.contains('dress-material') || cell.classList.contains('dress-cost') ||
-            cell.classList.contains('dress-model')){
-
+            cell.classList.contains('dress-model')) {
             const value = cell.textContent.trim();
             cell.innerHTML = `<input type="text" value="${value}" class="input-field">`;
         }
@@ -128,11 +157,11 @@ function disableEditing(row, data) {
     row.querySelectorAll('td').forEach((cell) => {
         if (cell.classList.contains('dress-name')) {
             cell.innerHTML = data.name;
-        } else if (cell.classList.contains('dress-description')) {
+            } else if (cell.classList.contains('dress-description')) {
             cell.innerHTML = data.description;
         } else if (cell.classList.contains('dress-color')) {
             cell.innerHTML = data.color;
-        }else if (cell.classList.contains('dress-model')) {
+        } else if (cell.classList.contains('dress-model')) {
             cell.innerHTML = data.model;
         } else if (cell.classList.contains('dress-length')) {
             cell.innerHTML = data.length;
@@ -143,6 +172,12 @@ function disableEditing(row, data) {
         }
     });
 
+    const inputFiles = row.querySelectorAll('.photo-input');
+    inputFiles.forEach(inputFile => {
+        inputFile.style.display = 'none'; // Скрываем input для загрузки
+        inputFile.files = null; // Очищаем выбранный файл для предотвращения изменений
+    });
+
     const button = row.querySelector('.cart-buttons a');
     button.textContent = 'Change';
 }
@@ -151,7 +186,6 @@ function submitChanges(row) {
     event.preventDefault();
     const dressId = row.querySelector('.dress-id').textContent;
     const updatedData = {};
-
     row.querySelectorAll('td').forEach((cell) => {
         const input = cell.querySelector('input');
         if (input) {
@@ -198,7 +232,6 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
 </script>
 
 

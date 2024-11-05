@@ -1,3 +1,4 @@
+from django.views.decorators.http import require_http_methods
 from lib2to3.fixes.fix_input import context
 from products.models import Dress, DressCategory
 from django.shortcuts import render, get_object_or_404
@@ -137,7 +138,6 @@ def admin_dresses(request):
     }
     return render(request, 'admin_dresses.html', context)
 
-
 def update_dress(request, id):
     dress = get_object_or_404(Dress, id=id)
     if request.method == 'POST':
@@ -152,7 +152,6 @@ def update_dress(request, id):
             dress.length = data.get('length', dress.length)
             dress.material = data.get('material', dress.material)
             dress.cost = data.get('cost', dress.cost)
-
             dress.save()  # Сохранение изменений
             return JsonResponse({'success': True})
 
