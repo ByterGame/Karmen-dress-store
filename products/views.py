@@ -66,7 +66,10 @@ def cart(request):
             'shipping_cost': shipping_cost or 0,
             'result_cost': result_cost,
             'form': form,
-        'has_initial_data': has_initial_data,
+            'has_initial_data': has_initial_data,
+            'itemCount': '0',
+            'itemSize': '0',
+
         }
         return render(request, 'cart.html', context)
     else:

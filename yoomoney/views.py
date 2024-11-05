@@ -3,8 +3,8 @@ from django.http import HttpResponseRedirect
 from yoomoney.payment import create_payment, payment_acceptance
 
 
-def create_payment_view(request, total, str_dresses):
-
+def create_payment_view(request, total, str_dresses, count, sizes):
+    print(f'count: {count}, sizes: {sizes}')
     data = {
         'user_id' : request.user.id,
         'total' : total,

@@ -3,8 +3,7 @@ import os
 import sys
 sys.path.append("Karmen-dress-store")
 from validators import LengthValidator, CharValidator, VariousSymbolsValidator
-
-
+import re
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -12,7 +11,7 @@ SECRET_KEY = 'django-insecure-7$&ue%r@0och!@gbjq@xu2ofx&k32(1ju2w2%1=b(%r_ex@mh!
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['5537-77-34-100-114.ngrok-free.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '4753-188-162-229-142.ngrok-free.app']
 
 
 INSTALLED_APPS = [

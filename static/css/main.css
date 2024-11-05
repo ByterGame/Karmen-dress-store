@@ -2545,6 +2545,9 @@ thead.cart-table-head tr {
 td.product-quantity input {
   margin-bottom: 0;
 }
+td.product-size input {
+  margin-bottom: 0;
+}
 
 td.product-remove a {
   color: #000000;
