@@ -24,7 +24,7 @@ def create_payment(data):
         },
         'confirmation': {
             'type': 'redirect',
-            'return_url': 'https://e5a1-77-34-100-114.ngrok-free.app/',
+            'return_url': ' https://4753-188-162-229-142.ngrok-free.app/',
         },
         'metadata': {
             'table_id': change.id,
