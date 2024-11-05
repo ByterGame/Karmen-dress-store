@@ -3561,3 +3561,7 @@ a:hover,
     color: #801818;
 }
 
+.in {
+    width: 120px;
+    max-width: 100%;
+}

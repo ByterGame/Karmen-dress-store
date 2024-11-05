@@ -20,7 +20,7 @@
     "pk": 2,
     "fields": {
         "name": "Trendy Twirl",
-        "description": "strict black dress",
+        "description": "black dress",
         "cost": "4999",
         "color": "black",
         "length": "mini",
@@ -101,7 +101,7 @@
     "fields": {
         "name": "Street Style Chic",
         "description": "red dress",
-        "cost": "6999",
+        "cost": "399",
         "color": "red",
         "length": "mini",
         "material": "synthetics",
@@ -749,6 +749,22 @@
         "photo_hover": "products_images/dress3.1.JPG",
         "category": 3,
         "model": "fitted"
+    }
+},
+{
+    "model": "products.dress",
+    "pk": 56,
+    "fields": {
+        "name": "",
+        "description": "",
+        "cost": "10",
+        "color": "",
+        "length": "",
+        "material": "",
+        "photo": "",
+        "photo_hover": "",
+        "category": 1,
+        "model": ""
     }
 }
 ]

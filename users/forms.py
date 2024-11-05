@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from users.models import User
 from django import forms
+from products.models import Dress
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
@@ -55,3 +56,9 @@ class UserShippingForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('fullname', 'phone', 'address', 'postal_code')
+
+class DressForm(forms.ModelForm):
+    class Meta:
+        model = Dress
+        fields = ['photo', 'photo_hover', 'name', 'description', 'color',
+                  'model', 'length', 'material', 'category', 'cost']
