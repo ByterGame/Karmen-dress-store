@@ -33,6 +33,19 @@
         {% if user.is_superuser or user.is_staff %}
     <sectoin class="py-5">
     <div class="container">
+    <div class="product-filter mt-5">
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <div class="section-title">
+                                    <ul class="product-controls ml-3">
+                                        <li><a href="{% url 'products:admin-panel' %}">Users</a></li>
+                                        <li><a href="{% url 'products:admin-dresses' %}">Dresses</a></li>
+                                        <li><a href="{% url 'products:admin-orders' %}">Orders</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
  <div class="mt-150 mb-150">
     <div class="cart-table-wrap">
         <table class="cart-table pl-5 pr-5">
@@ -40,6 +53,7 @@
                 <tr class="table-head-row">
                     <th class="order-id">Order Id</th>
                     <th class="order-user">User Id</th>
+                    <th class="order-paid">Is Paid</th>
                     <th class="product-name">Name</th>
                                     <th class="product-size">Size</th>
                                     <th class="product-price">Price</th>
@@ -55,6 +69,7 @@
                 <tr class="table-body-row">
                     <td class="order-id">{{ order.order.id }}</td>
                 <td class="order-user">{{ order.order.user_id }}</td>
+                <td class="order-paid">{{ order.order.is_paid }}</td>
 
                     <td class="col-md-12 order-details" colspan="5">
                         <table class="cart-table">

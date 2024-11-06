@@ -141,7 +141,6 @@ def admin_dresses(request):
     }
     return render(request, 'admin_dresses.html', context)
 
-
 def update_dress(request, id):
     dress = get_object_or_404(Dress, id=id)
     if request.method == 'POST':
@@ -156,7 +155,6 @@ def update_dress(request, id):
             dress.length = data.get('length', dress.length)
             dress.material = data.get('material', dress.material)
             dress.cost = data.get('cost', dress.cost)
-
             dress.save()
 
             with open('fixtures/Dress.json', 'w', encoding='utf-8') as f:

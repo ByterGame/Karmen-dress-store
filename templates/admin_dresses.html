@@ -33,13 +33,14 @@
         {% if user.is_superuser or user.is_staff %}
             <section class="py-5">
                 <div class="container">
-                    <div class="product-filter">
+                    <div class="product-filter mt-5">
                         <div class="row">
                             <div class="col-lg-12 text-center">
                                 <div class="section-title">
                                     <ul class="product-controls ml-3">
                                         <li><a href="{% url 'products:admin-panel' %}">Users</a></li>
                                         <li><a href="{% url 'products:admin-dresses' %}">Dresses</a></li>
+                                        <li><a href="{% url 'products:admin-orders' %}">Orders</a></li>
                                     </ul>
                                 </div>
                             </div>
