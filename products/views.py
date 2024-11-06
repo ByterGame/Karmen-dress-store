@@ -33,7 +33,7 @@ def checkout(request):
 
 def cart(request):
     if request.user.is_authenticated:
-        carted_dresses = request.user.cart.all()
+        carted_dresses = request.user.cart.filter(is_available=True)
         item_count = carted_dresses.count()
 
         initial_data = {
@@ -79,7 +79,7 @@ def likes(request):
     if request.user.is_authenticated:
         carted_dresses = request.user.cart.values_list('id', flat=True)
         context = {
-            'liked_dresses': request.user.like.all(),
+            'liked_dresses': request.user.like.filter(is_available=True),
             'carted_dresses': carted_dresses,
         }
         return render(request, 'likes.html', context)
@@ -97,14 +97,14 @@ def search(request):
             Q(length__icontains=query)
         )
     else:
-        products = Dress.objects.all()
+        products = Dress.objects.filter(is_available=True)
 
     return render(request, 'search.html', {'products': products, 'query': query})
 
 
 def single_product(request, id):
     dress = get_object_or_404(Dress, id=id)
-    all_dresses = Dress.objects.order_by('id')
+    all_dresses = Dress.objects.filter(is_available=True)
     liked_dresses = request.user.like.values_list('id', flat=True) if request.user.is_authenticated else []
     carted_dresses = request.user.cart.values_list('id', flat=True) if request.user.is_authenticated else []
 
@@ -117,7 +117,7 @@ def single_product(request, id):
     elif current_index == len(all_dresses) - 3:
         related_dresses = list(all_dresses[current_index + 1:]) + list(all_dresses[:1])
     else:
-        related_dresses = Dress.objects.filter(id__gt=dress.id).order_by('id')[:3]
+        related_dresses = Dress.objects.filter(id__gt=dress.id, is_available=True).order_by('id')[:3]
 
     context = {'dress': dress,
         'related_dresses': related_dresses,
@@ -134,12 +134,14 @@ def admin_panel(request):
     }
     return render(request, 'admin.html', context)
 
+
 def admin_dresses(request):
     dresses = Dress.objects.all()
     context = {
         'dresses': dresses,
     }
     return render(request, 'admin_dresses.html', context)
+
 
 def update_dress(request, id):
     dress = get_object_or_404(Dress, id=id)
@@ -183,16 +185,6 @@ def add_dress(request):
                 category_id=request.POST.get('category_id',1),
                 material=request.POST.get('material',''),
                 cost=request.POST.get('cost',''),
-                #photo=data.get('photo', ''),
-                # photo_hover=data.get('photo_hover', ''),
-                # name=data.get('name', ''),
-                # description=data.get('description', ''),
-                # color=data.get('color', ''),
-                # model=data.get('model', ''),
-                # length=data.get('length', ''),
-                # category_id=1,
-                # material=data.get('material', ''),
-                # cost=int(data.get('cost', 10)),
             )
             dress.save()
 
@@ -253,6 +245,7 @@ def orders(request):
     else:
         return render(request, "orders.html")
 
+
 def admin_orders(request):
     if request.user.is_authenticated and request.user.is_superuser:
         orders = Order.objects.all()
@@ -295,6 +288,7 @@ def admin_orders(request):
     else:
         return render(request, "admin_orders.html")
 
+
 def make_available(request, id):
     if request.method == 'POST':
         dress = get_object_or_404(Dress, id=id)
@@ -321,49 +315,6 @@ def update_order_status(request,id):
             return JsonResponse({'status': 'error', 'message': 'Заказ не найден'})
 
     return JsonResponse({'status': 'error', 'message': 'Неверный запрос'})
-
-# def add_dress(request):
-#     if request.method == 'POST':
-#         try:
-#             photo = request.POST.get('photo')
-#             photo_hover = request.POST.get('photo_hover')
-#             name = request.POST.get('name')
-#             description = request.POST.get('description')
-#             color = request.POST.get('color')
-#             model = request.POST.get('model')
-#             length = request.POST.get('length')
-#             material = request.POST.get('material')
-#             category = request.POST.get('category')
-#             cost = request.POST.get('cost')
-#
-#             dress = Dress.objects.create(
-#                 photo=photo,
-#                 photo_hover=photo_hover,
-#                 name=name,
-#                 description=description,
-#                 color=color,
-#                 model=model,
-#                 length=length,
-#                 material=material,
-#                 category=category,
-#                 cost=cost
-#             )
-#             dress.save()
-#
-#             with open('fixtures/Dress.json', 'w', encoding='utf-8') as f:
-#                 call_command('dumpdata', 'products.Dress', format='json', indent=4, stdout=f)
-#
-#             dresses = Dress.objects.all()
-#             context = {
-#                 'dresses': dresses,
-#             }
-#             return render(request, 'admin_dresses.html', context)
-#
-#         except Exception as e:
-#             return JsonResponse({'status': 'error', 'error': str(e)}, status=500)
-#
-#     return JsonResponse({'status': 'error', 'errors': {'__all__': ['Invalid request method.']},
-#                              'message': 'Please correct the errors below.'})
 
 
 # def add_dress(request):

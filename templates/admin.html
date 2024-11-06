@@ -55,7 +55,6 @@
                     <th class="user-id">ID</th>
                     <th class="username">Username</th>
                     <th class="is-superuser">Is Superuser</th>
-                    <th class="view-orders">Orders</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,10 +67,6 @@
                                class="superuser-checkbox"
                                {% if user.is_superuser %}checked{% endif %}
                                data-user-id="{{ user.id }}">
-                    </td>
-
-                    <td class="view-orders">
-                        <a class="view-orders-btn">View Orders</a>
                     </td>
                 </tr>
                 {% endfor %}

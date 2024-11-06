@@ -1,3 +1,4 @@
+import uuid
 from importlib.metadata import metadata
 
 from products.models import Dress
@@ -10,6 +11,7 @@ Configuration.secret_key = 'test_XtVlzBPW40VDbdG6kogjB43VgTk0XzGmoCSHGHmldZM'
 
 
 def create_payment(user_id, order, text='Были куплены: '):
+    idempotency_key = str(uuid.uuid4())
     for item in order.items:
         dress_id = int(item["id"])
         dress = Dress.objects.get(id=dress_id)
@@ -21,9 +23,9 @@ def create_payment(user_id, order, text='Были куплены: '):
         amount_value=order.order_sum,
         purchase=text,
         order=order,
-        is_accepted=True,
+        is_accepted=False,
     )
-    order.is_paid = True
+    order.is_paid = False
     order.save()
 
     payment = Payment.create({
@@ -36,7 +38,7 @@ def create_payment(user_id, order, text='Были куплены: '):
         },
         'confirmation': {
             'type': 'redirect',
-            'return_url': f'https://f507-87-225-75-120.ngrok-free.app/',
+            'return_url': f'https://47e6-62-76-6-79.ngrok-free.app//yoomoney/payment-accept/{change.id}',
         },
         'metadata': {
             'table_id': change.id,
@@ -45,24 +47,28 @@ def create_payment(user_id, order, text='Были куплены: '):
         'capture': True,
         'refundable': False,
         'description': 'Оплата на сумму ' + str(order.order_sum),
-    })
+    },idempotency_key=idempotency_key)
 
     return payment.confirmation.confirmation_url
 
-
-def payment_acceptance(response):
-    try:
-        table = BalanceChange.objects.get(
-            id=response['object']['metadata']['table_id'],
-        )
-    except BalanceChange.DoesNotExist:
-        # payment_id = response['object']['id']
-        return False
-
-    if response['event'] == 'payment.succeeded':
-        table.is_accepted = True
-        table.save()
-
-    elif response['event'] == 'payment.canceled':
-        table.is_accepted = False
-    return True
+#
+# def payment_acceptance(response, id):
+#     try:
+#         table = BalanceChange.objects.get(
+#             id=response['object']['metadata']['table_id'],
+#         )
+#     except BalanceChange.DoesNotExist:
+#         # payment_id = response['object']['id']
+#         return False
+#
+#     if response['event'] == 'payment.succeeded':
+#         table.is_accepted = True
+#         table.save()
+#         order_id = table.order_id
+#         order = Order.objects.get(id = order_id)
+#         order.is_paid = True
+#         order.save()
+#
+#     elif response['event'] == 'payment.canceled':
+#         table.is_accepted = False
+#     return True
