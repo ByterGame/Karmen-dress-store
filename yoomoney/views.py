@@ -1,9 +1,11 @@
 import json
-from django.http import HttpResponseRedirect
+from http.client import HTTPResponse
+
+from django.http import HttpResponseRedirect, JsonResponse
 
 from users.models import Order
 from yoomoney.models import BalanceChange
-from yoomoney.payment import create_payment
+from yoomoney.payment import create_payment, payment_acceptance
 
 
 def create_payment_view(request):
@@ -20,16 +22,9 @@ def create_payment_view(request):
     confirmation_url = create_payment(data)
     return HttpResponseRedirect(confirmation_url)
 
-# def create_payment_acceptance(request, id):
-#     response = json.loads(request.body)
-#     payment_acceptance(response, id)
 
-def payment_accept(request, id):
-    payment = BalanceChange.objects.get(id=id)
-    payment.is_accepted = True
-    order_id = payment.order_id
-    order = Order.objects.get(id=order_id)
-    order.is_paid = True
-    order.save()
-    payment.save()
-    return HttpResponseRedirect('/')
+def create_payment_acceptance(request):
+    response = json.loads(request.body)
+    payment_acceptance(response)
+    return JsonResponse('', safe=False)
+

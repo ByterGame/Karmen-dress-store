@@ -38,7 +38,7 @@ def create_payment(user_id, order, text='Были куплены: '):
         },
         'confirmation': {
             'type': 'redirect',
-            'return_url': f'https://47e6-62-76-6-79.ngrok-free.app//yoomoney/payment-accept/{change.id}',
+            'return_url': 'https://35db-82-162-122-185.ngrok-free.app/',
         },
         'metadata': {
             'table_id': change.id,
@@ -51,24 +51,29 @@ def create_payment(user_id, order, text='Были куплены: '):
 
     return payment.confirmation.confirmation_url
 
-#
-# def payment_acceptance(response, id):
-#     try:
-#         table = BalanceChange.objects.get(
-#             id=response['object']['metadata']['table_id'],
-#         )
-#     except BalanceChange.DoesNotExist:
-#         # payment_id = response['object']['id']
-#         return False
-#
-#     if response['event'] == 'payment.succeeded':
-#         table.is_accepted = True
-#         table.save()
-#         order_id = table.order_id
-#         order = Order.objects.get(id = order_id)
-#         order.is_paid = True
-#         order.save()
-#
-#     elif response['event'] == 'payment.canceled':
-#         table.is_accepted = False
-#     return True
+
+def payment_acceptance(response):
+    try:
+        table = BalanceChange.objects.get(
+            id=response['object']['metadata']['table_id'],
+        )
+    except BalanceChange.DoesNotExist:
+        # payment_id = response['object']['id']
+        return False
+    if response['event'] == 'payment.succeeded':
+        table.is_accepted = True
+        order_id = table.order_id
+        order = Order.objects.get(id=order_id)
+        order.is_paid = True
+        order.status = 'paid'
+        table.save()
+        order.save()
+    elif response['event'] == 'payment.canceled':
+        table.is_accepted = False
+        order_id = table.order_id
+        order = Order.objects.get(id=order_id)
+        order.is_paid = False
+        order.status = 'cancelled'
+        table.save()
+        order.save()
+    return True

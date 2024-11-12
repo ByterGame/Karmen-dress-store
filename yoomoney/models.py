@@ -7,7 +7,7 @@ from users.models import Order
 
 class BalanceChange(models.Model):
     user_id = models.IntegerField()
-    amount_value = models.IntegerField(max_length=100)
+    amount_value = models.IntegerField()
     date = models.DateTimeField(_("payment's date"), default=timezone.now)
     is_accepted = models.BooleanField(default=False)
     purchase = models.TextField()
